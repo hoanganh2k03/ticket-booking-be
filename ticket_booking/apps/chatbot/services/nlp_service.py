@@ -37,7 +37,7 @@ def generate_ai_response(user_message: str, customer=None, session_id=None, cont
         )
         
         if top_match_id:
-            system_prompt += f"Nếu có thể, hãy chèn đường dẫn đến trang đặt vé dạng {FRONTEND_URL}/match/{top_match_id} khi người dùng có ý định đặt, mua, hoặc xem chi tiết vé. "
+            system_prompt += f"Nếu có thể, hãy chèn đường dẫn đến trang đặt vé dạng {FRONTEND_URL}/match/match_id khi người dùng có ý định đặt, mua, hoặc xem chi tiết vé. Nếu người dùng muốn đặt mua thì chèn đường dẫn vô "
         
         system_prompt += "Không bịa ra thông tin ngoài dữ liệu thật.\n\n"
 

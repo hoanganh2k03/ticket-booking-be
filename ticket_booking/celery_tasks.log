@@ -9947,3 +9947,22 @@ Not Found: /media/Layout A
 [mHTTP GET /api/orders/matches/4/ 200 [0.05, 127.0.0.1:56806][0m
 Not Found: /media/Layout B
 [33mHTTP GET /media/Layout%20B 404 [0.02, 127.0.0.1:52529][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/orders/matches/ 200 [0.33, 127.0.0.1:52771][0m
+[mHTTP OPTIONS /api/chat/ 200 [0.01, 127.0.0.1:52771][0m
+[mHTTP POST /api/chat/ 200 [0.07, 127.0.0.1:52771][0m
+[mHTTP POST /api/chat/ 200 [0.04, 127.0.0.1:52771][0m
+[mHTTP POST /api/chat/ 200 [3.11, 127.0.0.1:52771][0m
+[mHTTP GET /api/orders/matches/1/ 200 [0.13, 127.0.0.1:52771][0m
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20A 404 [0.05, 127.0.0.1:53315][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP POST /api/chat/ 200 [4.20, 127.0.0.1:50275][0m
+[mHTTP GET /api/orders/matches/1/ 200 [0.12, 127.0.0.1:50275][0m
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20A 404 [0.05, 127.0.0.1:50437][0m
+[mHTTP POST /api/chat/ 200 [2.57, 127.0.0.1:50275][0m
+[mHTTP GET /api/orders/matches/1/ 200 [0.11, 127.0.0.1:50275][0m
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20A 404 [0.03, 127.0.0.1:54859][0m

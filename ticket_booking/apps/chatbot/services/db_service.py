@@ -53,7 +53,7 @@ def build_chroma_index():
             match_time = m.match_time.strftime('%H:%M %d/%m/%Y') if hasattr(m, 'match_time') and m.match_time else "Chưa xác định"
             
             league_name = m.league.league_name if m.league else "Giải không xác định"
-            sport_type = m.league.sport_type.sport_type_name if m.league and hasattr(m.league, 'sport_type') and m.league.sport_type else "Thể thao"
+            sport_type = m.league.sport.sport_name if m.league and m.league.sport else "Thể thao"
 
             # Duyệt qua từng khu vực trong sân
             section_prices = SectionPrice.objects.filter(match=m, is_closed=0).select_related("section")

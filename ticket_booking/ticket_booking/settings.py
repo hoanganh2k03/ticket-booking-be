@@ -65,7 +65,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute='*/1'),  # Cập nhật mỗi 5 phút
     },
 }
-
+FRONTEND_URL = 'http://localhost:5500'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -167,13 +167,8 @@ WSGI_APPLICATION = "ticket_booking.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-<<<<<<< HEAD
-        'NAME': 'sports',
-        'USER': 'root',
-=======
-        'NAME': 'soccer',
+        'NAME': 'sport',
         'USER': 'sa',
->>>>>>> main
         # 'PASSWORD': '???',
         'PASSWORD': 'kc',
         'HOST': 'localhost',

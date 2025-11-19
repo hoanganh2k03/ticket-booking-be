@@ -12,9 +12,7 @@ class ChatHistory(models.Model):
     session_id = models.CharField(max_length=100, blank=True, null=True)  # phiên hội thoại
 
     class Meta:
-        verbose_name = "Chat History"
-        verbose_name_plural = "Chat Histories"
-        ordering = ['-created_at']
+        db_table = 'chat_history'
 
     def __str__(self):
         return f"Chat {self.customer.id} - {self.session_id} ({self.created_at})"

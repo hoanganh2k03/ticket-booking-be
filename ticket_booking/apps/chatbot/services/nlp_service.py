@@ -2,7 +2,7 @@ import os
 from django.conf import settings
 from openai import OpenAI
 from apps.chatbot.models import ChatHistory
-
+from ticket_booking.settings import FRONTEND_URL
 # Cấu hình OpenAI/Groq client từ Django settings
 api_key = getattr(settings, 'GROQ_API_KEY', '')
 if api_key:
@@ -37,7 +37,7 @@ def generate_ai_response(user_message: str, customer=None, session_id=None, cont
         )
         
         if top_match_id:
-            system_prompt += f"Nếu có thể, hãy chèn đường dẫn đến trang đặt vé dạng localhost:8022/{top_match_id} khi người dùng có ý định đặt, mua, hoặc xem chi tiết vé. "
+            system_prompt += f"Nếu có thể, hãy chèn đường dẫn đến trang đặt vé dạng {FRONTEND_URL}/match/{top_match_id} khi người dùng có ý định đặt, mua, hoặc xem chi tiết vé. "
         
         system_prompt += "Không bịa ra thông tin ngoài dữ liệu thật.\n\n"
 

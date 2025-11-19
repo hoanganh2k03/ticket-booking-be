@@ -9884,3 +9884,7 @@ Watching for file changes with StatReloader
 [mHTTP OPTIONS /api/chat/ 200 [0.01, 127.0.0.1:50683][0m
 [mHTTP POST /api/chat/ 200 [5.20, 127.0.0.1:50683][0m
 Watching for file changes with StatReloader
+<<<<<<< HEAD
+=======
+Watching for file changes with StatReloader
+>>>>>>> main

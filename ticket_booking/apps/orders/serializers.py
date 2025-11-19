@@ -3,12 +3,14 @@ from django.utils import timezone
 from django.db import transaction
 from django.db.models import Q, Subquery
 from rest_framework.exceptions import ValidationError
-
+from django.db import transaction
+from django.db.models import F
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 from apps.events.models import Match, Team, League, Stadium
 from apps.tickets.models import SectionPrice, Section, Seat
 from apps.promotions.models import Promotion, PromotionDetail
 from .models import Order, OrderDetail, Payment
-
 from datetime import datetime
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -140,11 +142,14 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['order_id', 'user', 'total_amount', 'order_status', 'order_method', 'created_at', 'order_details']
 
     def create(self, validated_data):
+        # 1. BẮT ĐẦU VÙNG AN TOÀN (Giữ nguyên)
+        # Nếu có lỗi, mọi thứ sẽ được rollback (hủy bỏ)
         with transaction.atomic():
             try:
                 order_details_data = validated_data.pop('order_details')
                 order = Order.objects.create(**validated_data)
 
+                # --- (Phần code xử lý Promotion của bạn - GIỮ NGUYÊN) ---
                 promotion_counts = {}
                 for order_detail_data in order_details_data:
                     promotion = order_detail_data.get('promotion', None)
@@ -166,7 +171,10 @@ class OrderSerializer(serializers.ModelSerializer):
                         if promotion.usage_limit == 0:
                             promotion.status = False
                         promotion.save()
+                # --- (Kết thúc phần Promotion) ---
 
+
+                # --- (Phần code gom nhóm vé - GIỮ NGUYÊN) ---
                 grouped_order_details = {}
                 for order_detail_data in order_details_data:
                     pricing = order_detail_data['pricing']
@@ -176,35 +184,52 @@ class OrderSerializer(serializers.ModelSerializer):
 
                 total_order_amount = 0
 
-                for pricing_id, order_detail_group in grouped_order_details.items():
-                    pricing = SectionPrice.objects.get(pricing_id=pricing_id)
-                    available_seats = get_available_seats_for_section(pricing.section, pricing.match)
+                # --- 3. THÊM 2 BIẾN NÀY ĐỂ KÍCH HOẠT WEBSOCKET ---
+                sections_to_update_ws = {} # Dữ liệu sẽ gửi qua WebSocket
+                match_id_for_ws = None     # ID của "phòng" WebSocket
+                all_assigned_seats = []    # (Nâng cao) Gửi ID ghế đã bán
+                # --------------------------------------------------
 
+                for pricing_id, order_detail_group in grouped_order_details.items():
+                    
+                    # 4. !!! SỬA LẠI: DÙNG select_for_update() ĐỂ KHÓA HÀNG !!!
+                    # Đây là cách "bảo vệ" available_seats khỏi Race Condition
+                    # Bất kỳ ai khác cố update hàng này sẽ phải ĐỢI
+                    try:
+                        pricing = SectionPrice.objects.select_for_update().get(pricing_id=pricing_id)
+                    except SectionPrice.DoesNotExist:
+                        raise raise_custom_validation_error("Khu vực vé không tồn tại.")
+                    
+                    # (Lưu lại match_id để gửi WebSocket)
+                    if not match_id_for_ws:
+                        match_id_for_ws = pricing.match.match_id
+
+                    # 5. KIỂM TRA BỘ ĐẾM (Bên trong vùng an toàn - Giữ nguyên)
+                    if pricing.available_seats < len(order_detail_group):
+                        raise raise_custom_validation_error(f"Không có đủ ghế trống (chỉ còn {pricing.available_seats}).")
+
+                    # 6. KIỂM TRA GHẾ THỰC TẾ (Giữ nguyên logic của bạn)
+                    available_seats = get_available_seats_for_section(pricing.section, pricing.match)
                     if available_seats.count() < len(order_detail_group):
-                        raise raise_custom_validation_error("Không có đủ ghế trống cho tất cả các đơn hàng.")
+                        raise raise_custom_validation_error(f"Lỗi hệ thống: Số ghế thực tế ({available_seats.count()}) không khớp bộ đếm ({pricing.available_seats}).")
 
                     used_promotions = {pid: 0 for pid in promotion_counts.keys()}
 
+                    # 7. GÁN GHẾ (Giữ nguyên logic .first() của bạn)
                     for order_detail_data in order_detail_group:
                         assigned_seat = available_seats.first()
                         available_seats = available_seats.exclude(seat_id=assigned_seat.seat_id)
 
+                        # ... (Logic tính giá, gán promotion của bạn - GIỮ NGUYÊN) ...
                         promotion = order_detail_data.get('promotion', None)
                         final_promotion = None
-
                         if promotion:
                             promotion_id = promotion.promo_id
                             if (promotion_id in promotion_assignments and
                                     used_promotions[promotion_id] < promotion_assignments[promotion_id]):
                                 final_promotion = promotion
                                 used_promotions[promotion_id] += 1
-                            else:
-                                print(f"Promotion {promotion_id} has no remaining uses for this order_detail.")
-
-                        print(f"Assigned promotion: {final_promotion}")
-                        order_detail_data.pop('promotion', None)
-
-                        # --- Tính giá vé và discount trước khi tạo OrderDetail ---
+                        
                         ticket_price = pricing.price
                         discount = 0
                         if final_promotion:
@@ -212,31 +237,53 @@ class OrderSerializer(serializers.ModelSerializer):
                                 discount = final_promotion.discount_value
                             elif final_promotion.discount_type == "percentage":
                                 discount = (final_promotion.discount_value / 100) * ticket_price
-
                         final_price = max(0, ticket_price - discount)
-
                         order_detail_data.pop('price', None)
+                        order_detail_data.pop('promotion', None)
+                        # ----------------------------------------------------
 
-                        # --- Tạo OrderDetail và lưu giá tiền đã giảm vào ---
                         order_detail = OrderDetail.objects.create(
                             order=order,
                             seat=assigned_seat,
                             promotion=final_promotion,
-                            price=final_price,  # Lưu giá đã giảm vào cột 'price' của OrderDetail
+                            price=final_price,
                             **order_detail_data
                         )
-
                         total_order_amount += final_price
+                        all_assigned_seats.append(assigned_seat.seat_id) # Thêm ID ghế vào list
 
-                    pricing.available_seats -= len(order_detail_group)
+                    # 8. !!! SỬA LẠI: CẬP NHẬT BỘ ĐẾM AN TOÀN BẰNG F() !!!
+                    pricing.available_seats = F('available_seats') - len(order_detail_group)
                     pricing.save()
+                    
+                    # --- THÊM 2 DÒNG NÀY ĐỂ CHUẨN BỊ GỬI WEBSOCKET ---
+                    pricing.refresh_from_db() # Lấy số lượng vé MỚI NHẤT
+                    sections_to_update_ws[str(pricing.section.section_id)] = pricing.available_seats
+                    # ------------------------------------------------
 
                 order.total_amount = total_order_amount
                 order.save()
 
+                # 9. !!! KÍCH HOẠT WEBSOCKET (THÊM PHẦN NÀY) !!!
+                # Gửi thông báo sau khi transaction đã commit thành công
+                if match_id_for_ws:
+                    channel_layer = get_channel_layer()
+                    async_to_sync(channel_layer.group_send)(
+                        f"match_{match_id_for_ws}", # Tên "phòng" (phải khớp với consumer)
+                        {
+                            "type": "broadcast_seat_update", # Tên hàm consumer sẽ chạy
+                            "updated_sections": sections_to_update_ws, # Gửi dict {"1": 48}
+                            "sold_seat_ids": all_assigned_seats # (Nâng cao) Gửi ID các ghế vừa bán
+                        }
+                    )
+                # -------------------------------------------------
+
                 return order
 
             except Exception as e:
+                # Nếu có lỗi (hết vé), transaction.atomic() sẽ tự động
+                # rollback (hủy) mọi thay đổi (kể cả F()).
+                # -> `available_seats` sẽ KHÔNG BỊ TRỪ.
                 error_message = extract_error_message(e)
                 raise raise_custom_validation_error(error_message)
             

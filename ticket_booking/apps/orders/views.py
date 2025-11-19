@@ -95,6 +95,12 @@ class OrderCreateAPIView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         # Parse the order data
         serializer = self.get_serializer(data=request.data)
+        
+        # Log request data để debug
+        print("=" * 50)
+        print("Request data received:", request.data)
+        print("=" * 50)
+        
         if serializer.is_valid():
             # Create the order
             order = serializer.save()
@@ -105,6 +111,11 @@ class OrderCreateAPIView(generics.CreateAPIView):
                 "message": "Đơn hàng được đặt thành công.",
                 "data": serializer.data
             }, status=status.HTTP_201_CREATED)
+
+        # Log lỗi chi tiết
+        print("=" * 50)
+        print("Serializer errors:", serializer.errors)
+        print("=" * 50)
 
         # Return the error response with message and status
         return Response({

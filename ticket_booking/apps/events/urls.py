@@ -28,13 +28,13 @@ from .views import (
     SectionUpdateAPIView,
     SectionDeleteAPIView,
      LeagueViewSet,
-
+    SportViewSet
 )
 router = DefaultRouter()
 router.register(r'stadiums', StadiumViewSet, basename='stadium')
 router.register(r'leagues', LeagueViewSet, basename='league')
 router.register(r'teams', TeamViewSet, basename='teams')
-
+router.register(r'sports', SportViewSet, basename='sports')
 # lấy ds các trận 
 urlpatterns = [
     # urls.py (app events)

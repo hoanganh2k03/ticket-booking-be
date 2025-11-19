@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.db import models
+from django.db import models, transaction
+from django.db.models import F
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 
@@ -66,74 +67,81 @@ class OrderConsumer(AsyncWebsocketConsumer):
             await self.handle_ticket_order(text_data_json)
             
 
+    # async def handle_ticket_order(self, data):
+    # # Xử lý đặt vé (Ví dụ: tạo mới đơn đặt vé)
+    #     # user = self.scope["user"]
+    #     ticket_quantity = data.get("ticket_quantity")
+    #     section_id = data.get("section_id")  # Lấy section_id từ dữ liệu gửi đến
+
+    #     # Kiểm tra xem section_id có hợp lệ không
+    #     section = await self.get_section_price(self.match_id, section_id)
+    #     if not section:
+    #         await self.send(text_data=json.dumps({
+    #             "status": "error",
+    #             "message": "Invalid section ID"
+    #         }))
+    #         return
+
+    #     # Kiểm tra số lượng vé còn lại trong section của trận đấu
+    #     available_tickets_in_section = section['available_seats']
+
+    #     if ticket_quantity > available_tickets_in_section:
+    #         # Nếu không đủ vé trong section
+    #         await self.send(text_data=json.dumps({
+    #             "status": "error",
+    #             "message": f"Not enough tickets available in this section. Only {available_tickets_in_section} left."
+    #         }))
+    #         return
+    #     # Giảm số lượng vé còn lại trong section
+    #     section = await self.update_available_seats(self.match_id, section_id, ticket_quantity)
+
+    #     # Gửi phản hồi tới client
+    #     await self.channel_layer.group_send(
+    #         self.room_group_name,  # Tên nhóm WebSocket của trận đấu
+    #         {
+    #             "type": "send_ticket_update",  # Loại thông báo (có thể tùy chỉnh)
+    #             "section_id": section['section_id'],  # ID khu vực vé
+    #             "remaining_tickets_in_section": section['available_seats']  # Số vé còn lại trong khu vực
+    #         }
+    #     )
     async def handle_ticket_order(self, data):
-    # Xử lý đặt vé (Ví dụ: tạo mới đơn đặt vé)
-        # user = self.scope["user"]
         ticket_quantity = data.get("ticket_quantity")
-        section_id = data.get("section_id")  # Lấy section_id từ dữ liệu gửi đến
+        section_id = data.get("section_id")
 
-        # Kiểm tra xem section_id có hợp lệ không
-        section = await self.get_section_price(self.match_id, section_id)
-        if not section:
-            await self.send(text_data=json.dumps({
-                "status": "error",
-                "message": "Invalid section ID"
-            }))
+        # Gọi hàm update mới (đã an toàn)
+        section = await self.atomic_update_available_seats(self.match_id, section_id, ticket_quantity)
+
+        # Xử lý kết quả
+        if section == "DoesNotExist":
+            await self.send(text_data=json.dumps({"status": "error", "message": "Khu vực không hợp lệ"}))
+            return
+        elif section is None:
+            # Lỗi hết vé (do hàm atomic_update trả về None)
+            await self.send(text_data=json.dumps({"status": "error", "message": "Không đủ vé."}))
             return
 
-        # Kiểm tra số lượng vé còn lại trong section của trận đấu
-        available_tickets_in_section = section['available_seats']
-
-        if ticket_quantity > available_tickets_in_section:
-            # Nếu không đủ vé trong section
-            await self.send(text_data=json.dumps({
-                "status": "error",
-                "message": f"Not enough tickets available in this section. Only {available_tickets_in_section} left."
-            }))
-            return
-
-        # Tạo đơn đặt vé
-        # order = await database_sync_to_async(Order.objects.create)(
-        #     # user=user,
-        #     match_id=self.match_id,  # Sử dụng match_id đã có trong instance
-        #     section_id=section_id,  # Thêm thông tin section vào order
-        #     quantity=ticket_quantity
-        # )
-
-        # Giảm số lượng vé còn lại trong section
-        section = await self.update_available_seats(self.match_id, section_id, ticket_quantity)
-
-        # Gửi phản hồi tới client
+        # Nếu thành công, broadcast
         await self.channel_layer.group_send(
-            self.room_group_name,  # Tên nhóm WebSocket của trận đấu
+            self.room_group_name,
             {
-                "type": "send_ticket_update",  # Loại thông báo (có thể tùy chỉnh)
-                "section_id": section['section_id'],  # ID khu vực vé
-                "remaining_tickets_in_section": section['available_seats']  # Số vé còn lại trong khu vực
+                "type": "send_ticket_update",
+                "section_id": section['section_id'],
+                "remaining_tickets_in_section": section['available_seats']
             }
-        )
-        
-        # await self.send(text_data=json.dumps({
-        #     "status": "success",
-        #     "message": "Ticket order successful!",
-        #     # "order_id": order.id,
-        #     "section_id": section['section_id'],
-        #     "remaining_tickets_in_section": section['available_seats']
-        # }))
+        )    
 
+        async def send_ticket_update(self, event):
+        # Nhận thông tin vé đã thay đổi từ group (bao gồm section_id và remaining_tickets_in_section)
+            section_id = event["section_id"]
+            remaining_tickets_in_section = event["remaining_tickets_in_section"]
 
-    async def send_ticket_update(self, event):
-    # Nhận thông tin vé đã thay đổi từ group (bao gồm section_id và remaining_tickets_in_section)
-        section_id = event["section_id"]
-        remaining_tickets_in_section = event["remaining_tickets_in_section"]
-
-        # Cập nhật lại số lượng vé còn lại trong phần tử section trên giao diện
-        await self.send(text_data=json.dumps({
-            "status": "success",
-            "message": "Ticket data updated",
-            "section_id": section_id,
-            "remaining_tickets_in_section": remaining_tickets_in_section
-        }))
+            # Cập nhật lại số lượng vé còn lại trong phần tử section trên giao diện
+            await self.send(text_data=json.dumps({
+                "status": "success",
+                "message": "Ticket data updated",
+                "section_id": section_id,
+                "remaining_tickets_in_section": remaining_tickets_in_section
+            }))
 
 
     @sync_to_async
@@ -161,31 +169,62 @@ class OrderConsumer(AsyncWebsocketConsumer):
         except SectionPrice.DoesNotExist:
             return None
         
-    @sync_to_async
-    def get_section_price(self, match_id, section_id):
-        try:
-            section_price = SectionPrice.objects.get(match_id=match_id, section_id=section_id)
-            return {
-                "section_id": section_price.section_id,
-                "price": float(section_price.price),
-                "available_seats": section_price.available_seats
-            }
-        except SectionPrice.DoesNotExist:
-            return None
+    # @sync_to_async
+    # def get_section_price(self, match_id, section_id):
+    #     try:
+    #         section_price = SectionPrice.objects.get(match_id=match_id, section_id=section_id)
+    #         return {
+    #             "section_id": section_price.section_id,
+    #             "price": float(section_price.price),
+    #             "available_seats": section_price.available_seats
+    #         }
+    #     except SectionPrice.DoesNotExist:
+    #         return None
         
-    @sync_to_async
-    def update_available_seats(section, match_id, section_id, ticket_quantity):
+    # @sync_to_async
+    # def update_available_seats(section, match_id, section_id, ticket_quantity):
+    #     try:
+    #         section_price = SectionPrice.objects.get(match_id=match_id, section_id=section_id)
+    #         section_price.available_seats -= ticket_quantity
+    #         section_price.save()
+    #         return {
+    #             "section_id": section_price.section_id,
+    #             "price": float(section_price.price),
+    #             "available_seats": section_price.available_seats
+    #         }
+    #     except SectionPrice.DoesNotExist:
+    #         return None
+    # thêm hàm cập nhật an toàn
+    @database_sync_to_async # (Chuyển hàm sync này thành async)
+    @transaction.atomic     # (1. Bọc trong transaction)
+    def atomic_update_available_seats(match_id, section_id, ticket_quantity):
+        """
+        Hàm này kiểm tra và trừ số lượng vé một cách an toàn
+        """
         try:
-            section_price = SectionPrice.objects.get(match_id=match_id, section_id=section_id)
-            section_price.available_seats -= ticket_quantity
+            # 2. KHÓA HÀNG LẠI (Chống race condition)
+            # Bất kỳ ai khác cố update hàng này sẽ phải ĐỢI
+            section_price = SectionPrice.objects.select_for_update().get(match_id=match_id, section_id=section_id)
+            
+            # 3. KIỂM TRA (Bên trong vùng an toàn)
+            if ticket_quantity > section_price.available_seats:
+                return None # Báo lỗi: Hết vé
+
+            # 4. CẬP NHẬT (An toàn)
+            # Dùng F() để trừ trực tiếp trong CSDL
+            section_price.available_seats = F('available_seats') - ticket_quantity
             section_price.save()
+            
+            # Trả về section_price đã cập nhật
+            section_price.refresh_from_db()
             return {
                 "section_id": section_price.section_id,
                 "price": float(section_price.price),
                 "available_seats": section_price.available_seats
             }
         except SectionPrice.DoesNotExist:
-            return None
+            return "DoesNotExist" # Báo lỗi: Không tìm thấy
+
 
     @sync_to_async
     def get_sold_tickets(self, match_id):

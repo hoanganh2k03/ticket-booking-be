@@ -54,42 +54,122 @@ class MatchUpdateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'stadium_name': 'Sân vận động không tồn tại.'})
         return data
 # tạo traạn mới
+from rest_framework import serializers
+from .models import Match, Stadium, League, Team
+import re # Import thư viện Regex để kiểm tra chuỗi nâng cao
 
 class MatchCreateSerializer(serializers.ModelSerializer):
-    match_date = serializers.DateTimeField(write_only=True)
-    stadium_id = serializers.IntegerField(write_only=True)
-    league = serializers.CharField(write_only=True)
-    team_1 = serializers.IntegerField(write_only=True)
-    team_2 = serializers.IntegerField(write_only=True)
+    stadium = serializers.PrimaryKeyRelatedField(queryset=Stadium.objects.all())
+    league = serializers.PrimaryKeyRelatedField(queryset=League.objects.all())
+    team_1 = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
+    team_2 = serializers.PrimaryKeyRelatedField(queryset=Team.objects.all())
 
     class Meta:
         model = Match
         fields = [
-            'match_date',
-            'description',
-            'stadium_id',
-            'league',
-            'round',
-            'team_1',
-            'team_2'
+            'match_id', 'match_time', 'description', 
+            'stadium', 'league', 'round', 'team_1', 'team_2'
         ]
 
-    def create(self, validated_data):
-        stadium = Stadium.objects.get(pk=validated_data['stadium_id'])
-        league = League.objects.get(league_name=validated_data['league'])
-        team1 = Team.objects.get(pk=validated_data['team_1'])
-        team2 = Team.objects.get(pk=validated_data['team_2'])
+    def validate(self, data):
+        league = data['league']
+        team_1 = data['team_1']
+        team_2 = data['team_2']
+        match_time = data['match_time']
+        stadium = data['stadium']
+        
+        # Chuẩn hóa chuỗi round: xóa khoảng trắng thừa, chuyển về chữ thường để dễ so sánh
+        round_raw = data.get('round', '').strip()
+        round_lower = round_raw.lower()
 
-        match = Match.objects.create(
-            match_time=validated_data['match_date'],
-            description=validated_data['description'],
-            stadium=stadium,
-            league=league,
-            round=validated_data['round'],
-            team_1=team1,
-            team_2=team2
-        )
-        return match
+        # =========================================================
+        # PHẦN 1: VALIDATE LOGIC CƠ BẢN (Đội & Môn thể thao)
+        # =========================================================
+        if team_1.team_id == team_2.team_id:
+            raise serializers.ValidationError({"team_2": "Đội 1 và Đội 2 không thể giống nhau."})
+
+        if league.sport != team_1.sport:
+            raise serializers.ValidationError({
+                "team_1": f"Sai môn thể thao! Giải '{league.league_name}' là môn '{league.sport.sport_name}', nhưng đội '{team_1.team_name}' là môn '{team_1.sport.sport_name}'."
+            })
+
+        if league.sport != team_2.sport:
+            raise serializers.ValidationError({
+                "team_2": f"Sai môn thể thao! Giải '{league.league_name}' là môn '{league.sport.sport_name}', nhưng đội '{team_2.team_name}' là môn '{team_2.sport.sport_name}'."
+            })
+
+        # =========================================================
+        # PHẦN 2: VALIDATE TRƯỜNG 'ROUND' DỰA THEO LOẠI GIẢI
+        # =========================================================
+        
+        # --- CASE 1: ROUND ROBIN (Vòng tròn) ---
+        # Yêu cầu: Phải bắt đầu bằng "Vòng", "Round", "Lượt", "Tuần" + Số
+        # --- CASE 1: ROUND ROBIN (Vòng tròn) ---
+        if league.league_type == 'round_robin':
+            # CŨ (Xóa đi): pattern = r'^(vòng|round|lượt|tuần|matchday)\s+\d+'
+            
+            # MỚI: Chỉ chấp nhận chuỗi số (VD: "1", "10")
+            # isdigit() trả về True nếu chuỗi chỉ chứa số
+            if not round_raw.isdigit():
+                raise serializers.ValidationError({
+                    "round": f"Giải đấu vòng tròn: Vui lòng chỉ nhập số thứ tự vòng đấu (VD: 1, 2, 10)."
+                })
+
+        # --- CASE 2: KNOCKOUT (Loại trực tiếp) ---
+        # Yêu cầu: Phải chứa các từ khóa của vòng đấu loại
+        elif league.league_type == 'knockout':
+            valid_keywords = [
+                'loại', 'playoff', 'play-off', 
+                '1/32', '1/16', '1/8', 'round of', 
+                'tứ kết', 'quarter', 
+                'bán kết', 'semi', 
+                'chung kết', 'final', 
+                'tranh hạng'
+            ]
+            # Kiểm tra xem round_lower có CHỨA bất kỳ từ khóa nào không
+            is_valid = any(keyword in round_lower for keyword in valid_keywords)
+            
+            if not is_valid:
+                raise serializers.ValidationError({
+                    "round": f"Giải '{league.league_name}' là đấu cúp. Tên vòng phải là: Tứ kết, Bán kết, Chung kết, Vòng 1/8..."
+                })
+
+        # --- CASE 3: HYBRID (Hỗn hợp: World Cup, C1) ---
+        # Yêu cầu: Chấp nhận cả kiểu Bảng đấu VÀ kiểu Knockout
+        elif league.league_type == 'hybrid':
+            # Từ khóa cho vòng bảng
+            group_keywords = ['bảng', 'group', 'stage']
+            # Từ khóa cho vòng knock-out (lấy lại list trên)
+            knockout_keywords = [
+                '1/16', '1/8', 'tứ kết', 'bán kết', 'chung kết', 'final', 'semi', 'playoff'
+            ]
+            
+            is_group = any(k in round_lower for k in group_keywords)
+            is_knockout = any(k in round_lower for k in knockout_keywords)
+
+            if not (is_group or is_knockout):
+                raise serializers.ValidationError({
+                    "round": f"Giải '{league.league_name}' là hỗn hợp. Tên vòng phải là 'Bảng X' hoặc các vòng 'Tứ kết', 'Bán kết'..."
+                })
+
+        # --- CASE 4 & 5: FRIENDLY (Giao hữu) & OTHER (Khác) ---
+        # Yêu cầu: Không quá khắt khe, nhưng không được quá ngắn hoặc vô nghĩa
+        elif league.league_type in ['friendly', 'other']:
+            if len(round_raw) < 2:
+                 raise serializers.ValidationError({
+                    "round": "Tên vòng đấu/mô tả trận đấu quá ngắn."
+                })
+
+        # =========================================================
+        # PHẦN 3: CHECK TRÙNG LỊCH SÂN (Tùy chọn)
+        # =========================================================
+        if Match.objects.filter(stadium=stadium, match_time=match_time).exists():
+             raise serializers.ValidationError({
+                "match_time": f"Sân {stadium.stadium_name} đã có lịch thi đấu vào giờ này."
+            })
+
+        return data
+
 
 # danh sách sân,giải,đội để tạo trận
 class StadiumSerializerMatch(serializers.ModelSerializer):
@@ -110,17 +190,32 @@ class TeamSerializerMatch(serializers.ModelSerializer):
 from rest_framework import serializers
 from .models import Team
 
+# file: serializers.py
+from rest_framework import serializers
+from .models import Team, Sport
+
 class TeamSerializerView(serializers.ModelSerializer):
     logo = serializers.SerializerMethodField()
+    
+    # Sử dụng SlugRelatedField để hiển thị thẳng tên sport
+    # Dùng read_only=True vì đây là serializer chỉ để xem
+    sport = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='sport_name'  # Chỉ định trường tên trong model Sport
+    )
 
     class Meta:
         model = Team
-        fields = ['team_id', 'team_name', 'logo', 'head_coach', 'description']
+        # Cập nhật lại fields, thay 'sport_id' và 'sport_name' bằng 'sport'
+        fields = ['team_id', 'sport', 'team_name', 
+                  'logo', 'head_coach', 'description']
 
     def get_logo(self, obj):
-        request = self.context.get('request')  # Lấy request từ context
+        request = self.context.get('request')
         if obj.logo and hasattr(obj.logo, 'url'):
-            return request.build_absolute_uri(obj.logo.url)
+            if request:
+                return request.build_absolute_uri(obj.logo.url)
+            return obj.logo.url
         return None
     
 # update/thêm team
@@ -131,7 +226,25 @@ class TeamUpdateSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'logo': {'required': False, 'allow_null': True},
         }
+# thêm mới 18.11
+# file: serializers.py (thêm vào file)
 
+class TeamCreateUpdateSerializer(serializers.ModelSerializer):
+    # Dùng PrimaryKeyRelatedField để nhận ID của Sport khi tạo/cập nhật
+    sport = serializers.PrimaryKeyRelatedField(queryset=Sport.objects.all())
+    # Dùng ImageField để cho phép tải file lên
+    logo = serializers.ImageField(required=False, allow_null=True)
+
+    class Meta:
+        model = Team
+        # Chỉ bao gồm các trường có thể ghi
+        fields = [ 'sport','team_name', 'logo', 'head_coach', 'description']
+
+    def validate(self, data):
+        # DRF sẽ tự động kiểm tra UniqueConstraint ('unique_team_name_per_sport')
+        # khi .save() được gọi.
+        # Bạn có thể thêm validation phức tạp hơn ở đây nếu cần.
+        return data
 
 
 
@@ -370,3 +483,13 @@ class MatchHistorySerializer(serializers.ModelSerializer):
     def get_employee_info(self, obj):
         # ✅ Sửa tại đây
         return f"{obj.employee.id} - {obj.employee.full_name}"
+
+
+class SportSerializer(serializers.ModelSerializer):
+    """
+    Serializer đơn giản chỉ để liệt kê các môn thể thao.
+    """
+    class Meta:
+        model = Sport
+        # Chỉ lấy 2 trường này để điền vào dropdown là đủ
+        fields = ['sport_id', 'sport_name']

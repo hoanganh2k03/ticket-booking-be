@@ -165,7 +165,7 @@ WSGI_APPLICATION = "ticket_booking.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'soccer',
+        'NAME': 'sports',
         'USER': 'root',
         # 'PASSWORD': '???',
         'PASSWORD': '1234',

@@ -99,29 +99,24 @@ class MatchDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class MatchCreateAPIView(APIView):
     def post(self, request):
         serializer = MatchCreateSerializer(data=request.data)
+        
+        # is_valid() sẽ tự động gọi hàm validate() ở trên
         if serializer.is_valid():
+            # Lưu vào DB
             match = serializer.save()
+            
             return Response({
                 "status": "success",
-                "message": "Match created successfully",
-                "data": {
-                    "match_id": match.match_id,
-                    "match_date": match.match_time.strftime('%Y-%m-%d %H:%M:%S'),
-                    "description": match.description,
-                    "stadium_id": match.stadium.stadium_id,
-                    "league": match.league.league_name,
-                    "round": match.round,
-                    "team_1": match.team_1.team_id,
-                    "team_2": match.team_2.team_id,
-                    "created_at": match.created_at.strftime('%Y-%m-%d %H:%M:%S')
-                }
+                "message": "Tạo trận đấu thành công!",
+                "data": serializer.data
             }, status=status.HTTP_201_CREATED)
-        else:
-            return Response({
-                "status": "error",
-                "message": "Invalid data",
-                "errors": serializer.errors
-            }, status=status.HTTP_400_BAD_REQUEST)
+            
+        # Nếu lỗi, trả về chi tiết lỗi (do validate hoặc do sai ID)
+        return Response({
+            "status": "error",
+            "message": "Dữ liệu không hợp lệ",
+            "errors": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 # check trận đấu hôm nay
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -243,13 +238,23 @@ from .models import Team
 from .serializers import TeamSerializerView, TeamUpdateSerializer
 from .models import Match
 
+from .serializers import TeamSerializerView, TeamCreateUpdateSerializer 
+
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
 
     def get_serializer_class(self):
-        if self.action in ['update', 'partial_update']:
-            return TeamUpdateSerializer
+        # Dùng serializer ghi cho các hành động 'create', 'update', 'partial_update'
+        if self.action in ['create', 'update', 'partial_update']:
+            # Đảm bảo bạn đã đổi tên TeamUpdateSerializer thành TeamCreateUpdateSerializer
+            return TeamCreateUpdateSerializer 
+        
+        # Dùng serializer xem cho tất cả các hành động còn lại (list, retrieve)
         return TeamSerializerView
+
+    def get_serializer_context(self):
+        # Đảm bảo 'request' luôn được truyền vào context cho get_logo
+        return {'request': self.request}
 
     def destroy(self, request, *args, **kwargs):
         team = self.get_object()
@@ -799,3 +804,15 @@ class MatchHistoryListAPIView(ListAPIView):
     queryset = MatchHistory.objects.select_related('match', 'employee').all()
     serializer_class = MatchHistorySerializer
 
+
+
+from .serializers import TeamSerializerView, TeamCreateUpdateSerializer, SportSerializer
+from .models import  Sport
+class SportViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+
+    """
+    API endpoint này chỉ cho phép LẤY (GET) danh sách các môn thể thao.
+    """
+    queryset = Sport.objects.all().order_by('sport_name') # Lấy tất cả, sắp xếp theo tên
+    serializer_class = SportSerializer

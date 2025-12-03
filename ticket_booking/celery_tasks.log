@@ -12473,6 +12473,10 @@ Watching for file changes with StatReloader
 [mHTTP GET /api/reports/payments/1/ 200 [0.03, 127.0.0.1:64314][0m
 [mHTTP GET /api/reports/payments/4/ 200 [0.03, 127.0.0.1:64314][0m
 [mHTTP GET /api/reports/payments/4/ 200 [0.03, 127.0.0.1:64314][0m
+<<<<<<< Updated upstream
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 
+=======
+>>>>>>> Stashed changes
+Watching for file changes with StatReloader

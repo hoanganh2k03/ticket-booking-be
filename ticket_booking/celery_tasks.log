@@ -12485,3 +12485,6 @@ Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/reports/payments/?page=1 200 [1.32, 127.0.0.1:55205][0m
+[mHTTP GET /api/reports/payments/?page=1 200 [0.62, 127.0.0.1:53352][0m

@@ -55,3 +55,22 @@ Thumbs.db
 **/migrations/*.py
 !**/migrations/__init__.py
 **/migrations/*.pyc
+# Python compilation
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+local_settings.py
+db.sqlite3
+media
+
+# Celery
+celerybeat-schedule
+celerybeat-schedule.*
+
+# Environment
+env/
+venv/
+.env

@@ -158,3 +158,147 @@ class MatchListAPIView_Promotions(APIView):
         return Response(result, status=status.HTTP_200_OK)
 
 
+# AI TẠO PROMOTION
+import joblib
+import os
+import numpy as np
+from datetime import datetime
+from django.conf import settings
+from django.db.models import Sum, Avg
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from apps.events.models import Match
+from apps.tickets.models import SectionPrice
+from apps.orders.models import OrderDetail
+class AnalyzePromotionEffectivenessView(APIView):
+    """
+    API Phân tích Khuyến mãi dựa trên Tình trạng ghế trống (Inventory).
+    Input: { "match_id": 123 }
+    Output: Gợi ý mức % giảm giá tốt nhất để xả hàng tồn.
+    """
+    def post(self, request):
+        match_id = request.data.get('match_id')
+        if not match_id:
+            return Response({"error": "Thiếu match_id"}, status=400)
+
+        try:
+            # 1. LẤY DỮ LIỆU THỰC TẾ (REAL-TIME DATA)
+            match = Match.objects.get(pk=match_id)
+            
+            # Tính tổng sức chứa & Số ghế đã bán
+            # (Logic lấy từ SectionPrice và OrderDetail)
+            capacity_data = SectionPrice.objects.filter(match=match).aggregate(
+                total_cap=Sum('section__capacity'),
+                total_available=Sum('available_seats'),
+                avg_price=Avg('price')
+            )
+            
+            total_capacity = capacity_data['total_cap'] or 0
+            current_available = capacity_data['total_available'] or 0
+            current_price = float(capacity_data['avg_price'] or 0)
+            
+            if total_capacity == 0:
+                return Response({"error": "Trận này chưa tạo vé (Capacity=0)"}, status=400)
+
+            current_sold = total_capacity - current_available
+            fill_rate_now = (current_sold / total_capacity) * 100
+
+            # Nếu đã bán gần hết (>90%) thì không cần Promotion
+            if fill_rate_now > 90:
+                return Response({
+                    "status": "warning",
+                    "message": f"Trận này đã bán được {fill_rate_now:.1f}%. Không cần khuyến mãi thêm."
+                })
+
+            # 2. CHUẨN BỊ AI MODEL
+            model_path = os.path.join(settings.BASE_DIR, 'ml_models', 'price_optimization_model.pkl')
+            model = joblib.load(model_path)
+
+            day = match.match_time.weekday()
+            hour = match.match_time.hour
+            is_hot = 1 if match.is_hot_match else 0
+            importance = match.importance
+
+            # 3. GIẢ LẬP CÁC MỨC KHUYẾN MÃI (SCENARIOS)
+            # Chỉ xét giảm giá (Promotion) vì mục tiêu là lấp đầy ghế trống
+            discounts = [0, 10, 15, 20, 25, 30, 40, 50] 
+            
+            best_option = None
+            max_extra_revenue = -1
+            analysis = []
+
+            for pct in discounts:
+                # Giá sau khi giảm
+                promo_price = current_price * (1 - pct / 100)
+                
+                # Hỏi AI: "Với giá này, tổng thị trường mua được bao nhiêu?"
+                features = np.array([[day, hour, is_hot, importance, promo_price]])
+                predicted_total_demand = int(model.predict(features)[0])
+                
+                # Logic quan trọng: Tính số khách MỚI tiềm năng
+                # Khách mới = Nhu cầu tổng - Khách đã mua
+                potential_new_buyers = predicted_total_demand - current_sold
+                
+                if potential_new_buyers <= 0:
+                    potential_new_buyers = 0 # Giá này không hấp dẫn thêm ai cả
+                
+                # Không thể bán quá số ghế còn lại
+                sales_volume = min(potential_new_buyers, current_available)
+                
+                # Doanh thu bán thêm (Incremental Revenue)
+                extra_revenue = sales_volume * promo_price
+                
+                # Tỷ lệ lấp đầy dự kiến sau KM
+                new_fill_rate = ((current_sold + sales_volume) / total_capacity) * 100
+
+                sim_result = {
+                    "discount": pct,
+                    "promo_price": promo_price,
+                    "extra_sold": sales_volume, # Bán thêm được bao nhiêu
+                    "extra_revenue": extra_revenue, # Thu thêm được bao nhiêu
+                    "final_fill_rate": round(new_fill_rate, 1)
+                }
+                analysis.append(sim_result)
+
+                # Tìm phương án tối ưu tiền nhất
+                if extra_revenue > max_extra_revenue:
+                    max_extra_revenue = extra_revenue
+                    best_option = sim_result
+
+            # 4. TRẢ KẾT QUẢ
+            return Response({
+                "status": "success",
+                "current_status": {
+                    "sold": current_sold,
+                    "available": current_available,
+                    "fill_rate": round(fill_rate_now, 1),
+                    "avg_price": current_price
+                },
+                "recommendation": {
+                    "best_discount": best_option['discount'],
+                    "best_price": best_option['promo_price'],
+                    "expected_extra_sold": best_option['extra_sold'],
+                    "expected_extra_revenue": best_option['extra_revenue'],
+                    "expected_final_fill": best_option['final_fill_rate'],
+                    "message": self.generate_message(best_option, current_available)
+                },
+                "analysis_data": analysis # Để vẽ biểu đồ
+            })
+
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            return Response({"error": str(e)}, status=500)
+
+    def generate_message(self, opt, available):
+        if opt['extra_sold'] == 0:
+            return "Dù giảm giá cũng khó bán thêm được vé nào (Nhu cầu đã bão hòa)."
+        
+        fill_percent = (opt['extra_sold'] / available) * 100 if available > 0 else 0
+        
+        if opt['discount'] == 0:
+            return "Nên giữ nguyên giá. Việc giảm giá không mang lại doanh thu cao hơn."
+        
+        return (f"Nên giảm {opt['discount']}%! "
+                f"Dự kiến sẽ 'đẩy' đi được thêm {opt['extra_sold']} vé tồn kho, "
+                f"thu về thêm {opt['extra_revenue']:,.0f} VNĐ.")

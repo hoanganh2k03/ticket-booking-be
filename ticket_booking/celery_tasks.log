@@ -9102,10 +9102,10 @@ Watching for file changes with StatReloader
 [mHTTP POST /api/orders/momo-payment/ 200 [0.30, 127.0.0.1:62390][0m
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
-D:\ÐATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+D:\ ATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
-D:\ÐATN\ticket-booking-be\ticket_booking\apps\tickets\__init__.py changed, reloading.
+D:\ ATN\ticket-booking-be\ticket_booking\apps\tickets\__init__.py changed, reloading.
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
@@ -9171,9 +9171,9 @@ Unauthorized: /api/accounts/employee/profile/
 [mHTTP GET /api/reports/revenue/?start_date=2025-11-03&end_date=2025-11-09 200 [0.03, 127.0.0.1:53744][0m
 [mHTTP GET /api/reports/ticket-status/?start_date=2025-11-03&end_date=2025-11-09 200 [0.06, 127.0.0.1:53711][0m
 [mHTTP GET /api/reports/returns-report/?start_date=2025-11-03&end_date=2025-11-09 200 [0.03, 127.0.0.1:53711][0m
-D:\ÐATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+D:\ ATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
 Watching for file changes with StatReloader
-D:\ÐATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+D:\ ATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
 Watching for file changes with StatReloader
 [mHTTP GET /api/reports/orders/leagues/ 200 [0.08, 127.0.0.1:62122][0m
 [mHTTP GET /api/reports/revenue/?start_date=2025-11-03&end_date=2025-11-09 200 [0.13, 127.0.0.1:62121][0m
@@ -12473,8 +12473,6 @@ Watching for file changes with StatReloader
 [mHTTP GET /api/reports/payments/1/ 200 [0.03, 127.0.0.1:64314][0m
 [mHTTP GET /api/reports/payments/4/ 200 [0.03, 127.0.0.1:64314][0m
 [mHTTP GET /api/reports/payments/4/ 200 [0.03, 127.0.0.1:64314][0m
-<<<<<<< Updated upstream
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
-=======
->>>>>>> Stashed changes
+

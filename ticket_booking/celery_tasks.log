@@ -12593,3 +12593,10 @@ Not Found: /media/employee_images/ChatGPT_Image_23_48_21_15_thg_6_2025.png
 [35;1mHTTP GET /api/tickets/section-prices/ 500 [0.58, 127.0.0.1:60462][0m
 [35;1mHTTP GET /api/tickets/completed-matches/ 500 [0.34, 127.0.0.1:58981][0m
 [35;1mHTTP GET /api/tickets/section-prices/ 500 [0.35, 127.0.0.1:65244][0m
+[35;1mHTTP GET /api/events/teams/ 500 [0.55, 127.0.0.1:65119][0m
+[35;1mHTTP GET /api/events/teams/ 500 [0.30, 127.0.0.1:61344][0m
+[35;1mHTTP GET /api/tickets/completed-matches/ 500 [1.06, 127.0.0.1:58738][0m
+[35;1mHTTP GET /api/tickets/section-prices/ 500 [1.49, 127.0.0.1:50648][0m
+[35;1mHTTP GET /api/tickets/completed-matches/ 500 [0.62, 127.0.0.1:61961][0m
+[35;1mHTTP GET /api/tickets/section-prices/ 500 [0.79, 127.0.0.1:49976][0m
+Watching for file changes with StatReloader

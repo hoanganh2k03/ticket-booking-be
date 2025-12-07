@@ -49,7 +49,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hattoriheiji48691810@gmail.com'
 EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
-GROQ_API_KEY='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'
+GROQ_API_KEY='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'
 # calery
 from celery.schedules import crontab  # Thêm import ở đây
 

@@ -12597,3 +12597,12 @@ Not Found: /media/Layout A
 [33mHTTP GET /media/Layout%20A 404 [2.12, 127.0.0.1:55391][0m
 [mHTTP GET /api/chat/history/?customer_id=34 200 [0.07, 127.0.0.1:63449][0m
 [mHTTP GET /api/orders/matches/ 200 [0.11, 127.0.0.1:57647][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.18, 127.0.0.1:55640][0m
+[mHTTP GET /api/orders/matches/ 200 [0.23, 127.0.0.1:49190][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.11, 127.0.0.1:49190][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:55640][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.12, 127.0.0.1:55640][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:49190][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.07, 127.0.0.1:49190][0m
+[mHTTP GET /api/orders/matches/ 200 [0.10, 127.0.0.1:55640][0m

@@ -10,7 +10,7 @@ from .views import  MatchDetailAPIView
 # from .views import StadiumListCreateAPIView
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from django.urls import path
+# from .views import StadiumCreateAPIView
 from .views import StadiumSectionCreateAPIView
 from .views import StadiumViewSet
 from django.urls import path, include
@@ -20,7 +20,6 @@ from .views import CheckMatchTodayAPIView
 from.views import MatchUpdateWithHistoryAPIView
 from rest_framework.routers import DefaultRouter
 from .views import MatchHistoryListAPIView
-from .views_import import ImportMatchScheduleView # <-- Import View mới tạo
 from .views import (
     StadiumListAPIView,
     LeagueListAPIView,
@@ -71,6 +70,5 @@ urlpatterns = [
     # xóa section
     path('stadiums/<int:stadium_id>/sections/<int:section_id>/delete/', SectionDeleteAPIView.as_view(), name='section-delete'),
     path('', include(router.urls)),
-    path('import-schedule/', ImportMatchScheduleView.as_view(), name='import-schedule'),
 ]
 

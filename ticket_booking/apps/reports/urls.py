@@ -1,11 +1,9 @@
 from django.urls import path, include
 from .views import *
 from rest_framework.routers import DefaultRouter
-from django.urls import path
-from .views import PredictDemandView
+
 router = DefaultRouter()
 router.register(r'orders', OrderViewSet, basename='orders')
-router.register(r'reports', OrderViewSet, basename='report')
 
 urlpatterns = [
     path('revenue/', RevenueReportAPIView.as_view(), name='revenue-report'),
@@ -19,7 +17,4 @@ urlpatterns = [
 
     path('payments/', PaymentListAPIView.as_view(), name='payments-list'),
     path('payments/<int:payment_id>/', PaymentDetailAPIView.as_view(), name='payments-detail'),
-    # ML
-    path('predict-demand/', PredictDemandView.as_view(), name='predict-demand'),
-   
 ]

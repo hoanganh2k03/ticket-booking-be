@@ -119,7 +119,7 @@ class Team(models.Model):
     logo = models.ImageField(upload_to='team_logos/', null=True, blank=True, default='team_logos/default.webp')
     head_coach = models.CharField(max_length=255)
     description = models.TextField()
-    rating = models.IntegerField(default=5, verbose_name="Chỉ số sức hút")
+
     class Meta:
         db_table = 'team'
         # Ràng buộc mới: Tên đội là duy nhất TRONG MÔN THỂ THAO đó
@@ -192,14 +192,12 @@ class League(models.Model):
 class Match(models.Model):
     match_id = models.AutoField(primary_key=True)
     match_time = models.DateTimeField()
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField()
     stadium = models.ForeignKey(Stadium, on_delete=models.CASCADE)
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     round = models.CharField(max_length=100) # Giữ CharField là linh hoạt nhất
     team_1 = models.ForeignKey(Team, related_name='home_matches', on_delete=models.CASCADE)
     team_2 = models.ForeignKey(Team, related_name='away_matches', on_delete=models.CASCADE)
-    is_hot_match = models.BooleanField(default=False, verbose_name="Trận cầu tâm điểm")
-    importance = models.IntegerField(default=3, verbose_name="Mức độ quan trọng (1-5)")
     created_at = models.DateTimeField(auto_now_add=True)
 
     # Thêm logic validation để đảm bảo tính toàn vẹn dữ liệu
@@ -230,72 +228,7 @@ class Match(models.Model):
     
     def __str__(self):
         return f'{self.team_1} vs {self.team_2}'
-    # Mặc định là trận thường, không cần nhập
-    is_hot_match = models.BooleanField(default=False, verbose_name="Trận cầu tâm điểm")
-    importance = models.IntegerField(default=3, verbose_name="Mức độ quan trọng (1-5)")
 
-    # --- PHẦN QUAN TRỌNG: TỰ ĐỘNG TÍNH TOÁN ---
-    def save(self, *args, **kwargs):
-        # Chỉ tự động tính nếu Admin chưa set thủ công (hoặc khi tạo mới)
-        if self.pk is None or (self.importance == 3 and not self.is_hot_match):
-            self.calculate_hotness()
-        super().save(*args, **kwargs)
-
-    def calculate_hotness(self):
-        if not self.team_1 or not self.team_2:
-            return
-
-        r1 = self.team_1.rating
-        r2 = self.team_2.rating
-        
-        total = r1 + r2
-        diff = abs(r1 - r2)
-
-        # --- LEVEL 5: SUPER HOT (ĐẠI CHIẾN) ---
-        # Hai đội đều mạnh (Tổng >= 17) HOẶC Derby
-        # VD: Man City (10) + Liverpool (9) = 19
-        if total >= 17:
-            self.is_hot_match = True
-            self.importance = 5
-            return
-
-        # --- LEVEL 4: HOT (TRẬN CẦU ĐINH) ---
-        # Hai đội khá gặp nhau (Tổng >= 14)
-        # VD: Tottenham (8) + West Ham (6) = 14
-        if total >= 15:
-            self.is_hot_match = False
-            self.importance = 4
-            return
-
-        # --- LEVEL 2: ONE-SIDED (CHÊNH LỆCH / ĐÁ TẬP) ---
-        # Một đội quá mạnh đá với đội quá yếu -> Kém hấp dẫn về mặt cạnh tranh
-        # VD: Man City (10) vs Sheffield (3) -> Diff = 7
-        if diff >= 5:
-            self.is_hot_match = False
-            
-            # --- LOGIC MỚI: BẢO KÊ NGÔI SAO ---
-            # Nếu có một đội Rating 9 hoặc 10 (Man City, Liverpool...)
-            # Thì khán giả vẫn đến xem đông -> Importance không được quá thấp
-            if max(r1, r2) >= 9:
-                self.importance = 4 # Vẫn khá quan trọng (Xem sao thi đấu)
-            elif max(r1, r2) >= 7:
-                self.importance = 3 # Trung bình
-            else:
-                self.importance = 2 # Hai đội yếu/trung bình đá nhau -> Mới thực sự là ế
-            return
-
-        # --- LEVEL 1: LOW TIER (CHUNG KẾT NGƯỢC) ---
-        # Hai đội yếu gặp nhau -> Ít người quan tâm
-        # VD: Burnley (3) + Luton (3) = 6
-        if total <= 8:
-            self.is_hot_match = False
-            self.importance = 1 # Giá vé phải rẻ nhất
-            return
-
-        # --- LEVEL 3: AVERAGE (CÒN LẠI) ---
-        # Các trận trung bình giữa bảng
-        self.is_hot_match = False
-        self.importance = 3
 
 # --- KHÔNG ĐỔI: Model MatchHistory (Đã đủ linh hoạt) ---
 class MatchHistory(models.Model):

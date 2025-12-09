@@ -47,9 +47,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'vuquochoanganh2k3@gmail.com'
-EMAIL_HOST_PASSWORD = 'tgai qoii itcl oroc'
-#GROQ_API_KEY='abc'
+EMAIL_HOST_USER = 'hattoriheiji48691810@gmail.com'
+EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
+GROQ_API_KEY='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'
 # calery
 from celery.schedules import crontab  # Thêm import ở đây
 
@@ -65,7 +65,7 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute='*/1'),  # Cập nhật mỗi 5 phút
     },
 }
-FRONTEND_URL = 'http://127.0.0.1:5500/'
+FRONTEND_URL = 'http://localhost:5500'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -215,7 +215,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 100,
+    'PAGE_SIZE': 2000,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 

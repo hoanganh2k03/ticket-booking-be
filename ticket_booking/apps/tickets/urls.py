@@ -8,7 +8,8 @@ from .views import create_section_price
 from .views import MatchDetailView
 from . import views
 from .views import CompletedTicketMatchesAPIView,MatchSectionPricesAPIView
-
+from django.urls import path
+from .views import SuggestOptimalPriceView
 router = DefaultRouter()
 router.register(r'sections', SectionViewSet)
 router.register(r'seats', SeatViewSet)
@@ -25,4 +26,5 @@ urlpatterns = [
 
     path('completed-matches/', CompletedTicketMatchesAPIView.as_view(), name='completed-ticket-matches'),
     path('match/<int:match_id>/section-prices/', MatchSectionPricesAPIView.as_view(), name='match-section-prices'),
+    path('suggest-price/', SuggestOptimalPriceView.as_view(), name='suggest-price'),
 ]

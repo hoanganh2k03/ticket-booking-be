@@ -459,64 +459,66 @@ class RevenueReportAPIView(APIView):
         }
         serializer = RevenueReportSerializer(data)
         return Response({'status':'success', **serializer.data}, status=status.HTTP_200_OK)
+import logging
+logger = logging.getLogger(__name__)
 
 class TicketStatusReportAPIView(APIView):
     """
     Báo cáo tình trạng vé:
-      • by_match     – sức chứa, vé bán & còn lại, tỷ lệ lấp đầy theo trận
-      • by_section   – sức chứa & còn lại theo khu vực
-      • daily_sales  – số vé bán theo ngày (dựa trên Order.created_at)
-    Hỗ trợ param:
-      • league_id    – chỉ lấy data của giải đó
-      • match_id     – chỉ lấy data của trận đó
-      • start_date   – lọc vé bán từ ngày (YYYY-MM-DD)
-      • end_date     – lọc vé bán đến ngày (YYYY-MM-DD)
+      • by_match    – sức chứa, vé bán & còn lại, tỷ lệ lấp đầy theo trận
+      • by_section  – sức chứa & còn lại theo khu vực
+      • daily_sales – số vé bán theo ngày
     """
 
     def get(self, request, *args, **kwargs):
-        league_id       = request.query_params.get('league_id')
-        match_id        = request.query_params.get('match_id')
-        start_date_str  = request.query_params.get('start_date')
-        end_date_str    = request.query_params.get('end_date')
+        league_id      = request.query_params.get('league_id')
+        match_id       = request.query_params.get('match_id')
+        start_date_str = request.query_params.get('start_date')
+        end_date_str   = request.query_params.get('end_date')
 
-        # Parse start/end dates
-        start_dt = end_dt = None
-        sd = ed = None
+        # 1. Xử lý ngày tháng (Chuẩn hóa)
+        start_date_obj = None
+        end_date_obj = None
+        
+        # Biến dùng để lọc thời gian trận đấu (datetime)
+        filter_match_start = None
+        filter_match_end = None
+
         if start_date_str and end_date_str:
             try:
+                # Parse string sang date
                 sd = datetime.strptime(start_date_str, "%Y-%m-%d").date()
                 ed = datetime.strptime(end_date_str,   "%Y-%m-%d").date()
+                
+                start_date_obj = sd
+                end_date_obj = ed
+
+                # Tạo datetime aware để lọc chính xác
                 tz = timezone.get_current_timezone()
-                start_dt = timezone.make_aware(datetime.combine(sd, time.min), tz)
-                end_dt   = timezone.make_aware(datetime.combine(ed, time.max), tz)
+                filter_match_start = timezone.make_aware(datetime.combine(sd, time.min), tz)
+                filter_match_end   = timezone.make_aware(datetime.combine(ed, time.max), tz)
             except ValueError:
                 return Response(
-                    {"status": "error", "message": "start_date và end_date phải theo định dạng YYYY-MM-DD"},
+                    {"status": "error", "message": "Ngày phải định dạng YYYY-MM-DD"},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-        # ─── 1) BY-MATCH & BY-SECTION: từ SectionPrice ──────────────────────────
+        # ─── 2) BY-MATCH & BY-SECTION: từ SectionPrice ──────────────────────────
+        # Logic: Lấy tất cả SectionPrice, gom nhóm theo Trận để tính tổng
         sp_qs = SectionPrice.objects.select_related(
             'match__team_1', 'match__team_2', 'section', 'match__league'
         )
 
-        # Lọc theo league trước
         if league_id:
             sp_qs = sp_qs.filter(match__league_id=league_id)
 
-        # Tiếp theo lọc theo match
         if match_id:
             sp_qs = sp_qs.filter(match_id=match_id)
 
-        # Lọc theo khoảng thời gian trận đấu
-        if start_dt and end_dt:
-            # sp_qs = sp_qs.filter(
-            #     match__match_time__gte=start_dt,
-            #     match__match_time__lte=end_dt
-            # )
+        # FIX LOGIC: Lọc trận đấu theo NGÀY ĐÁ (match_time), không phải ngày mua vé
+        if filter_match_start and filter_match_end:
             sp_qs = sp_qs.filter(
-                order_details__order__created_at__gte=start_dt,
-                order_details__order__created_at__lte=end_dt
+                match__match_time__range=(filter_match_start, filter_match_end)
             )
 
         # Tổng hợp theo trận
@@ -532,18 +534,24 @@ class TicketStatusReportAPIView(APIView):
             )
             .annotate(
                 total_capacity    = Sum('section__capacity'),
-                available_tickets = Sum('available_seats'),
+                available_tickets = Sum('available_seats'), # Số ghế còn trống
             )
             .annotate(
+                # Vé đã bán = Tổng sức chứa - Số ghế còn trống
                 sold_tickets = F('total_capacity') - F('available_tickets'),
+                
+                # Tỷ lệ lấp đầy
                 fill_rate    = ExpressionWrapper(
-                    F('sold_tickets') * 100.0 / F('total_capacity'),
+                    (F('total_capacity') - F('available_tickets')) * 100.0 / F('total_capacity'),
                     output_field=DecimalField(max_digits=5, decimal_places=2)
                 )
             )
             .order_by('match_date')
         )
 
+        # Tổng hợp theo khu vực (Chỉ có ý nghĩa khi chọn 1 trận cụ thể)
+        # Nếu không chọn match_id, nó sẽ cộng dồn capacity của các trận (hơi vô nghĩa)
+        # Nên ta chỉ trả về khi có match_id hoặc chấp nhận cộng dồn
         # Tổng hợp theo khu vực
         sections = (
             sp_qs.values(
@@ -552,65 +560,69 @@ class TicketStatusReportAPIView(APIView):
                 capacity     = F('section__capacity'),
             )
             .annotate(
-                available_seats = Sum('available_seats'),
+                # --- SỬA Ở ĐÂY ---
+                # Code cũ: current_available = Sum('available_seats'),
+                # Code mới: Đổi tên thành 'available_seats' cho khớp với Frontend
+                available_seats = Sum('available_seats'), 
+            )
+            .annotate(
+                # Cập nhật lại công thức tính vé đã bán theo tên biến mới
+                sold = F('capacity') - F('available_seats')
             )
             .order_by('section_name')
         )
 
-        # ─── 2) DAILY SALES: từ order_details → Order.created_at ────────────────
+        # ─── 3) DAILY SALES: từ OrderDetail (Vé thực bán) ────────────────
+        # Chỉ lấy vé đã thanh toán thành công
         daily_qs = OrderDetail.objects.filter(
-            order__payment__payment_status="success"
+            order__payment__payment_status="SUCCESS" # Chú ý check đúng string trong DB (success/SUCCESS)
+            # order__order_status="SUCCESS"
         )
+        
         if league_id:
             daily_qs = daily_qs.filter(pricing__match__league_id=league_id)
         if match_id:
             daily_qs = daily_qs.filter(pricing__match_id=match_id)
 
+        # FIX LOGIC: Dùng TruncDate để group theo ngày (DB Agnostic - không sợ lỗi timezone MySQL)
         daily = (
             daily_qs
-            .annotate(
-                converted=Func(
-                    F('order__created_at'),
-                    Value('+00:00'),
-                    Value('+07:00'),
-                    function='CONVERT_TZ',
-                    output_field=DateTimeField()
-                )
-            )
-            .annotate(
-                day=Func(
-                    F('converted'),
-                    function='DATE',
-                    output_field=DateField()
-                )
-            )
-            .filter(day__gte=start_dt, day__lte=end_dt)
+            .annotate(day=TruncDate('order__created_at')) # Cắt datetime thành date
             .values('day')
             .annotate(sold=Count('detail_id'))
             .order_by('day')
         )
 
-        # ─── 3) Build payload & serialize ───────────────────────────────────
+        # FIX CRASH: Chỉ lọc ngày nếu người dùng có gửi ngày lên
+        if start_date_obj and end_date_obj:
+            daily = daily.filter(day__range=(start_date_obj, end_date_obj))
 
+        # ─── 4) Build payload & serialize ───────────────────────────────────
         list_matches = list(matches)
         list_sections = list(sections)
+        list_daily = list(daily)
 
-        # Xuất theo format nếu có
+        # Export (Nếu có code export)
         fmt = request.query_params.get('export_format')
-        print(fmt)
         if fmt == 'pdf':
             return export_ticket_status_pdf(request, list_matches, list_sections)
         if fmt == 'xlsx':
             return export_ticket_status_xlsx(request, list_matches, list_sections)
 
-        # Ngược lại trả JSON
-        payload           = {'matches': list_matches, 'sections': list_sections}
-        report_serializer = TicketStatusReportSerializer(payload)
-        daily_serializer  = DailyTicketSalesSerializer(daily, many=True)
+        # Serializer thủ công (hoặc dùng serializer class nếu bạn có)
         return Response({
             "status":      "success",
-            "payload":     report_serializer.data,
-            "daily_sales": daily_serializer.data,
+            "filter_info": {
+                "league_id": league_id,
+                "match_id": match_id,
+                "start_date": start_date_str,
+                "end_date": end_date_str
+            },
+            "payload": {
+                "matches": list_matches,
+                "sections": list_sections
+            },
+            "daily_sales": list_daily,
         }, status=status.HTTP_200_OK)
 
 class PromotionUsageReportAPIView(APIView):
@@ -954,3 +966,87 @@ class PaymentDetailAPIView(generics.RetrieveAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     lookup_field = 'payment_id'
+# Hệ thống dự báo
+import os
+import joblib
+import numpy as np
+from django.conf import settings
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from datetime import datetime
+
+class PredictDemandView(APIView):
+    """
+    API Dự báo nhu cầu vé sử dụng Machine Learning.
+    Endpoint: /api/reports/predict-demand/
+    Method: POST
+    Body: { "date": "2025-11-20 19:00", "price": 200000 }
+    """
+    def post(self, request):
+        try:
+            # 1. Lấy dữ liệu đầu vào
+            date_str = request.data.get('date')
+            price = request.data.get('price')
+
+            if not date_str or price is None:
+                return Response(
+                    {"error": "Vui lòng gửi đủ 'date' (YYYY-MM-DD HH:MM) và 'price'"}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # 2. Xử lý dữ liệu (Feature Engineering) giống hệt lúc Train
+            try:
+                dt = datetime.strptime(date_str, '%Y-%m-%d %H:%M')
+            except ValueError:
+                 return Response({"error": "Định dạng ngày sai. Hãy dùng YYYY-MM-DD HH:MM"}, status=status.HTTP_400_BAD_REQUEST)
+
+            day_of_week = dt.weekday() # Thứ 2=0 ... CN=6
+            hour = dt.hour
+            price = float(price)
+
+            # 3. Load Model (Đảm bảo bạn đã chạy lệnh train_model trước đó)
+            model_path = os.path.join(settings.BASE_DIR, 'ml_models', 'ticket_demand_model.pkl')
+            
+            if not os.path.exists(model_path):
+                 return Response(
+                     {"error": "Chưa tìm thấy Model. Vui lòng chạy lệnh 'python manage.py train_model' trước."}, 
+                     status=status.HTTP_503_SERVICE_UNAVAILABLE
+                 )
+            
+            # Load model (có thể cache model này để tối ưu hiệu năng, nhưng demo thì load trực tiếp cũng được)
+            model = joblib.load(model_path)
+
+            # 4. Dự đoán
+            # Input phải là mảng 2 chiều [[feature1, feature2, feature3]]
+            features = np.array([[day_of_week, hour, price]])
+            predicted_sold = model.predict(features)[0] # Lấy kết quả đầu tiên
+
+            # Xử lý kết quả (không lấy số âm, làm tròn số nguyên)
+            predicted_sold = int(max(0, round(predicted_sold)))
+
+            # 5. Đưa ra gợi ý chiến lược (Business Insight) - Phần này ăn điểm Đồ Án
+            suggestion = ""
+            if predicted_sold >= 80: # Trước đây là 150 (quá cao), giờ giảm xuống 80
+                suggestion = "Nhu cầu CAO. Có thể TĂNG giá vé để tối ưu doanh thu."
+            elif predicted_sold <= 40: # Trước đây là 30
+                suggestion = "Nhu cầu THẤP. Nên chạy chương trình KHUYẾN MÃI."
+            else:
+                suggestion = "Nhu cầu ỔN ĐỊNH."
+
+            return Response({
+                "input": {
+                    "date": date_str,
+                    "day_of_week": "Cuối tuần" if day_of_week >= 5 else "Trong tuần",
+                    "hour": f"{hour} giờ",
+                    "price": f"{price:,.0f} VNĐ"
+                },
+                "prediction": {
+                    "estimated_ticket_sold": predicted_sold,
+                    "revenue_forecast": f"{predicted_sold * price:,.0f} VNĐ",
+                    "suggestion": suggestion
+                }
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": f"Lỗi Server: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -12607,4 +12607,7 @@ Not Found: /media/employee_images/ChatGPT_Image_23_48_21_15_thg_6_2025.png
 [35;1mHTTP GET /api/tickets/completed-matches/ 500 [0.62, 127.0.0.1:61961][0m
 [35;1mHTTP GET /api/tickets/section-prices/ 500 [0.79, 127.0.0.1:49976][0m
 Watching for file changes with StatReloader
+<<<<<<< HEAD
+>>>>>>> parent of ebf9bf3 (1)
+=======
 >>>>>>> parent of ebf9bf3 (1)

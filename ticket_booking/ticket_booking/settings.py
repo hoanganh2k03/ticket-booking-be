@@ -47,11 +47,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-<<<<<<< HEAD
+
 EMAIL_HOST_USER = 'vuquochoanganh2k3@gmail.com'
 EMAIL_HOST_PASSWORD = 'tgai qoii itcl oroc'
 GROQ_API_KEY='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'
-GROQ_API_KEY='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'
+
 # calery
 from celery.schedules import crontab  # Thêm import ở đây
 

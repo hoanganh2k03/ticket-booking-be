@@ -210,7 +210,6 @@ class OrderSerializer(serializers.ModelSerializer):
 
                     # 6. KIỂM TRA GHẾ THỰC TẾ (Giữ nguyên logic của bạn)
                     available_seats = get_available_seats_for_section(pricing.section, pricing.match)
-                    
                     if available_seats.count() < len(order_detail_group):
                         raise raise_custom_validation_error(f"Lỗi hệ thống: Số ghế thực tế ({available_seats.count()}) không khớp bộ đếm ({pricing.available_seats}).")
 

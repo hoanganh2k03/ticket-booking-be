@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 from apps.accounts.models import Customer
 from .models import ChatHistory
 from .serializers import ChatHistorySerializer
@@ -58,3 +59,60 @@ class ChatbotAPIView(APIView):
             )
 
         return Response({"reply": answer}, status=status.HTTP_200_OK)
+
+
+class ChatHistoryAPIView(APIView):
+    """
+    API để lấy lịch sử chat của một phiên hội thoại
+    GET: /api/chat/history/?session_id=<session_id>&customer_id=<customer_id>
+    """
+
+    def get(self, request):
+        session_id = request.query_params.get("session_id", "").strip()
+        customer_id = request.query_params.get("customer_id")
+
+        # Nếu không truyền session_id, cố gắng lấy phiên gần nhất của customer
+        if not session_id:
+            if not customer_id:
+                return Response({"messages": [], "session_id": None}, status=status.HTTP_200_OK)
+
+            try:
+                customer = Customer.objects.get(id=customer_id)
+            except Customer.DoesNotExist:
+                return Response({"messages": [], "session_id": None}, status=status.HTTP_200_OK)
+
+            latest_session = (
+                ChatHistory.objects.filter(customer=customer)
+                .exclude(session_id__isnull=True)
+                .exclude(session_id__exact="")
+                .order_by("-created_at")
+                .values_list("session_id", flat=True)
+                .first()
+            )
+
+            if not latest_session:
+                return Response({"messages": [], "session_id": None}, status=status.HTTP_200_OK)
+
+            # dùng session_id tìm chi tiết
+            session_id = latest_session
+
+        # Kiểm tra customer_id nếu có
+        customer = None
+        if customer_id:
+            try:
+                customer = Customer.objects.get(id=customer_id)
+            except Customer.DoesNotExist:
+                customer = None
+
+        # Lấy lịch sử chat của phiên này
+        query = Q(session_id=session_id)
+        if customer:
+            query &= Q(customer=customer)
+
+        chat_history = ChatHistory.objects.filter(query).order_by('created_at')
+
+        if not chat_history.exists():
+            return Response({"messages": [], "session_id": session_id}, status=status.HTTP_200_OK)
+
+        serializer = ChatHistorySerializer(chat_history, many=True)
+        return Response({"messages": serializer.data, "session_id": session_id}, status=status.HTTP_200_OK)

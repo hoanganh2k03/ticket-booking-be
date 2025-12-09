@@ -35,7 +35,6 @@ class SectionPriceViewSet(viewsets.ModelViewSet):
     queryset = SectionPrice.objects.all()
     serializer_class = SectionPriceSerializer
     permission_classes = [AllowAny]
-
     @action(detail=True, methods=['patch'], url_path='stop_selling')
     def stop_selling(self, request, pk=None):
         section_price = self.get_object()
@@ -352,3 +351,171 @@ class MatchSectionPricesAPIView(APIView):
 
 #         except SectionPrice.DoesNotExist:
 #             return Response({"error": "Không tìm thấy thông tin giá vé."}, status=status.HTTP_404_NOT_FOUND)
+# AI GIÁ
+import joblib
+import os
+import numpy as np
+from django.utils import timezone
+from django.conf import settings
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+# Import Models
+from apps.events.models import Match
+
+class SuggestOptimalPriceView(APIView):
+    """
+    API Đề xuất giá vé tối ưu (AI Dynamic Pricing).
+    Logic: Cân bằng giữa Doanh thu (70%) và Tỷ lệ lấp đầy (30%).
+    """
+    def post(self, request):
+        try:
+            # 1. Kiểm tra Input
+            match_id = request.data.get('match_id')
+            if not match_id:
+                return Response({"error": "Vui lòng cung cấp ID trận đấu (match_id)"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # 2. Lấy thông tin trận đấu
+            try:
+                match = Match.objects.select_related('stadium', 'team_1', 'team_2').get(pk=match_id)
+            except Match.DoesNotExist:
+                return Response({"error": "Trận đấu không tồn tại"}, status=status.HTTP_404_NOT_FOUND)
+
+            if match.match_time < timezone.now():
+                return Response({"error": "Trận đấu đã diễn ra, không thể gợi ý giá."}, status=status.HTTP_400_BAD_REQUEST)
+
+            # 3. Chuẩn bị dữ liệu cho AI
+            day_of_week = match.match_time.weekday()
+            hour = match.match_time.hour
+            is_hot_match = 1 if match.is_hot_match else 0
+            importance = match.importance
+
+            # Lấy sức chứa sân
+            real_capacity = 0
+            if hasattr(match.stadium, 'sections'):
+                real_capacity = match.stadium.sections.aggregate(Sum('capacity'))['capacity__sum'] or 0
+            MAX_CAPACITY = real_capacity if real_capacity > 0 else (match.stadium.capacity or 500)
+
+            # 4. Load Model AI
+            model_path = os.path.join(settings.BASE_DIR, 'ml_models', 'price_optimization_model.pkl')
+            if not os.path.exists(model_path):
+                return Response({"error": "Chưa train model AI."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            
+            model = joblib.load(model_path)
+
+            # 5. THIẾT LẬP KHOẢNG QUÉT GIÁ (SCAN RANGE)
+            # Chặn trên để tránh AI thử giá quá ảo (Business Rule)
+            min_price = 50000
+            
+            if is_hot_match or importance == 5:
+                max_price = 1500000 # Trận Hot cho phép thử đến 1.5tr
+            elif importance == 4:
+                max_price = 700000
+            elif importance == 3:
+                max_price = 500000
+            else:
+                max_price = 300000 # Trận yếu chỉ cho max 300k
+
+            # Bước nhảy: 20k (để biểu đồ mịn hơn)
+            price_range = range(min_price, max_price + 20000, 20000) 
+
+            # 6. VÒNG LẶP GIẢ LẬP (SIMULATION)
+            simulations = []
+            max_revenue_found = 0 # Để chuẩn hóa điểm số
+
+            for p in price_range:
+                # Input AI
+                features = np.array([[day_of_week, hour, is_hot_match, importance, p]])
+                
+                # Dự báo
+                pred_qty = int(model.predict(features)[0])
+                pred_qty = max(0, min(pred_qty, MAX_CAPACITY)) # Giới hạn bởi sức chứa
+                
+                revenue = pred_qty * p
+                fill_rate = (pred_qty / MAX_CAPACITY) * 100
+
+                if revenue > max_revenue_found:
+                    max_revenue_found = revenue
+
+                simulations.append({
+                    "price": p,
+                    "revenue": revenue,
+                    "sold": pred_qty,
+                    "fill_rate": round(fill_rate, 1)
+                })
+
+            # 7. CHẤM ĐIỂM TÌM PHƯƠNG ÁN TỐI ƯU (SCORING)
+            best_option = None
+            best_score = -9999
+            
+            chart_data = [] # Dữ liệu trả về cho biểu đồ
+
+            for sim in simulations:
+                # Lọc dữ liệu biểu đồ: Chỉ lấy các điểm có thay đổi hoặc cách nhau 50k
+                # Hoặc lấy hết nếu muốn chi tiết (ở đây lấy hết vì range bước nhảy 20k là vừa đủ)
+                chart_data.append(sim)
+
+                # Bỏ qua những mức giá bán được 0 vé (Vô nghĩa)
+                if sim['sold'] <= 0: continue
+
+                # --- CÔNG THỨC CÂN BẰNG ---
+                # Score = (Doanh thu / Max_Doanh thu * 70) + (Tỷ lệ lấp đầy * 0.3)
+                # Mục đích: Ưu tiên tiền, nhưng nếu tiền ngang nhau thì chọn cái nào đông khách hơn.
+                
+                rev_score = (sim['revenue'] / max_revenue_found) * 100 if max_revenue_found > 0 else 0
+                fill_score = sim['fill_rate'] # 0-100
+
+                final_score = (rev_score * 0.7) + (fill_score * 0.3)
+
+                # Phạt nặng nếu lấp đầy quá thấp (< 40%) -> Trừ 30 điểm
+                # Để tránh việc AI chọn giá cắt cổ bán cho 10 người
+                if sim['fill_rate'] < 40:
+                    final_score -= 30
+
+                sim['score'] = round(final_score, 1)
+
+                if final_score > best_score:
+                    best_score = final_score
+                    best_option = sim
+
+            # Fallback nếu không tìm được (vd toàn bộ dự báo = 0)
+            if not best_option:
+                best_option = simulations[0]
+
+            # 8. TRẢ VỀ KẾT QUẢ
+            return Response({
+                "status": "success",
+                "match_info": {
+                    "match_id": match.match_id,
+                    "name": f"{match.team_1.team_name} vs {match.team_2.team_name}",
+                    "time": match.match_time,
+                    "is_hot": match.is_hot_match,
+                    "importance": match.importance,
+                    "stadium_capacity": MAX_CAPACITY
+                },
+                "recommendation": {
+                    "optimal_avg_price": best_option['price'],
+                    "estimated_revenue": best_option['revenue'],
+                    "estimated_sold": best_option['sold'],
+                    "fill_rate": best_option['fill_rate'],
+                    "reason": self.generate_reason(best_option, match.is_hot_match)
+                },
+                "chart_data": chart_data # Array chứa {price, revenue, sold, fill_rate}
+            })
+
+        except Exception as e:
+            return Response({"error": f"Lỗi hệ thống: {str(e)}"}, status=500)
+
+    def generate_reason(self, option, is_hot):
+        rate = option['fill_rate']
+        
+        # Trả về mã code thay vì văn bản dài
+        if rate >= 80:
+            return "OPTIMAL_FILL"      # Lấp đầy tối đa
+        elif rate >= 60:
+            return "BALANCED"          # Cân bằng
+        elif is_hot:
+            return "PROFIT_MAX"        # Tối ưu lợi nhuận (cho trận Hot)
+        else:
+            return "SAFE_OPTION"       # Phương án an toàn (cho trận Ế)

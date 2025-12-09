@@ -56,6 +56,7 @@ EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
 GROQ_API_KEY='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'
 <<<<<<< HEAD
 >>>>>>> parent of ebf9bf3 (1)
+=======
 # calery
 from celery.schedules import crontab  # Thêm import ở đây
 

@@ -77,3 +77,4 @@ venv/
 celerybeat-schedule-wal
 .env
 sessions.json
+env_310/

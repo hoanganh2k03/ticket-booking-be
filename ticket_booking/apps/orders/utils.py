@@ -5,7 +5,7 @@ from datetime import timedelta
 from .models import Payment, OrderDetail, Order
 from apps.tickets.models import Seat, SectionPrice
 from apps.promotions.models import Promotion
-
+from rest_framework.exceptions import ValidationError # <--- THÊM IMPORT NÀY
 
 
 def get_available_seats_for_section(section, match):
@@ -76,3 +76,27 @@ def check_payment_expiration():
 
         # Đảm bảo các thay đổi đã được lưu vào database
         print(f"Order {order.order_id} has been cancelled and all associated seats have been freed.")
+
+def extract_error_message(e):
+    """
+    Trích xuất thông báo lỗi từ đối tượng ValidationError.
+    """
+    if hasattr(e, 'detail'):
+        if isinstance(e.detail, dict):
+            # Nếu lỗi là một dictionary, lấy tất cả các thông báo lỗi từ đó
+            return e.detail.get('message', "Không có thông báo lỗi chi tiết.")
+        else:
+            # Nếu lỗi là một chuỗi hoặc một danh sách
+            return str(e.detail)
+    return str(e)
+
+
+def raise_custom_validation_error(message):
+    """
+    Tạo lỗi validation tùy chỉnh với mã lỗi và thông điệp.
+    """
+    error_detail = {
+        "status": "error",
+        "message": message
+    }
+    raise ValidationError(error_detail)

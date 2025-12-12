@@ -73,4 +73,5 @@ celerybeat-schedule.*
 # Environment
 env/
 venv/
-.env
+.envcelerybeat-schedule-shm
+celerybeat-schedule-wal

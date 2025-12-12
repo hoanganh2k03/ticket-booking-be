@@ -75,3 +75,5 @@ env/
 venv/
 .envcelerybeat-schedule-shm
 celerybeat-schedule-wal
+.env
+sessions.json

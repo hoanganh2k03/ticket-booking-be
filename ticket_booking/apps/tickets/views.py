@@ -465,9 +465,7 @@ class SuggestOptimalPriceView(APIView):
                 
                 rev_score = (sim['revenue'] / max_revenue_found) * 100 if max_revenue_found > 0 else 0
                 fill_score = sim['fill_rate'] # 0-100
-
                 final_score = (rev_score * 0.7) + (fill_score * 0.3)
-
                 # Phạt nặng nếu lấp đầy quá thấp (< 40%) -> Trừ 30 điểm
                 # Để tránh việc AI chọn giá cắt cổ bán cho 10 người
                 if sim['fill_rate'] < 40:

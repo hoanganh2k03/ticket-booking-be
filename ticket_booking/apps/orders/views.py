@@ -93,37 +93,56 @@ class OrderCreateAPIView(generics.CreateAPIView):
     serializer_class = OrderSerializer
 
     def create(self, request, *args, **kwargs):
-        # Parse the order data
-        serializer = self.get_serializer(data=request.data)
-        
-        # Log request data để debug
         print("=" * 50)
-        print("Request data received:", request.data)
+        print("Raw request data:", request.data)
         print("=" * 50)
-        
-        if serializer.is_valid():
-            # Create the order
-            order = serializer.save()
 
-            # Return the success response with message and status
+        try:
+            data = request.data.copy()
+            
+            # ⭐ Tính total_amount từ order_details nếu client không gửi chính xác
+            if isinstance(data.get('order_details'), list):
+                total_amount = 0
+                for od in data['order_details']:
+                    try:
+                        price = float(od.get('price', 0))
+                        total_amount += price
+                    except (ValueError, TypeError):
+                        pass
+                data['total_amount'] = round(total_amount, 2)
+                
+                # Pop các trường không cần
+                for od in data['order_details']:
+                    od.pop('price', None)
+                    od.pop('qr_code', None)
+                    od.pop('seat_id', None)
+
+            print("Sanitized payload:", data)
+
+            serializer = self.get_serializer(data=data)
+            if serializer.is_valid():
+                order = serializer.save()
+                return Response({
+                    "status": "success",
+                    "message": "Đơn hàng được đặt thành công.",
+                    "data": OrderSerializer(order).data
+                }, status=status.HTTP_201_CREATED)
+
+            print("Errors:", serializer.errors)
             return Response({
-                "status": "success",
-                "message": "Đơn hàng được đặt thành công.",
-                "data": serializer.data
-            }, status=status.HTTP_201_CREATED)
+                "status": "error",
+                "message": "Lỗi khi thực hiện mua vé.",
+                "errors": serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
 
-        # Log lỗi chi tiết
-        print("=" * 50)
-        print("Serializer errors:", serializer.errors)
-        print("=" * 50)
-
-        # Return the error response with message and status
-        return Response({
-            "status": "error",
-            "message": "Lỗi khi thực hiện mua vé.",
-            "errors": serializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)
-
+        except Exception as e:
+            import traceback
+            print("EXCEPTION:", traceback.format_exc())
+            return Response({
+                "status": "error",
+                "message": f"Lỗi server: {str(e)}",
+                "errors": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 redis_client = redis.StrictRedis.from_url(settings.REDIS_URL, decode_responses=True)
 
 class PaymentCreateView(APIView):

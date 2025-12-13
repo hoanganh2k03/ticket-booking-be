@@ -5,6 +5,7 @@ from django.db.models import Q, Subquery
 from rest_framework.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import F
+
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from apps.events.models import Match, Team, League, Stadium
@@ -12,7 +13,10 @@ from apps.tickets.models import SectionPrice, Section, Seat
 from apps.promotions.models import Promotion, PromotionDetail
 from .models import Order, OrderDetail, Payment
 from datetime import datetime
-
+from django.db import transaction
+from django.db.models import F
+import random
+from .utils import get_available_seats_for_section, extract_error_message, raise_custom_validation_error
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
@@ -77,7 +81,8 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         model = OrderDetail
         fields = ['pricing', 'seat', 'price', 'promotion', 'qr_code']
 
-
+        # Thêm dòng này để ignore dữ liệu rác từ FE
+        read_only_fields = ['detail_id', 'price', 'qr_code']
 
 def get_available_seats_for_section(section, match):
     # Lấy tất cả ghế trong section có trạng thái available (status = 0)
@@ -108,17 +113,26 @@ def get_available_seats_for_section(section, match):
 
 
 def extract_error_message(e):
-        """
-        Trích xuất thông báo lỗi từ đối tượng ValidationError.
-        """
+    """
+    Trích xuất thông báo lỗi từ nhiều loại Exception khác nhau (ValidationError, IntegrityError, v.v.)
+    """
+    # 1. Nếu là ValidationError của DRF (có thuộc tính .detail)
+    if hasattr(e, 'detail'):
         if isinstance(e.detail, dict):
-            print(e.detail)
-            # Nếu lỗi là một dictionary, lấy tất cả các thông báo lỗi từ đó
-            error_message = e.detail.get('message', "Không có thông báo lỗi chi tiết.")
+            # Nếu detail là dict, cố gắng lấy message hoặc trả về chuỗi của dict
+            # Đôi khi lỗi nằm trong key cụ thể, ví dụ {'non_field_errors': ['...']}
+            for key, value in e.detail.items():
+                if isinstance(value, list):
+                    return f"{key}: {value[0]}"
+                return str(value)
+            return str(e.detail)
+        elif isinstance(e.detail, list):
+            return str(e.detail[0])
         else:
-            # Nếu lỗi là một chuỗi hoặc một danh sách, lấy lỗi trực tiếp
-            error_message = str(e.detail)
-        return error_message
+            return str(e.detail)
+
+    # 2. Nếu là lỗi thông thường hoặc lỗi Database (không có .detail)
+    return str(e)
 
 
 def raise_custom_validation_error(message):
@@ -134,6 +148,11 @@ def raise_custom_validation_error(message):
         raise ValidationError(error_detail)
 
 
+# ==========================================
+
+# ==========================================
+# 3. CLASS ORDER SERIALIZER (HOÀN CHỈNH)
+# ==========================================
 class OrderSerializer(serializers.ModelSerializer):
     order_details = OrderDetailSerializer(many=True)
 
@@ -256,27 +275,34 @@ class OrderSerializer(serializers.ModelSerializer):
                     pricing.available_seats = F('available_seats') - len(order_detail_group)
                     pricing.save()
                     
-                    # --- THÊM 2 DÒNG NÀY ĐỂ CHUẨN BỊ GỬI WEBSOCKET ---
-                    pricing.refresh_from_db() # Lấy số lượng vé MỚI NHẤT
+                    pricing.refresh_from_db() # Tải lại dữ liệu mới nhất từ DB
+                    
+                    # Lúc này pricing.available_seats sẽ là 17 (19 - 2)
                     sections_to_update_ws[str(pricing.section.section_id)] = pricing.available_seats
+                   
+                    # --- THÊM 2 DÒNG NÀY ĐỂ CHUẨN BỊ GỬI WEBSOCKET ---
+                    # pricing.refresh_from_db() # Lấy số lượng vé MỚI NHẤT
+                    # sections_to_update_ws[str(pricing.section.section_id)] = pricing.available_seats
                     # ------------------------------------------------
 
                 order.total_amount = total_order_amount
                 order.save()
-
-                # 9. !!! KÍCH HOẠT WEBSOCKET (THÊM PHẦN NÀY) !!!
-                # Gửi thông báo sau khi transaction đã commit thành công
-                if match_id_for_ws:
-                    channel_layer = get_channel_layer()
-                    async_to_sync(channel_layer.group_send)(
-                        f"match_{match_id_for_ws}", # Tên "phòng" (phải khớp với consumer)
-                        {
-                            "type": "broadcast_seat_update", # Tên hàm consumer sẽ chạy
-                            "updated_sections": sections_to_update_ws, # Gửi dict {"1": 48}
-                            "sold_seat_ids": all_assigned_seats # (Nâng cao) Gửi ID các ghế vừa bán
-                        }
-                    )
-                # -------------------------------------------------
+                # websocket
+                
+                if match_id_for_ws and sections_to_update_ws:
+                    try:
+                        channel_layer = get_channel_layer()
+                        async_to_sync(channel_layer.group_send)(
+                            f"match_{match_id_for_ws}", 
+                            {
+                                "type": "broadcast_ticket_update", 
+                                "updated_sections": sections_to_update_ws, # Gửi số 17 đúng
+                                "message": "Có vé vừa được đặt thành công!"
+                            }
+                        )
+                        print(f"✅ Đã gửi WebSocket: {sections_to_update_ws}")
+                    except Exception as ws_error:
+                        print(f"❌ Lỗi gửi WebSocket: {ws_error}")
 
                 return order
 

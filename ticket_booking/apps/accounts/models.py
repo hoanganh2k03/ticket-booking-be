@@ -65,6 +65,7 @@ class Customer(models.Model):
 class CustomerAccount(models.Model):
     username = models.CharField(max_length=15, primary_key=True)
     password = models.CharField(max_length=255)
+    faceid = models.CharField(max_length=255, null=True, blank=True, unique=True)
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE)

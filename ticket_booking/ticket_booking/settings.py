@@ -67,6 +67,12 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 FRONTEND_URL = 'http://localhost:5500'
+# Google OAuth2
+# Create an OAuth 2.0 Client ID in Google Cloud Console and set it here.
+GOOGLE_CLIENT_ID = '798322275420-0rk6mm7g8nis62j2h4bjse6fbhtmk5pv.apps.googleusercontent.com'
+# Facebook OAuth2 - set these in production/ENV
+FACEBOOK_APP_ID = '4200485996929060'
+FACEBOOK_APP_SECRET = '2311e7a08dfae3b341e097be27793be2'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

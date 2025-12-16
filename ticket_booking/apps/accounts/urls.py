@@ -25,6 +25,8 @@ urlpatterns = [
 
     path('auth/customer/login/', CustomerLoginView.as_view(), name='customer-login'),
     path('auth/customer/register/', CustomerRegistrationView.as_view(), name='customer-register'),
+    path('auth/customer/google/', CustomerGoogleLoginView.as_view(), name='customer-google-login'),
+    path('auth/customer/facebook/', CustomerFacebookLoginView.as_view(), name='customer-facebook-login'),
     path('auth/customer/verify-otp/', CustomerVerifyOTPView.as_view(), name='verify-otp'),
     path('auth/customer/send-otp/', ResendOTPView.as_view(), name='send-otp'),
 

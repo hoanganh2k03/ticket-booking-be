@@ -24,10 +24,13 @@ import redis
 import jwt
 
 from .permissions import *
-from .models import Employee
+from .models import Employee, Customer, CustomerAccount
 from .serializers import *
 from .utils import *
 from apps.orders.models import Order
+import requests
+from django.contrib.auth.hashers import make_password
+from django.conf import settings
 
 
 redis_client = redis.StrictRedis.from_url(settings.REDIS_URL, decode_responses=True)
@@ -667,6 +670,197 @@ class ResendOTPView(APIView):
                 "status": "error",
                 "message": "Không tìm thấy tài khoản với username này."
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CustomerGoogleLoginView(APIView):
+    """Đăng nhập / đăng ký bằng Google id_token.
+
+    Frontend gửi id_token (JWT) trả về từ Google Identity Services.
+    Server xác thực token bằng endpoint của Google và tạo hoặc lấy Customer/CustomerAccount,
+    sau đó trả về cặp access/refresh token như đăng nhập thường.
+    """
+
+    def post(self, request, *args, **kwargs):
+        id_token = request.data.get('id_token')
+
+        if not id_token:
+            return Response({"status": "error", "message": "Thiếu id_token."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verify token with Google
+        try:
+            resp = requests.get(f"https://oauth2.googleapis.com/tokeninfo?id_token={id_token}")
+            if resp.status_code != 200:
+                return Response({"status": "error", "message": "Token Google không hợp lệ."}, status=status.HTTP_400_BAD_REQUEST)
+
+            token_info = resp.json()
+
+            # Optional: validate audience
+            google_client_id = getattr(settings, 'GOOGLE_CLIENT_ID', '')
+            aud = token_info.get('aud')
+            if google_client_id and google_client_id != '<YOUR_GOOGLE_CLIENT_ID>' and aud != google_client_id:
+                return Response({"status": "error", "message": "Token Google không hợp lệ cho ứng dụng này (aud mismatch)."}, status=status.HTTP_400_BAD_REQUEST)
+
+            email = token_info.get('email')
+            full_name = token_info.get('name') or token_info.get('given_name') or ''
+            email_verified = token_info.get('email_verified') in ('true', True)
+
+            if not email:
+                return Response({"status": "error", "message": "Email không được tìm thấy trong token."}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Find or create customer
+            customer = Customer.objects.filter(email__iexact=email).first()
+
+            if customer:
+                customer_account = CustomerAccount.objects.get(customer=customer)
+                # mark verified if not
+                if not customer_account.is_verified:
+                    customer_account.is_verified = True
+                    customer_account.save()
+            else:
+                # create customer and account
+                # phone_number must be unique and not empty; generate placeholder
+                placeholder_phone = 'g' + ''.join(random.choices(string.digits, k=12))
+                while Customer.objects.filter(phone_number=placeholder_phone).exists():
+                    placeholder_phone = 'g' + ''.join(random.choices(string.digits, k=12))
+
+                customer = Customer.objects.create(full_name=full_name or email.split('@')[0], phone_number=placeholder_phone, email=email)
+
+                # generate unique username (max 15 chars)
+                base = email.split('@')[0][:12]
+                username = base
+                counter = 1
+                while CustomerAccount.objects.filter(username=username).exists():
+                    username = (base[:12] + str(counter))[:15]
+                    counter += 1
+
+                random_password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+
+                customer_account = CustomerAccount.objects.create(
+                    username=username,
+                    password=make_password(random_password),
+                    is_verified=True,
+                    is_active=True,
+                    customer=customer
+                )
+
+            # Issue tokens
+            refresh = RefreshToken.for_user(customer_account)
+            access_token = str(refresh.access_token)
+
+            return Response({
+                "status": "success",
+                "message": "Đăng nhập bằng Google thành công.",
+                "data": {
+                    "access_token": access_token,
+                    "refresh_token": str(refresh),
+                    "customer": {
+                        "customer_id": customer.id,
+                        "full_name": customer.full_name,
+                        "email": customer.email
+                    }
+                }
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"status": "error", "message": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class CustomerFacebookLoginView(APIView):
+    """Đăng nhập / đăng ký bằng Facebook access_token.
+
+    Frontend gửi access_token (JWT) trả về từ Facebook SDK.
+    Server xác thực token bằng endpoint graph.facebook.com/me và tạo hoặc lấy Customer/CustomerAccount,
+    sau đó trả về cặp access/refresh token như đăng nhập thường.
+    """
+
+    def post(self, request, *args, **kwargs):
+        access_token = request.data.get('access_token')
+
+        if not access_token:
+            return Response({"status": "error", "message": "Thiếu access_token."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Verify token with Facebook Graph API
+            resp = requests.get(f"https://graph.facebook.com/me?access_token={access_token}&fields=id,name,email")
+            if resp.status_code != 200:
+                return Response({"status": "error", "message": "Token Facebook không hợp lệ."}, status=status.HTTP_400_BAD_REQUEST)
+
+            token_info = resp.json()
+            fb_id = token_info.get('id')
+            email = token_info.get('email')
+            full_name = token_info.get('name') or ''
+
+            if not fb_id:
+                return Response({"status": "error", "message": "Không thể xác thực Facebook token (id không tồn tại)."}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Find or create customer by email if available, otherwise by faceid
+            customer = None
+            customer_account = None
+            if email:
+                customer = Customer.objects.filter(email__iexact=email).first()
+            if customer:
+                customer_account = CustomerAccount.objects.get(customer=customer)
+                # Link facebook id if not set
+                if not getattr(customer_account, 'faceid', None):
+                    customer_account.faceid = fb_id
+                    customer_account.is_verified = True
+                    customer_account.save()
+            else:
+                # try find by faceid
+                if CustomerAccount.objects.filter(faceid=fb_id).exists():
+                    customer_account = CustomerAccount.objects.get(faceid=fb_id)
+                    customer = customer_account.customer
+                else:
+                    # create a new customer and account
+                    placeholder_phone = 'fb' + ''.join(random.choices(string.digits, k=12))
+                    while Customer.objects.filter(phone_number=placeholder_phone).exists():
+                        placeholder_phone = 'fb' + ''.join(random.choices(string.digits, k=12))
+
+                    # create customer with available info
+                    # ensure unique, non-empty email (some FB accounts don't share email)
+                    resolved_email = email if email else f"fb_{fb_id}@facebook.local"
+                    customer = Customer.objects.create(full_name=full_name or (email.split('@')[0] if email else fb_id), phone_number=placeholder_phone, email=resolved_email)
+
+                    # generate unique username (max 15 chars)
+                    base = (email.split('@')[0] if email else f"fb{fb_id}")[:12]
+                    username = base
+                    counter = 1
+                    while CustomerAccount.objects.filter(username=username).exists():
+                        username = (base[:12] + str(counter))[:15]
+                        counter += 1
+
+                    random_password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+
+                    customer_account = CustomerAccount.objects.create(
+                        username=username,
+                        password=make_password(random_password),
+                        is_verified=True,
+                        is_active=True,
+                        customer=customer,
+                        faceid=fb_id
+                    )
+
+            # Issue tokens (refresh + access)
+            refresh = RefreshToken.for_user(customer_account)
+            access_token = str(refresh.access_token)
+
+            return Response({
+                "status": "success",
+                "message": "Đăng nhập bằng Facebook thành công.",
+                "data": {
+                    "access_token": access_token,
+                    "refresh_token": str(refresh),
+                    "customer": {
+                        "customer_id": customer.id,
+                        "full_name": customer.full_name,
+                        "email": customer.email
+                    }
+                }
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"status": "error", "message": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 
 def is_valid_user(customer_id, token):

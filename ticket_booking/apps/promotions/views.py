@@ -101,27 +101,7 @@ class PromotionViewSet(viewsets.ModelViewSet):
             eta=promo.end_time
         )
     
-    # def update(self, request, *args, **kwargs):
-    #     promotion = self.get_object()
-        
-    #     # Tính số lượng mã đã được sử dụng
-    #     used_count = OrderDetail.objects.filter(promotion=promotion).count()
-        
-    #     if used_count > 0:
-    #         # Nếu Promotion đã được sử dụng,
-    #         # chỉ cho phép cập nhật các trường: end_time, usage_limit, description.
-    #         allowed_fields = {"end_time", "usage_limit", "description"}
-    #         disallowed = set(request.data.keys()) - allowed_fields
-    #         if disallowed:
-    #             return Response(
-    #                 {
-    #                     "detail": "Promotion đã được sử dụng; chỉ được cập nhật end_time, usage_limit và description.",
-    #                     "disallowed_fields": list(disallowed),
-    #                 },
-    #                 status=status.HTTP_400_BAD_REQUEST,
-    #             )
-        
-    #     return super().update(request, *args, **kwargs)
+    
 
 # Lấy danh sách section theo match
 class SectionListAPIView_Promotions(APIView):
@@ -162,19 +142,21 @@ class MatchListAPIView_Promotions(APIView):
 import joblib
 import os
 import numpy as np
-from datetime import datetime
 from django.conf import settings
 from django.db.models import Sum, Avg
+from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+# Import Models
 from apps.events.models import Match
-from apps.tickets.models import SectionPrice
-from apps.orders.models import OrderDetail
+from apps.tickets.models import SectionPrice, Section, Seat
+
 class AnalyzePromotionEffectivenessView(APIView):
     """
-    API Phân tích Khuyến mãi dựa trên Tình trạng ghế trống (Inventory).
-    Input: { "match_id": 123 }
-    Output: Gợi ý mức % giảm giá tốt nhất để xả hàng tồn.
+    API Phân tích Khuyến mãi: Tối ưu giá (AI Pricing Strategist){"match_id":2}.
+    Phiên bản: FINAL FIXED
+    Fix: Xử lý trường hợp Tier 4 còn 6 ngày nhưng dự báo quá lạc quan.
     """
     def post(self, request):
         match_id = request.data.get('match_id')
@@ -182,35 +164,53 @@ class AnalyzePromotionEffectivenessView(APIView):
             return Response({"error": "Thiếu match_id"}, status=400)
 
         try:
-            # 1. LẤY DỮ LIỆU THỰC TẾ (REAL-TIME DATA)
             match = Match.objects.get(pk=match_id)
             
-            # Tính tổng sức chứa & Số ghế đã bán
-            # (Logic lấy từ SectionPrice và OrderDetail)
-            capacity_data = SectionPrice.objects.filter(match=match).aggregate(
-                total_cap=Sum('section__capacity'),
-                total_available=Sum('available_seats'),
+            # ==========================================
+            # 0. TÍNH THỜI GIAN
+            # ==========================================
+            now = timezone.now()
+            days_left = (match.match_time - now).days
+            
+            if days_left < 0:
+                 return Response({"error": "Trận đấu đã kết thúc/đang diễn ra."}, status=400)
+
+            # ==========================================
+            # 1. LẤY DỮ LIỆU INVENTORY
+            # ==========================================
+            open_prices = SectionPrice.objects.filter(match=match)
+            if not open_prices.exists():
+                return Response({"error": "Trận đấu chưa mở bán vé nào."}, status=400)
+
+            open_sections = Section.objects.filter(tickets__in=open_prices).distinct()
+            total_capacity_open = open_sections.aggregate(t=Sum('capacity'))['t'] or 0
+            maintenance_count = Seat.objects.filter(section__in=open_sections, status=1).count()
+            initial_supply = total_capacity_open - maintenance_count
+            
+            if initial_supply <= 0:
+                return Response({"error": "Supply = 0"}, status=400)
+
+            price_agg = open_prices.aggregate(
+                total_avail=Sum('available_seats'),
                 avg_price=Avg('price')
             )
-            
-            total_capacity = capacity_data['total_cap'] or 0
-            current_available = capacity_data['total_available'] or 0
-            current_price = float(capacity_data['avg_price'] or 0)
-            
-            if total_capacity == 0:
-                return Response({"error": "Trận này chưa tạo vé (Capacity=0)"}, status=400)
+            current_available = price_agg['total_avail'] or 0
+            current_price = float(price_agg['avg_price'] or 0)
 
-            current_sold = total_capacity - current_available
-            fill_rate_now = (current_sold / total_capacity) * 100
+            current_sold = initial_supply - current_available
+            if current_sold < 0: current_sold = 0
+            
+            fill_rate_now = (current_sold / initial_supply) * 100
 
-            # Nếu đã bán gần hết (>90%) thì không cần Promotion
-            if fill_rate_now > 90:
+            if fill_rate_now > 98:
                 return Response({
                     "status": "warning",
-                    "message": f"Trận này đã bán được {fill_rate_now:.1f}%. Không cần khuyến mãi thêm."
+                    "message": f"Trận này đã bán {fill_rate_now:.1f}% (Sold-out). Không cần khuyến mãi."
                 })
 
+            # ==========================================
             # 2. CHUẨN BỊ AI MODEL
+            # ==========================================
             model_path = os.path.join(settings.BASE_DIR, 'ml_models', 'price_optimization_model.pkl')
             model = joblib.load(model_path)
 
@@ -219,86 +219,148 @@ class AnalyzePromotionEffectivenessView(APIView):
             is_hot = 1 if match.is_hot_match else 0
             importance = match.importance
 
-            # 3. GIẢ LẬP CÁC MỨC KHUYẾN MÃI (SCENARIOS)
-            # Chỉ xét giảm giá (Promotion) vì mục tiêu là lấp đầy ghế trống
-            discounts = [0, 10, 15, 20, 25, 30, 40, 50] 
-            
+            match_tier = "Tier 3 (Bình thường)"
+            if importance == 5 or (importance == 4 and is_hot): match_tier = "Tier 1 (Siêu HOT)"
+            elif importance == 4: match_tier = "Tier 2 (Trận nổi bậc)"
+            elif importance <= 2: match_tier = "Tier 4 (Trận kém thu hút)"
+
+            # ==========================================
+            # 3. MÔ PHỎNG CHIẾN LƯỢC
+            # ==========================================
+            discounts = [0, 5, 10, 15, 20, 25, 30, 40, 50]
             best_option = None
-            max_extra_revenue = -1
+            max_revenue = -1
             analysis = []
 
+            # --- A. XÁC ĐỊNH TRẠNG THÁI ---
+            critical_threshold = 40 
+            if "Tier 1" in match_tier: critical_threshold = 60
+            elif "Tier 2" in match_tier: critical_threshold = 50
+
+            is_critical_state = False
+            is_warning_state = False
+
+            if days_left <= 3 and fill_rate_now < critical_threshold:
+                is_critical_state = True
+            elif days_left <= 10 and fill_rate_now < (critical_threshold + 10):
+                is_warning_state = True
+
+            # --- B. BASE FACTOR ---
+            reality_base = 1.0
+            if is_critical_state: reality_base = 0.2
+            elif is_warning_state: reality_base = 0.6
+            elif "Tier 4" in match_tier and fill_rate_now < 20: reality_base = 0.4
+
+            time_pressure_factor = 1.0
+            if days_left > 14: time_pressure_factor = 0.9
+            elif is_critical_state: time_pressure_factor = 0.5
+            elif is_warning_state: time_pressure_factor = 0.8
+
+            base_factor = reality_base * time_pressure_factor
+
+            # --- C. VÒNG LẶP MÔ PHỎNG ---
             for pct in discounts:
-                # Giá sau khi giảm
                 promo_price = current_price * (1 - pct / 100)
-                
-                # Hỏi AI: "Với giá này, tổng thị trường mua được bao nhiêu?"
                 features = np.array([[day, hour, is_hot, importance, promo_price]])
-                predicted_total_demand = int(model.predict(features)[0])
+                predicted_raw = int(model.predict(features)[0])
                 
-                # Logic quan trọng: Tính số khách MỚI tiềm năng
-                # Khách mới = Nhu cầu tổng - Khách đã mua
-                potential_new_buyers = predicted_total_demand - current_sold
+                # --- [FIX 1] ĐIỀU CHỈNH ĐỘ NHẠY CHO TIER 4 (Áp dụng cả Warning State) ---
+                sensitivity = 0.8 
+                penalty_for_weak_discount = 1.0
+
+                if "Tier 4" in match_tier and (is_critical_state or is_warning_state):
+                    # Tier 4 mà đang ế (kể cả còn 6 ngày hay 2 ngày) thì khách rất chảnh
+                    if pct < 25: 
+                        sensitivity = 0.1 # Giảm ít -> Không ai quan tâm
+                        penalty_for_weak_discount = 0.3 # Phạt nặng
+                    else:
+                        sensitivity = 3.5 # Giảm sâu -> Mới bắt đầu quan tâm
                 
-                if potential_new_buyers <= 0:
-                    potential_new_buyers = 0 # Giá này không hấp dẫn thêm ai cả
+                elif is_critical_state:
+                    sensitivity = 3.0 # Tier 1,2,3 gấp thì FOMO
+                elif is_warning_state:
+                    sensitivity = 1.2
+
+                # Tính Factor
+                boost_from_discount = (pct / 100) * sensitivity 
+                current_base_factor = base_factor * penalty_for_weak_discount
+                adjusted_factor = current_base_factor + boost_from_discount
                 
-                # Không thể bán quá số ghế còn lại
-                sales_volume = min(potential_new_buyers, current_available)
+                if adjusted_factor > 1.5: adjusted_factor = 1.5
                 
-                # Doanh thu bán thêm (Incremental Revenue)
-                extra_revenue = sales_volume * promo_price
+                predicted_demand = int(predicted_raw * adjusted_factor)
                 
-                # Tỷ lệ lấp đầy dự kiến sau KM
-                new_fill_rate = ((current_sold + sales_volume) / total_capacity) * 100
+                # --- [FIX 2] VELOCITY CAP (Mở rộng phạm vi lên 7 ngày) ---
+                # Nếu Tier 4 đang ế nặng, dù còn 7 ngày cũng không thể bán 100% vé trong tích tắc nếu giảm giá thấp
+                
+                if days_left <= 7 and fill_rate_now < 20:
+                    # Cap phụ thuộc vào mức giảm giá
+                    # 10% -> Max bán được 20% tổng cung
+                    # 50% -> Max bán được 80% tổng cung
+                    velocity_cap_percent = 0.1 + (pct / 100) * 1.4 
+                    
+                    max_sellable_amount = initial_supply * velocity_cap_percent
+                    if predicted_demand > max_sellable_amount:
+                        predicted_demand = int(max_sellable_amount)
+
+                # -----------------------------------------------------------
+
+                potential_new = predicted_demand - current_sold
+                if potential_new < 0: potential_new = 0
+                
+                sales_new = min(potential_new, current_available)
+                revenue_scenario = sales_new * promo_price
+                new_fill_rate = ((current_sold + sales_new) / initial_supply) * 100
 
                 sim_result = {
                     "discount": pct,
                     "promo_price": promo_price,
-                    "extra_sold": sales_volume, # Bán thêm được bao nhiêu
-                    "extra_revenue": extra_revenue, # Thu thêm được bao nhiêu
+                    "extra_sold": sales_new,
+                    "extra_revenue": revenue_scenario,
                     "final_fill_rate": round(new_fill_rate, 1)
                 }
                 analysis.append(sim_result)
 
-                # Tìm phương án tối ưu tiền nhất
-                if extra_revenue > max_extra_revenue:
-                    max_extra_revenue = extra_revenue
+                if revenue_scenario > max_revenue:
+                    max_revenue = revenue_scenario
                     best_option = sim_result
 
+            # ==========================================
             # 4. TRẢ KẾT QUẢ
+            # ==========================================
             return Response({
                 "status": "success",
-                "current_status": {
-                    "sold": current_sold,
-                    "available": current_available,
-                    "fill_rate": round(fill_rate_now, 1),
-                    "avg_price": current_price
+                "match_info": {
+                    "name": f"{match.team_1} vs {match.team_2}",
+                    "tier": match_tier,
+                    "days_left": days_left,
+                    "sold_real": current_sold,
+                    "initial_supply": initial_supply,
+                    "available_real": current_available,
+                    "fill_rate": round(fill_rate_now, 1)
                 },
                 "recommendation": {
                     "best_discount": best_option['discount'],
-                    "best_price": best_option['promo_price'],
-                    "expected_extra_sold": best_option['extra_sold'],
                     "expected_extra_revenue": best_option['extra_revenue'],
-                    "expected_final_fill": best_option['final_fill_rate'],
-                    "message": self.generate_message(best_option, current_available)
+                    "expected_extra_sold": best_option['extra_sold'],
+                    "final_fill_rate": best_option['final_fill_rate'],
+                    "message": self.generate_message(best_option, match_tier, days_left, is_critical_state, is_warning_state)
                 },
-                "analysis_data": analysis # Để vẽ biểu đồ
+                "analysis_data": analysis
             })
 
         except Exception as e:
-            import traceback
-            traceback.print_exc()
             return Response({"error": str(e)}, status=500)
 
-    def generate_message(self, opt, available):
-        if opt['extra_sold'] == 0:
-            return "Dù giảm giá cũng khó bán thêm được vé nào (Nhu cầu đã bão hòa)."
-        
-        fill_percent = (opt['extra_sold'] / available) * 100 if available > 0 else 0
+    def generate_message(self, opt, tier, days, is_critical, is_warning):
+        status_msg = ""
+        if is_critical: status_msg = f"CẢNH BÁO ĐỎ (Còn {days} ngày, chưa đạt KPI). "
+        elif is_warning: status_msg = f"CẢNH BÁO VÀNG (Còn {days} ngày, bán chậm). "
+        else: status_msg = f"Tình hình ổn định (Còn {days} ngày). "
         
         if opt['discount'] == 0:
-            return "Nên giữ nguyên giá. Việc giảm giá không mang lại doanh thu cao hơn."
+            return f"{status_msg}Trận '{tier}'. Giá hiện tại đang tối ưu."
         
-        return (f"Nên giảm {opt['discount']}%! "
-                f"Dự kiến sẽ 'đẩy' đi được thêm {opt['extra_sold']} vé tồn kho, "
-                f"thu về thêm {opt['extra_revenue']:,.0f} VNĐ.")
+        action = "xả hàng tồn kho" if (is_critical or is_warning) and "Tier 4" in tier else "kích cầu"
+        return (f"{status_msg}AI đề xuất mức giảm {opt['discount']}% để {action} cho trận '{tier}', "
+                f"dự kiến kéo thêm {opt['extra_sold']} khán giả.")

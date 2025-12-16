@@ -5,7 +5,7 @@ from django.db.models import Q, Subquery
 from rest_framework.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import F
-
+from django.db.models import Max
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from apps.events.models import Match, Team, League, Stadium
@@ -54,11 +54,29 @@ class MatchSerializer(serializers.ModelSerializer):
     league = LeagueSerializer()
     stadium = StadiumSerializer()
     section_prices = SectionPriceSerializer(source='tickets', many=True)
-    
+    discount_percent = serializers.SerializerMethodField()
     class Meta:
         model = Match
-        fields = ['match_id', 'match_time', 'description', 'stadium', 'league', 'round', 'team_1', 'team_2', 'created_at', 'section_prices']
-
+        fields = ['match_id', 'match_time', 'description', 'stadium', 'league', 'round', 'team_1', 'team_2', 'created_at', 'section_prices','importance','is_hot_match','discount_percent']
+    def get_discount_percent(self, obj):
+        now = timezone.now()
+        
+        # LOGIC SỬA ĐỔI:
+        # Chúng ta query từ bảng Promotion, nhưng lọc qua bảng con PromotionDetail
+        # Cú pháp: promotiondetail__match=obj
+        # (Nghĩa là: Tìm Promotion mà có PromotionDetail trỏ tới Match hiện tại)
+        
+        result = Promotion.objects.filter(
+            promotiondetail__match=obj, # <--- ĐIỂM QUAN TRỌNG NHẤT
+            
+            status=True,                # Promotion phải đang Active
+            start_time__lte=now,        # Đã bắt đầu
+            end_time__gte=now,          # Chưa kết thúc
+            usage_limit__gt=0,          # Còn lượt dùng
+            discount_type='percentage'  # Chỉ lấy loại phần trăm
+        ).aggregate(Max('discount_value'))
+        
+        return result['discount_value__max'] or 0
 
 class PromotionDetailSerializer(serializers.ModelSerializer):
     class Meta:

@@ -208,7 +208,7 @@ class TeamSerializerView(serializers.ModelSerializer):
         model = Team
         # Cập nhật lại fields, thay 'sport_id' và 'sport_name' bằng 'sport'
         fields = ['team_id', 'sport', 'team_name', 
-                  'logo', 'head_coach', 'description']
+                  'logo', 'head_coach', 'description','rating']
 
     def get_logo(self, obj):
         request = self.context.get('request')
@@ -237,8 +237,17 @@ class TeamCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Team
-        # Chỉ bao gồm các trường có thể ghi
-        fields = [ 'sport','team_name', 'logo', 'head_coach', 'description']
+        # --- THAY ĐỔI 1: Thêm 'rating' vào danh sách fields ---
+        fields = ['sport', 'team_name', 'logo', 'head_coach', 'description', 'rating']
+
+    # --- THAY ĐỔI 2: Thêm hàm kiểm tra giá trị rating ---
+    def validate_rating(self, value):
+        """
+        Kiểm tra chỉ số sức mạnh phải nằm trong khoảng 1-10.
+        """
+        if value < 1 or value > 10:
+            raise serializers.ValidationError("Chỉ số sức mạnh (rating) phải nằm trong khoảng từ 1 đến 10.")
+        return value
 
     def validate(self, data):
         # DRF sẽ tự động kiểm tra UniqueConstraint ('unique_team_name_per_sport')

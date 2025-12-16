@@ -256,12 +256,22 @@ class MoMoPaymentAPIView(APIView):
 
     def post(self, request):
         # Extract order ID and other details from the request
+
         order_id = request.data.get('order')
         amount = request.data.get('amount', 50000)  # You can adjust this
         order_info = request.data.get('order_info', 'Pay with MoMo')
-        redirect_url = request.data.get('redirect_url', 'https://your-redirect-url.com')
-        ipn_url = request.data.get('ipn_url', 'https://your-ipn-url.com')
+        CURRENT_DOMAIN = "https://willene-spiriferous-drucilla.ngrok-free.dev"
+        ipn_url = f"{CURRENT_DOMAIN}/api/orders/done-payment/"        # Trỏ về đúng cái view vừa tạo ở bước 1 và 2
+        redirect_url = f"{CURRENT_DOMAIN}/api/orders/payment-result/"
 
+         # Extract order ID and other details from the request
+
+        # order_id = request.data.get('order')
+        # amount = request.data.get('amount', 50000)  # You can adjust this
+        # order_info = request.data.get('order_info', 'Pay with MoMo')
+        # redirect_url = request.data.get('redirect_url', 'https://your-redirect-url.com')
+        # ipn_url = request.data.get('ipn_url', 'https://your-ipn-url.com')
+        
         # Prepare parameters for MoMo request
         access_key = "F8BBA842ECF85"
         secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
@@ -985,3 +995,29 @@ class CustomerOrdersAPIView(APIView):
             "message": "Danh sách đơn hàng đã được lấy thành công.",
             "data": data
         }, status=status.HTTP_200_OK)
+
+from django.shortcuts import redirect
+import urllib.parse
+
+def payment_result_view(request):
+    # 1. Lấy thông tin từ MoMo trả về
+    result_code = request.GET.get('resultCode')
+    order_id = request.GET.get('orderId') 
+    message = request.GET.get('message', '')
+
+    # 2. ĐỊA CHỈ TRANG WEB FRONTEND (LIVE SERVER)
+    # Đảm bảo đường dẫn này chính xác 100% trên máy bạn
+    FRONTEND_URL = "http://127.0.0.1:5500/pages/customer/qrcode.html" 
+    
+    # 3. Chuyển hướng
+    # Lời khuyên: Hãy giữ nguyên tên tham số (orderId, resultCode) để JS dễ xử lý
+    
+    if str(result_code) == '0':
+        # Thành công
+        # Ta gửi lại 'orderId' (đúng format JS cần) và 'resultCode=0'
+        return redirect(f"{FRONTEND_URL}?resultCode=0&orderId={order_id}&message=Success")
+    else:
+        # Thất bại
+        # Cần mã hóa tin nhắn lỗi (vì có thể chứa tiếng Việt/ký tự đặc biệt)
+        encoded_message = urllib.parse.quote(message)
+        return redirect(f"{FRONTEND_URL}?resultCode={result_code}&orderId={order_id}&message={encoded_message}")

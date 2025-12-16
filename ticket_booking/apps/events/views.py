@@ -816,3 +816,4 @@ class SportViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Sport.objects.all().order_by('sport_name') # Lấy tất cả, sắp xếp theo tên
     serializer_class = SportSerializer
+    

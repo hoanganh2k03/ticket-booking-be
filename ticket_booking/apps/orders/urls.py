@@ -17,4 +17,5 @@ urlpatterns = [
     path('order-list/', OrderListView.as_view(), name='order_list'),
     path('ticket-return/', TicketReturnAPIView.as_view(), name='return_ticket'),
     path('cash-card-payment/', CashCardPaymentAPIView.as_view(), name='cash-card-payment'),
+    path('payment-result/', payment_result_view, name='payment-result'),
 ]

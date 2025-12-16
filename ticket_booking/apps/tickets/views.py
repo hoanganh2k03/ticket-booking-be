@@ -517,3 +517,4 @@ class SuggestOptimalPriceView(APIView):
             return "PROFIT_MAX"        # Tối ưu lợi nhuận (cho trận Hot)
         else:
             return "SAFE_OPTION"       # Phương án an toàn (cho trận Ế)
+

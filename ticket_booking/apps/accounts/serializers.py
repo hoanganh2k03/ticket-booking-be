@@ -393,22 +393,39 @@ class EmployeeUpdateSerializer(serializers.ModelSerializer):
 
 class CustomerSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='customeraccount.username', read_only=True)
+    faceid = serializers.CharField(source='customeraccount.faceid', read_only=True)
 
     class Meta:
         model = Customer
-        fields = ['id', 'full_name', 'phone_number', 'email', 'created_at', 'updated_at', 'username']
+        fields = ['id', 'full_name', 'phone_number', 'email', 'created_at', 'updated_at', 'username', 'faceid']
 
 
 class CustomerAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAccount
-        fields = ['username', 'password', 'is_verified', 'is_active', 'customer']
+        fields = ['username', 'password', 'is_verified', 'is_active', 'customer', 'faceid']
 
     def update(self, instance, validated_data):
         # Cập nhật thông tin tài khoản
         if 'password' in validated_data:
             validated_data['password'] = make_password(validated_data['password'])
+        # allow updating faceid too
+        if 'faceid' in validated_data:
+            # If faceid is empty string, set to None
+            faceid_val = validated_data.get('faceid')
+            instance.faceid = faceid_val if faceid_val else None
+            # we should remove it from validated_data to avoid extra field processing
+            validated_data.pop('faceid', None)
         return super().update(instance, validated_data)
+
+    def create(self, validated_data):
+        # ensure password is hashed
+        if 'password' in validated_data:
+            validated_data['password'] = make_password(validated_data['password'])
+        # handle empty faceid
+        if 'faceid' in validated_data and not validated_data['faceid']:
+            validated_data['faceid'] = None
+        return super().create(validated_data)
 
 
 class CustomerUpdateSerializer(serializers.ModelSerializer):

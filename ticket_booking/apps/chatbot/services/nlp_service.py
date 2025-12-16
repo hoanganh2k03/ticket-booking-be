@@ -3,21 +3,39 @@ from django.conf import settings
 from openai import OpenAI
 from apps.chatbot.models import ChatHistory
 from ticket_booking.settings import FRONTEND_URL
-# Cấu hình OpenAI/Groq client từ Django settings
-api_key = getattr(settings, 'GROQ_API_KEY', '')
-if api_key:
-    client = OpenAI(
-        base_url="https://api.groq.com/openai/v1",
-        api_key=api_key
-    )
-else:
-    client = None
+# Cấu hình OpenAI/Groq client từ Django settings (lazy init)
+import threading
+
+_client = None
+_client_lock = threading.Lock()
+
+def get_client():
+    global _client
+    if _client is None:
+        with _client_lock:
+            if _client is None:
+                api_key = getattr(settings, 'GROQ_API_KEY', '')
+                if api_key:
+                    try:
+                        _client = OpenAI(
+                            base_url="https://api.groq.com/openai/v1",
+                            api_key=api_key
+                        )
+                        print("✅ GROQ/OpenAI client initialized.")
+                    except Exception as e:
+                        print(f"⚠️ Lỗi khi init client: {e}")
+                        _client = None
+                else:
+                    _client = None
+    return _client
+
 
 def generate_ai_response(user_message: str, customer=None, session_id=None, context=None, top_match_id=None) -> str:
     """
     Chatbot sinh phản hồi dựa trên dữ liệu từ DB + ngữ cảnh Chroma, 
     có nhớ lịch sử hội thoại theo session_id.
     """
+    client = get_client()
     if not client:
         return "Lỗi: GROQ_API_KEY chưa được cấu hình."
     
@@ -86,6 +104,7 @@ def rewrite_query_with_context(user_message: str, session_id: str = None) -> str
     """
     Dùng AI để diễn giải lại câu hỏi sao cho có đầy đủ ngữ cảnh từ hội thoại cũ.
     """
+    client = get_client()
     if not client:
         return user_message
     

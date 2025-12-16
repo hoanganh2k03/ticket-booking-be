@@ -10,7 +10,10 @@ def normalize(text: str) -> str:
     return text
 
 
-faq_data = {
+
+
+def get_faq_answer(user_input: str) -> str | None:
+    faq_data = {
     # ===== GENERAL =====
     ("xin chao", "chao", "hello"): 
         "Xin chào! Tôi có thể giúp bạn đặt vé xem thể thao hoặc giải đáp thắc mắc.",
@@ -41,8 +44,6 @@ faq_data = {
         "Bạn có thể hủy hoặc đổi vé trước giờ diễn ra sự kiện nếu thỏa điều kiện.",
 }
 
-
-def get_faq_answer(user_input: str) -> str | None:
     normalized = normalize(user_input)
 
     for questions, answer in faq_data.items():

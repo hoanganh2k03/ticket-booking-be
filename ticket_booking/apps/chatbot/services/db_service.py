@@ -8,7 +8,25 @@ from langchain_core.documents import Document
 # Cố định CHROMA_PATH trong thư mục chatbot
 CHROMA_PATH = os.path.join(settings.BASE_DIR, "apps", "chatbot", "chroma_index")
 
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+import threading
+
+_embeddings = None
+_embeddings_lock = threading.Lock()
+
+def get_embeddings():
+    global _embeddings
+    if _embeddings is None:
+        with _embeddings_lock:
+            if _embeddings is None:
+                try:
+                    _embeddings = HuggingFaceEmbeddings(
+                        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+                    )
+                    print("✅ HuggingFaceEmbeddings initialized.")
+                except Exception as e:
+                    print(f"⚠️ Lỗi khi init embeddings: {e}")
+                    _embeddings = None
+    return _embeddings
 
 
 def build_chroma_index():
@@ -26,7 +44,7 @@ def build_chroma_index():
     # 🧹 Xoá index cũ nếu có
     if os.path.exists(CHROMA_PATH):
         try:
-            db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embeddings)
+            db = Chroma(persist_directory=CHROMA_PATH, embedding_function=get_embeddings())
             if hasattr(db, "reset_collection"):
                 db.reset_collection()
                 print("✅ Đã reset toàn bộ dữ liệu trong collection.")
@@ -103,7 +121,7 @@ def build_chroma_index():
 
     try:
         db = Chroma.from_documents(
-            docs, embedding=embeddings, persist_directory=CHROMA_PATH
+            docs, embedding=get_embeddings(), persist_directory=CHROMA_PATH
         )
         print(f"✅ Chroma index đã được tạo tại {CHROMA_PATH}")
     except Exception as e:
@@ -118,7 +136,7 @@ def search_chroma(user_message: str, k: int = 3):
         # Build index trước khi search
         build_chroma_index()
 
-        db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embeddings)
+        db = Chroma(persist_directory=CHROMA_PATH, embedding_function=get_embeddings())
         results = db.similarity_search(user_message, k=k)
         print(results)
         if not results:

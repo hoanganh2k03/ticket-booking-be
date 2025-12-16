@@ -50,11 +50,11 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'hattoriheiji48691810@gmail.com'
 EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
-# GROQ_API_KEY='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'
+GROQ_API_KEY='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'
 # EMAIL_HOST_USER = 'vuquochoanganh2k3@gmail.com'
 # EMAIL_HOST_PASSWORD = 'tgai qoii itcl oroc'
 
-GROQ_API_KEY='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'
+# GROQ_API_KEY='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'
 # calery
 from celery.schedules import crontab  # Thêm import ở đây
 

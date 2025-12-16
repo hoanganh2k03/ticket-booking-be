@@ -178,11 +178,12 @@ WSGI_APPLICATION = "ticket_booking.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sports',
-        # 'USER': 'sa',
-        'USER':'root',
-        'PASSWORD': '1234',
-        # 'PASSWORD': 'kc',
+       # 'NAME': 'sports',
+         'USER': 'sa',
+         'NAME':'sport',
+        #'USER':'root',
+       # 'PASSWORD': '1234',
+        'PASSWORD': 'kc',
         'HOST': 'localhost',
         'PORT': '3306',
     }

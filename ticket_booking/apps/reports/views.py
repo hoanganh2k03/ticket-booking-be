@@ -751,6 +751,26 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         qs = Order.objects.all().order_by('-created_at')
+
+        # Defensive: exclude rows with malformed primary keys (non-UUIDs).
+        # Use a DB-specific strategy: MySQL often has issues with the regex translation, so use a length check there.
+        from django.db import connection
+        engine = connection.settings_dict.get('ENGINE', '').lower()
+        if 'mysql' in engine:
+            try:
+                qs = qs.extra(where=["LENGTH(REPLACE(order_id,'-','')) = 32"])  # MySQL compatible
+            except Exception:
+                # best-effort: if extra fails, continue without the defensive filter
+                pass
+        else:
+            try:
+                qs = qs.filter(order_id__regex=r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
+            except Exception:
+                try:
+                    qs = qs.extra(where=["LENGTH(REPLACE(order_id,'-','')) = 32"])  # Fallback
+                except Exception:
+                    pass
+
         season_id = self.request.query_params.get('season')
         match_id  = self.request.query_params.get('match')
         params = self.request.query_params
@@ -790,6 +810,10 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
             end_dt = timezone.make_aware(datetime.combine(d, time.max), timezone.get_current_timezone())
             qs = qs.filter(created_at__lte=end_dt)
         return qs.distinct().order_by('-created_at')
+    
+    def list(self, request, *args, **kwargs):
+        """Return paginated list of orders (clean, no debug prints)."""
+        return super().list(request, *args, **kwargs)
     
     def retrieve(self, request, *args, **kwargs):
         order = self.get_object()

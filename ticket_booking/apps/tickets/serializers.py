@@ -23,6 +23,9 @@ class SectionPriceSerializer(serializers.ModelSerializer):
     section_name = serializers.SerializerMethodField(read_only=True)
     stadium_name = serializers.SerializerMethodField(read_only=True)
     match_time = serializers.SerializerMethodField(read_only=True)
+    # Expose sport info so frontend can filter directly from ticketData
+    sport_id = serializers.SerializerMethodField(read_only=True)
+    sport_name = serializers.SerializerMethodField(read_only=True)
     sell_date = serializers.DateTimeField(format='%Y-%m-%dT%H:%M:%S')
 
     class Meta:
@@ -37,7 +40,9 @@ class SectionPriceSerializer(serializers.ModelSerializer):
             'match_description',
             'match_time',
             'section_name',
-            'stadium_name'
+            'stadium_name',
+            'sport_id',
+            'sport_name'
         ]
         read_only_fields = [
             'pricing_id',
@@ -47,9 +52,42 @@ class SectionPriceSerializer(serializers.ModelSerializer):
             'section_name',
             'stadium_name',
             'available_seats',
-            'is_closed'
+            'is_closed',
+            'sport_id',
+            'sport_name'
         ]
 
+    def get_match_description(self, obj):
+        return obj.match.description if obj.match else None
+
+    def get_match_time(self, obj):
+        if obj.match and obj.match.match_time:
+            return localtime(obj.match.match_time).strftime('%Y-%m-%dT%H:%M:%S')
+        return None
+
+    def get_section_name(self, obj):
+        return obj.section.section_name if obj.section else None
+
+    def get_stadium_name(self, obj):
+        return obj.match.stadium.stadium_name if obj.match and obj.match.stadium else None
+
+    def get_sport_id(self, obj):
+        try:
+            return obj.match.league.sport.sport_id
+        except Exception:
+            return None
+
+    def get_sport_name(self, obj):
+        try:
+            return obj.match.league.sport.sport_name
+        except Exception:
+            return None
+
+    def update(self, instance, validated_data):
+        # Loại bỏ các trường không nên được cập nhật trực tiếp
+        validated_data.pop('available_seats', None)
+        validated_data.pop('is_closed', None)
+        return super().update(instance, validated_data)
     def get_match_description(self, obj):
         return obj.match.description if obj.match else None
 

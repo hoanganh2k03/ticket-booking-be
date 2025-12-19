@@ -473,6 +473,7 @@ class TicketStatusReportAPIView(APIView):
     def get(self, request, *args, **kwargs):
         league_id      = request.query_params.get('league_id')
         match_id       = request.query_params.get('match_id')
+        sport_id       = request.query_params.get('sport_id')
         start_date_str = request.query_params.get('start_date')
         end_date_str   = request.query_params.get('end_date')
 
@@ -514,6 +515,10 @@ class TicketStatusReportAPIView(APIView):
 
         if match_id:
             sp_qs = sp_qs.filter(match_id=match_id)
+
+        # Nếu người dùng lọc theo môn thể thao
+        if sport_id:
+            sp_qs = sp_qs.filter(match__league__sport_id=sport_id)
 
         # FIX LOGIC: Lọc trận đấu theo NGÀY ĐÁ (match_time), không phải ngày mua vé
         if filter_match_start and filter_match_end:
@@ -583,6 +588,8 @@ class TicketStatusReportAPIView(APIView):
             daily_qs = daily_qs.filter(pricing__match__league_id=league_id)
         if match_id:
             daily_qs = daily_qs.filter(pricing__match_id=match_id)
+        if sport_id:
+            daily_qs = daily_qs.filter(pricing__match__league__sport_id=sport_id)
 
         # FIX LOGIC: Dùng TruncDate để group theo ngày (DB Agnostic - không sợ lỗi timezone MySQL)
         daily = (
@@ -613,6 +620,7 @@ class TicketStatusReportAPIView(APIView):
         return Response({
             "status":      "success",
             "filter_info": {
+                "sport_id": sport_id,
                 "league_id": league_id,
                 "match_id": match_id,
                 "start_date": start_date_str,
@@ -877,6 +885,11 @@ class LeagueListAPIView(APIView):
         active = request.query_params.get('active')
         if active and active.lower() in ('true', '1', 'yes'):
             leagues = leagues.filter(end_date__gte=timezone.now().date())
+
+        # Lọc theo môn thể thao nếu có
+        sport_id = request.query_params.get('sport_id')
+        if sport_id:
+            leagues = leagues.filter(sport_id=sport_id)
 
         serializer = LeagueListSerializer(leagues, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

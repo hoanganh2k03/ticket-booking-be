@@ -196,9 +196,14 @@ class MatchDetailSerializer(serializers.ModelSerializer):
 
 # các trận đã tạo vé
 class MatchSimpleSerializer(serializers.ModelSerializer):
+    # Trả về league_id và sport thông qua quan hệ Match -> League -> Sport
+    league_id = serializers.IntegerField(source='league.league_id', read_only=True)
+    sport_id = serializers.IntegerField(source='league.sport.sport_id', read_only=True)
+    sport_name = serializers.CharField(source='league.sport.sport_name', read_only=True)
+
     class Meta:
         model = Match
-        fields = ['match_id', 'description']
+        fields = ['match_id', 'description', 'league_id', 'sport_id', 'sport_name']
 
 # Them sân/section
 class SectionInlineSerializer(serializers.ModelSerializer):

@@ -204,10 +204,14 @@ class TeamSerializerView(serializers.ModelSerializer):
         slug_field='sport_name'  # Chỉ định trường tên trong model Sport
     )
 
+    # Expose sport id and name explicitly for frontend filtering
+    sport_id = serializers.IntegerField(source='sport.sport_id', read_only=True)
+    sport_name = serializers.CharField(source='sport.sport_name', read_only=True)
+
     class Meta:
         model = Team
-        # Cập nhật lại fields, thay 'sport_id' và 'sport_name' bằng 'sport'
-        fields = ['team_id', 'sport', 'team_name', 
+        # Include sport_id and sport_name so frontend can rely on them
+        fields = ['team_id', 'sport_id', 'sport_name', 'sport', 'team_name', 
                   'logo', 'head_coach', 'description','rating']
 
     def get_logo(self, obj):
@@ -426,9 +430,14 @@ class SeatDetailSerializer(serializers.ModelSerializer):
 
 class LeagueSerializer(serializers.ModelSerializer):
     has_matches = serializers.SerializerMethodField()
+    # Expose sport id and name explicitly for frontend filtering
+    sport_id = serializers.IntegerField(source='sport.sport_id', read_only=True)
+    sport_name = serializers.CharField(source='sport.sport_name', read_only=True)
+
     class Meta:
         model = League
-        fields = '__all__'
+        # include all model fields and the two computed fields
+        fields = '__all__'  # 'sport_id' and 'sport_name' will be added by serializer automatically
 
     def get_has_matches(self, obj):
         return obj.match_set.exists()

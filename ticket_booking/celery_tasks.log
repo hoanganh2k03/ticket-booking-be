@@ -13779,3 +13779,43 @@ Watching for file changes with StatReloader
 [35;1mHTTP POST /api/accounts/auth/customer/login/ 500 [1.06, 127.0.0.1:58871][0m
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=1 200 [0.14, 127.0.0.1:52141][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:62358][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [0.95, 127.0.0.1:59726][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.08, 127.0.0.1:59726][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:52337][0m
+[mHTTP POST /api/accounts/auth/login 200 [2.09, 127.0.0.1:52337][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.06, 127.0.0.1:52337][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.10, 127.0.0.1:52337][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:52080]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:52080]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.08, 127.0.0.1:52337][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.02, 127.0.0.1:52337][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:52337][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.13, 127.0.0.1:52337][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.08, 127.0.0.1:52337][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.05, 127.0.0.1:52337][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.03, 127.0.0.1:52337][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.06, 127.0.0.1:52337][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:52080]
+[mHTTP GET /api/orders/matches/5/ 200 [0.09, 127.0.0.1:64680][0m
+WebSocket HANDSHAKING /ws/book/5/ [127.0.0.1:61891]
+WebSocket CONNECT /ws/book/5/ [127.0.0.1:61891]
+[mHTTP GET /api/events/stadiums/1/sections/ 200 [0.06, 127.0.0.1:64680][0m
+[mHTTP GET /api/orders/promotions/5/1/ 200 [0.05, 127.0.0.1:57237][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.16, 127.0.0.1:57237][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:57237][0m
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [1.08, 127.0.0.1:57237][0m
+WebSocket DISCONNECT /ws/book/5/ [127.0.0.1:61891]
+[mHTTP GET /api/orders/matches/2/ 200 [0.05, 127.0.0.1:57237][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:64933]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:64933]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.04, 127.0.0.1:57237][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.04, 127.0.0.1:49908][0m
+Watching for file changes with StatReloader

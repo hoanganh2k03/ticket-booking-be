@@ -13863,3 +13863,23 @@ WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:59361]
 WebSocket CONNECT /ws/book/2/ [127.0.0.1:59361]
 [mHTTP GET /api/events/stadiums/2/sections/ 200 [0.07, 127.0.0.1:61395][0m
 WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:59361]
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/orders/matches/ 200 [0.34, 127.0.0.1:56339][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.44, 127.0.0.1:55153][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.25, 127.0.0.1:55153][0m
+[mHTTP GET /api/orders/matches/ 200 [0.19, 127.0.0.1:56339][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/orders/matches/ 200 [0.23, 127.0.0.1:53848][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.45, 127.0.0.1:58646][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.18, 127.0.0.1:60520][0m
+[mHTTP GET /api/orders/matches/ 200 [0.27, 127.0.0.1:49301][0m
+[mHTTP OPTIONS /api/chat/send/ 200 [0.04, 127.0.0.1:62800][0m
+[mHTTP POST /api/chat/send/ 200 [3.26, 127.0.0.1:62800][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.41, 127.0.0.1:53756][0m
+[mHTTP GET /api/orders/matches/ 200 [0.44, 127.0.0.1:56316][0m
+[mHTTP POST /api/chat/send/ 200 [4.41, 127.0.0.1:64197][0m
+[mHTTP POST /api/chat/send/ 200 [2.27, 127.0.0.1:50784][0m

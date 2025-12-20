@@ -13819,3 +13819,17 @@ WebSocket CONNECT /ws/book/2/ [127.0.0.1:64933]
 [mHTTP GET /api/events/stadiums/2/sections/ 200 [0.04, 127.0.0.1:57237][0m
 [mHTTP GET /api/orders/promotions/2/4/ 200 [0.04, 127.0.0.1:49908][0m
 Watching for file changes with StatReloader
+[mHTTP GET /api/orders/matches/ 200 [0.19, 127.0.0.1:54876][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.34, 127.0.0.1:57716][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:54876][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.24, 127.0.0.1:57716][0m
+[mHTTP GET /api/orders/matches/ 200 [0.22, 127.0.0.1:54876][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.28, 127.0.0.1:57716][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.08, 127.0.0.1:55660][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:52143]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:52143]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:55660][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:52143]
+Watching for file changes with StatReloader
+[mHTTP GET /api/orders/matches/ 200 [0.35, 127.0.0.1:50258][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.50, 127.0.0.1:58941][0m

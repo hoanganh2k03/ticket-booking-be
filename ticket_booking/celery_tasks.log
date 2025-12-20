@@ -13833,3 +13833,7 @@ WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:52143]
 Watching for file changes with StatReloader
 [mHTTP GET /api/orders/matches/ 200 [0.35, 127.0.0.1:50258][0m
 [35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.50, 127.0.0.1:58941][0m
+[mHTTP GET /api/orders/matches/ 200 [0.32, 127.0.0.1:61242][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.50, 127.0.0.1:53984][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.23, 127.0.0.1:49722][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:52279][0m

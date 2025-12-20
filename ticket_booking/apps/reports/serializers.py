@@ -77,7 +77,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     seat = serializers.CharField(source='seat.seat_number', read_only=True)
-    section = serializers.CharField(source='pricing.section.name', read_only=True)
+    section = serializers.CharField(source='pricing.section.section_name', read_only=True)
 
     class Meta:
         model = OrderDetail

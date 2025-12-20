@@ -35,6 +35,22 @@ class SectionPriceViewSet(viewsets.ModelViewSet):
     queryset = SectionPrice.objects.all()
     serializer_class = SectionPriceSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        """Allow filtering by sport_id or sport_name via query params."""
+        qs = SectionPrice.objects.all().select_related('match__league__sport', 'section')
+        sport_id = self.request.query_params.get('sport_id')
+        sport_name = self.request.query_params.get('sport_name')
+        if sport_id:
+            try:
+                sid = int(sport_id)
+                qs = qs.filter(match__league__sport__sport_id=sid)
+            except ValueError:
+                pass
+        if sport_name:
+            qs = qs.filter(match__league__sport__sport_name__icontains=sport_name)
+        return qs
+
     @action(detail=True, methods=['patch'], url_path='stop_selling')
     def stop_selling(self, request, pk=None):
         section_price = self.get_object()
@@ -302,7 +318,23 @@ class CompletedTicketMatchesAPIView(APIView):
     def get(self, request):
         completed_matches = []
 
-        all_matches = Match.objects.select_related('stadium').all()
+        # Hỗ trợ lọc theo sport_id hoặc sport_name qua query params
+        sport_id = request.query_params.get('sport_id')
+        sport_name = request.query_params.get('sport_name')
+
+        # Select related league and sport to avoid N+1 queries
+        all_matches = Match.objects.select_related('stadium', 'league__sport').all()
+
+        if sport_id:
+            try:
+                sport_id_int = int(sport_id)
+                all_matches = all_matches.filter(league__sport__sport_id=sport_id_int)
+            except ValueError:
+                # ignore invalid sport_id
+                pass
+        elif sport_name:
+            all_matches = all_matches.filter(league__sport__sport_name__icontains=sport_name)
+
         for match in all_matches:
             # Kiểm tra nếu match không có sân vận động hợp lệ
             if not match.stadium:

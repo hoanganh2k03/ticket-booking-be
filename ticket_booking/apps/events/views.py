@@ -25,6 +25,19 @@ class LeagueViewSet(viewsets.ModelViewSet):
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
 
+    def get_queryset(self):
+        qs = League.objects.all().order_by('start_date')
+        sport_id = self.request.query_params.get('sport_id')
+        sport_name = self.request.query_params.get('sport_name')
+        if sport_id:
+            try:
+                qs = qs.filter(sport__sport_id=int(sport_id))
+            except ValueError:
+                pass
+        if sport_name:
+            qs = qs.filter(sport__sport_name__iexact=sport_name)
+        return qs
+
     # Tùy chỉnh action PUT (Cập nhật)
     def update(self, request, *args, **kwargs):
         league = self.get_object()  # Lấy đối tượng league cần cập nhật
@@ -48,8 +61,17 @@ class LeagueViewSet(viewsets.ModelViewSet):
 # lấy ds các trận 
 class MatchListAPIView(APIView):
     def get(self, request):
-        matches = Match.objects.all().order_by('match_time')
-        serializer = MatchSerializer(matches, many=True)
+        qs = Match.objects.all().order_by('match_time')
+        sport_id = request.query_params.get('sport_id')
+        sport_name = request.query_params.get('sport_name')
+        if sport_id:
+            try:
+                qs = qs.filter(league__sport__sport_id=int(sport_id))
+            except ValueError:
+                pass
+        if sport_name:
+            qs = qs.filter(league__sport__sport_name__iexact=sport_name)
+        serializer = MatchSerializer(qs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 # update trận
 from rest_framework import generics
@@ -243,6 +265,20 @@ from .serializers import TeamSerializerView, TeamCreateUpdateSerializer
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
 
+    def get_queryset(self):
+        qs = Team.objects.all().order_by('team_name')
+        sport_id = self.request.query_params.get('sport_id')
+        sport_name = self.request.query_params.get('sport_name')
+        if sport_id:
+            try:
+                qs = qs.filter(sport__sport_id=int(sport_id))
+            except ValueError:
+                # ignore invalid sport_id
+                pass
+        if sport_name:
+            qs = qs.filter(sport__sport_name__iexact=sport_name)
+        return qs
+
     def get_serializer_class(self):
         # Dùng serializer ghi cho các hành động 'create', 'update', 'partial_update'
         if self.action in ['create', 'update', 'partial_update']:
@@ -311,6 +347,19 @@ from .serializers import StadiumSerializerView, StadiumUpdateSerializer
 
 class StadiumViewSet(viewsets.ModelViewSet):
     queryset = Stadium.objects.all()
+
+    def get_queryset(self):
+        qs = Stadium.objects.all().order_by('stadium_name')
+        sport_id = self.request.query_params.get('sport_id')
+        sport_name = self.request.query_params.get('sport_name')
+        if sport_id:
+            try:
+                qs = qs.filter(match__league__sport__sport_id=int(sport_id)).distinct()
+            except ValueError:
+                pass
+        if sport_name:
+            qs = qs.filter(match__league__sport__sport_name__iexact=sport_name).distinct()
+        return qs
 
     def get_serializer_class(self):
         if self.action in ['update', 'partial_update']:

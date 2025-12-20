@@ -14,6 +14,7 @@ class Section(models.Model):
     section_name = models.CharField(max_length=100)
     stadium = models.ForeignKey('events.Stadium', on_delete=models.CASCADE)
     capacity = models.IntegerField()
+    map_position = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         constraints = [
@@ -41,25 +42,6 @@ def update_capacity_on_delete(sender, instance, **kwargs):
     total_capacity = Section.objects.filter(stadium=stadium).aggregate(total=models.Sum('capacity'))['total'] or 0
     stadium.capacity = total_capacity
     stadium.save()
-
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        self.update_stadium_capacity()
-
-    def update_stadium_capacity(self):
-        total_capacity = Section.objects.filter(stadium=self.stadium).aggregate(total=models.Sum('capacity'))['total'] or 0
-        self.stadium.capacity = total_capacity
-        self.stadium.save()
-        
-
-@receiver(post_delete, sender=Section)
-def update_capacity_on_delete(sender, instance, **kwargs):
-    stadium = instance.stadium
-    total_capacity = Section.objects.filter(stadium=stadium).aggregate(total=models.Sum('capacity'))['total'] or 0
-    stadium.capacity = total_capacity
-    stadium.save()
-
 
 
 class Seat(models.Model):

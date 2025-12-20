@@ -365,8 +365,9 @@ from apps.tickets.models import Section
 class SectionSerializerUpdate(serializers.ModelSerializer):
     class Meta:
         model = Section
-        fields = ['section_id', 'section_name', 'stadium', 'capacity']
+        fields = ['section_id', 'section_name', 'stadium', 'capacity', 'map_position']
         read_only_fields = ['stadium']  # stadium không được phép sửa từ bên ngoài
+
     def validate(self, attrs):
         # Kiểm tra nếu section_name thay đổi
         section_name = attrs.get('section_name')
@@ -390,7 +391,7 @@ class SectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Section
-        fields = ['section_id', 'section_name', 'stadium_id', 'stadium_name', 'capacity']
+        fields = ['section_id', 'section_name', 'stadium_id', 'stadium_name', 'capacity', 'map_position']
 # lấy thông tin các ghế của section the id sân và id section
 from apps.tickets.models import Seat
 

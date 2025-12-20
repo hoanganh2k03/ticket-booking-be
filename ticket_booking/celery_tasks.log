@@ -13837,3 +13837,29 @@ Watching for file changes with StatReloader
 [35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.50, 127.0.0.1:53984][0m
 [35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.23, 127.0.0.1:49722][0m
 [mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:52279][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.20, 127.0.0.1:52762][0m
+[mHTTP GET /api/orders/matches/ 200 [0.26, 127.0.0.1:62889][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.33, 127.0.0.1:62889][0m
+[mHTTP GET /api/orders/matches/ 200 [0.11, 127.0.0.1:52762][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.08, 127.0.0.1:64223][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:62108]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:62108]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.03, 127.0.0.1:64223][0m
+[mHTTP POST /api/accounts/auth/token/refresh/ 200 [0.05, 127.0.0.1:64223][0m
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:64223][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.03, 127.0.0.1:64223][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.10, 127.0.0.1:54081][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:62108]
+Watching for file changes with StatReloader
+[mHTTP GET /api/orders/matches/ 200 [0.31, 127.0.0.1:63126][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.46, 127.0.0.1:49670][0m
+[35;1mHTTP GET /api/chat/history/?customer_id=34 500 [0.19, 127.0.0.1:49670][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:63126][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.10, 127.0.0.1:61395][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:59361]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:59361]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.07, 127.0.0.1:61395][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:59361]

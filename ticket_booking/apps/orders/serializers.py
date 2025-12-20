@@ -24,9 +24,10 @@ class TeamSerializer(serializers.ModelSerializer):
 
 
 class LeagueSerializer(serializers.ModelSerializer):
+    sport_name = serializers.CharField(source='sport.sport_name', read_only=True)
     class Meta:
         model = League
-        fields = ['league_id', 'league_name']
+        fields = ['league_id', 'league_name', 'start_date', 'end_date', 'sport_name']
 
 
 class StadiumSerializer(serializers.ModelSerializer):
@@ -171,9 +172,9 @@ def raise_custom_validation_error(message):
 # ==========================================
 # 3. CLASS ORDER SERIALIZER (HOÀN CHỈNH)
 # ==========================================
+import math
 class OrderSerializer(serializers.ModelSerializer):
     order_details = OrderDetailSerializer(many=True)
-
     class Meta:
         model = Order
         fields = ['order_id', 'user', 'total_amount', 'order_status', 'order_method', 'created_at', 'order_details']
@@ -183,8 +184,15 @@ class OrderSerializer(serializers.ModelSerializer):
         # Nếu có lỗi, mọi thứ sẽ được rollback (hủy bỏ)
         with transaction.atomic():
             try:
+                request = self.context.get('request')
+                # Mặc định là 0 nếu khách không nhập điểm
+                use_points = int(request.data.get('use_points', 0)) 
+                customer = validated_data.get('user') # Instance của Customer
+                
                 order_details_data = validated_data.pop('order_details')
                 order = Order.objects.create(**validated_data)
+                # order_details_data = validated_data.pop('order_details')
+                # order = Order.objects.create(**validated_data)
 
                 # --- (Phần code xử lý Promotion của bạn - GIỮ NGUYÊN) ---
                 promotion_counts = {}
@@ -297,14 +305,47 @@ class OrderSerializer(serializers.ModelSerializer):
                     
                     # Lúc này pricing.available_seats sẽ là 17 (19 - 2)
                     sections_to_update_ws[str(pricing.section.section_id)] = pricing.available_seats
-                   
-                    # --- THÊM 2 DÒNG NÀY ĐỂ CHUẨN BỊ GỬI WEBSOCKET ---
-                    # pricing.refresh_from_db() # Lấy số lượng vé MỚI NHẤT
-                    # sections_to_update_ws[str(pricing.section.section_id)] = pricing.available_seats
                     # ------------------------------------------------
+                # tích điểm
+                # --- MỚI: XỬ LÝ TRỪ ĐIỂM GIẢM GIÁ (Sau khi đã tính tổng tiền vé) ---
+                points_discount_money = 0
+                if customer and use_points > 0:
+                    # 1. Kiểm tra số dư điểm
+                    if customer.points < use_points:
+                        raise raise_custom_validation_error(f"Số điểm không đủ (Bạn có {customer.points} điểm).")
+                    
+                    # 2. Tính số điểm TỐI ĐA cần thiết để thanh toán đơn hàng này
+                    # Ví dụ: Đơn 900k -> Cần tối đa 900 điểm
+                    # Đơn 900.500đ -> Cần tối đa 901 điểm (dùng math.ceil làm tròn lên)
+                    max_points_needed = math.ceil(total_order_amount / 1000)
+                    
+                    # 3. Chốt số điểm thực tế sẽ trừ (Lấy số nhỏ hơn giữa: Khách nhập vs Hệ thống cần)
+                    # Nếu khách nhập 1000, nhưng cần 900 -> Trừ 900
+                    # Nếu khách nhập 500, cần 900 -> Trừ 500
+                    actual_points_to_use = min(use_points, max_points_needed)
+                    
+                    # 4. Tính tiền giảm giá thực tế
+                    points_discount_money = actual_points_to_use * 1000
+                    
+                    # 5. Cập nhật điểm của Customer (Trừ số điểm thực tế)
+                    customer.points = F('points') - actual_points_to_use
+                    customer.save()
+                    
+                    # 6. Ghi lịch sử trừ điểm
+                    from apps.accounts.models import PointHistory
+                    PointHistory.objects.create(
+                        customer=customer,
+                        order=order,
+                        change_amount=-actual_points_to_use, # Lưu số điểm thực tế bị trừ
+                        reason=f"Sử dụng {actual_points_to_use} điểm giảm giá (yêu cầu {use_points})"
+                    )
 
-                order.total_amount = total_order_amount
+                # --- CẬP NHẬT TRẠNG THÁI CUỐI CÙNG CỦA ORDER ---
+                order.points_discount = points_discount_money
+                # Tổng tiền = Tổng giá vé - Tiền giảm từ điểm
+                order.total_amount = max(0, total_order_amount - points_discount_money)
                 order.save()
+                # --- KẾT THÚC XỬ LÝ ĐIỂM GIẢM GIÁ ---
                 # websocket
                 
                 if match_id_for_ws and sections_to_update_ws:

@@ -1249,3 +1249,104 @@ class CustomerAdminViewSet(viewsets.ModelViewSet):
             "status": "success",
             "message": "Xóa khách hàng thành công."
         }, status=status.HTTP_200_OK)
+
+
+# đồng bạc...
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Customer, PointHistory
+from .serializers import CustomerSerializer, PointHistorySerializer
+
+class CustomerLoyaltyView(APIView):
+    # permission_classes = [IsCustomer] # Bỏ comment nếu cần bảo mật
+
+    def get(self, request):
+        customer_id = request.query_params.get('id')
+
+        if not customer_id:
+            return Response({
+                "status": "error",
+                "message": "Cần phải có Customer ID."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            customer = Customer.objects.get(id=customer_id)
+            
+            # 1. Lấy thông tin cơ bản
+            customer_data = CustomerSerializer(customer).data
+            
+            # 2. Lấy lịch sử điểm (Mới nhất lên đầu)
+            history = PointHistory.objects.filter(customer=customer).order_by('-created_at')
+            history_data = PointHistorySerializer(history, many=True).data
+
+            # 3. Logic tính toán hạng tiếp theo (Next Tier Progress)
+            current_score = customer.loyalty_score
+            next_tier_info = {
+                "current_tier_name": customer.get_tier_display(),
+                "next_tier_name": "Đã đạt cấp tối đa",
+                "points_needed": 0,
+                "progress_percent": 100
+            }
+
+            # Các mốc điểm dựa trên logic save() trong model của bạn
+            # Silver: 500, Gold: 2000, Diamond: 5000
+            if current_score < 500:
+                target = 500
+                next_tier_info["next_tier_name"] = "Thành viên Bạc"
+                next_tier_info["points_needed"] = target - current_score
+                next_tier_info["progress_percent"] = (current_score / target) * 100
+            elif current_score < 2000:
+                target = 2000
+                next_tier_info["next_tier_name"] = "Thành viên Vàng"
+                next_tier_info["points_needed"] = target - current_score
+                next_tier_info["progress_percent"] = ((current_score - 500) / (2000 - 500)) * 100 # % trong cấp hiện tại
+            elif current_score < 5000:
+                target = 5000
+                next_tier_info["next_tier_name"] = "Thành viên Kim Cương"
+                next_tier_info["points_needed"] = target - current_score
+                next_tier_info["progress_percent"] = ((current_score - 2000) / (5000 - 2000)) * 100
+            else:
+                # Quy tắc: Cứ mỗi 2000 điểm là 1 mốc quà
+                STEP = 2000
+                DIAMOND_BASE = 5000 # Mốc bắt đầu tính thưởng
+                
+                # Tính số điểm đã "cày" được kể từ khi lên Diamond
+                # Ví dụ: 6800 - 5000 = 1800 điểm đã cày
+                score_earned_in_diamond = current_score - DIAMOND_BASE
+                
+                # Tính phần dư trong chu kỳ 2000
+                # 1800 % 2000 = 1800
+                remainder = score_earned_in_diamond % STEP
+                
+                # Số điểm còn thiếu để đạt mốc tiếp theo (2000)
+                # 2000 - 1800 = 200 điểm (HỢP LÝ HƠN)
+                points_needed = STEP - remainder
+                
+                # Phần trăm hoàn thành
+                progress_percent = (remainder / STEP) * 100
+
+                next_tier_info["next_tier_name"] = "DIAMOND_REWARD"
+                next_tier_info["points_needed"] = points_needed
+                next_tier_info["progress_percent"] = progress_percent
+            # Trả về kết quả tổng hợp
+            return Response({
+                "status": "success",
+                "message": "Lấy thông tin hạng và lịch sử thành công.",
+                "data": {
+                    "profile": {
+                        "full_name": customer.full_name,
+                        "points": customer.points,            # Điểm để tiêu
+                        "loyalty_score": customer.loyalty_score, # Điểm để xét hạng
+                        "tier": customer.tier
+                    },
+                    "tier_progress": next_tier_info, # Dữ liệu để vẽ thanh tiến trình
+                    "history": history_data          # Danh sách lịch sử
+                }
+            }, status=status.HTTP_200_OK)
+
+        except Customer.DoesNotExist:
+            return Response({
+                "status": "error",
+                "message": "Không tìm thấy khách hàng này."
+            }, status=status.HTTP_404_NOT_FOUND)

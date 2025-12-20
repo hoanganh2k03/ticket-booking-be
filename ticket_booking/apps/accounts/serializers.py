@@ -397,7 +397,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['id', 'full_name', 'phone_number', 'email', 'created_at', 'updated_at', 'username', 'faceid']
+        fields = ['id', 'full_name', 'phone_number', 'email', 'created_at', 'updated_at', 'username', 'faceid', 'points', 'loyalty_score', 'tier']
 
 
 class CustomerAccountSerializer(serializers.ModelSerializer):
@@ -672,3 +672,16 @@ class CustomerCreateUpdateSerializer(serializers.ModelSerializer):
         if qs.exists():
             raise serializers.ValidationError('Số điện thoại này đã được đăng ký.')
         return value
+# vàng đồng bạc kim cương
+from rest_framework import serializers
+from .models import Customer, PointHistory
+
+# ... (Các serializer cũ giữ nguyên) ...
+
+class PointHistorySerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(format="%d/%m/%Y %H:%M") # Format ngày giờ cho đẹp
+    order_id = serializers.ReadOnlyField(source='order.order_id')   # Lấy ID đơn hàng nếu có
+
+    class Meta:
+        model = PointHistory
+        fields = ['id', 'change_amount', 'reason', 'created_at', 'order_id']

@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from .views import CustomerDetailView, CustomerLoyaltyView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -41,6 +42,9 @@ urlpatterns = [
     path('customer/change-password/', CustomerPasswordChangeView.as_view(), name='customer-change-pass'),
     path('customer/forgot-password/', CustomerForgotPasswordView.as_view(), name='customer-forgot-pass'),
     path('customer/reset-password/', CustomerResetPasswordView.as_view(), name='customer-reset-pass'),
+
+# vàng bạc đá quý
+    path('customer/loyalty/', CustomerLoyaltyView.as_view(), name='customer-loyalty'),
 
     path('', include(router.urls)),
 ]

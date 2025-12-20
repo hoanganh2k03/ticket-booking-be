@@ -14,7 +14,7 @@ class Order(models.Model):
     order_status = models.CharField(max_length=50, choices=[('pending', 'Đang chờ'), ('received', 'Đã nhận'), ('cancelled', 'Đã hủy')])
     order_method = models.CharField(max_length=50, choices=[('online', 'Trực tuyến'), ('offline', 'Trực tiếp')])
     created_at = models.DateTimeField(auto_now_add=True)
-
+    points_discount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     class Meta:
         db_table = 'order'
 

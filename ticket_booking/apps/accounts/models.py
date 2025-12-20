@@ -55,7 +55,29 @@ class Customer(models.Model):
     email = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    points = models.IntegerField(default=0, verbose_name="Điểm hiện có")
+    loyalty_score = models.IntegerField(default=0, verbose_name="Điểm xếp hạng")
+    
+    TIER_CHOICES = [
+        ('bronze', 'Thành viên Đồng'),
+        ('silver', 'Thành viên Bạc'),
+        ('gold', 'Thành viên Vàng'),
+        ('diamond', 'Thành viên Kim Cương'),
+    ]
+    tier = models.CharField(max_length=20, choices=TIER_CHOICES, default='bronze')
+    # --- LOGIC TỰ ĐỘNG CẬP NHẬT HẠNG ---
+    def save(self, *args, **kwargs):
+        # Tự động tính hạng dựa trên loyalty_score trước khi lưu
+        if self.loyalty_score >= 5000:
+            self.tier = 'diamond'
+        elif self.loyalty_score >= 2000:
+            self.tier = 'gold'
+        elif self.loyalty_score >= 500:
+            self.tier = 'silver'
+        else:
+            self.tier = 'bronze'
+            
+        super().save(*args, **kwargs)
     class Meta:
         db_table = 'customer'
 
@@ -75,4 +97,11 @@ class CustomerAccount(models.Model):
 
     def __str__(self):
         return self.username
+
+class PointHistory(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    order = models.ForeignKey('orders.Order', on_delete=models.SET_NULL, null=True)
+    change_amount = models.IntegerField() # + cho tích điểm, - cho sử dụng điểm
+    reason = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
 

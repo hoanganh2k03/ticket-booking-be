@@ -39,43 +39,73 @@ def get_available_seats_for_section(section, match):
 
 
 def check_payment_expiration():
-    expired_payments = Payment.objects.filter(payment_status='pending', expiration_time__lt=timezone.now())
+    now = timezone.now()
+    print(f"------------------------------------------------")
+    print(f"⏰ BAT DAU QUET: {now}")
     
+    # 1. DEBUG: Kiểm tra tổng thể bảng Payment xem có gì không
+    # In ra 5 payment mới nhất bất kể trạng thái để xem DB có dữ liệu không
+    all_payments = Payment.objects.all().order_by('-created_at')[:5] 
+    if all_payments.exists():
+        print("   🔍 [Soi DB] 5 Payment mới nhất trong bảng Payment:")
+        for p in all_payments:
+            # Dùng .pk thay cho .id để tránh lỗi
+            print(f"      - PK: {p.pk} | Status: '{p.payment_status}' | Expire: {p.expiration_time}")
+    else:
+        print("   ⚠️ Bảng Payment đang TRỐNG RỖNG! (Nếu bảng Order có đơn mà bảng Payment trống thì logic tạo đơn có vấn đề)")
+
+    # 2. Lọc đơn Pending (Sửa lỗi .pk)
+    # Lưu ý: Kiểm tra kỹ xem trong DB chữ 'pending' viết hoa hay thường
+    pending_payments = Payment.objects.filter(payment_status__iexact='pending') # iexact: Không phân biệt hoa thường
+    print(f"   -> Tổng số Payment đang Pending tìm thấy: {pending_payments.count()}")
+
+    if pending_payments.exists():
+        sample = pending_payments.first()
+        # Sửa sample.id -> sample.pk
+        is_expired = sample.expiration_time and sample.expiration_time < now
+        print(f"   -> [Check mẫu] PK: {sample.pk} | Time: {sample.expiration_time} | Hết hạn chưa?: {is_expired}")
+
+    # 3. Lọc đơn THỰC SỰ hết hạn để hủy
+    expired_payments = Payment.objects.filter(payment_status__iexact='pending', expiration_time__lt=now)
+    
+    if not expired_payments.exists():
+        print("   -> ✅ Không có đơn nào quá hạn cần hủy.")
+        print(f"------------------------------------------------")
+        return
+
+    print(f"   -> ⚡ Tìm thấy {expired_payments.count()} đơn quá hạn. Bắt đầu hủy...")
+
+    # 4. Xử lý hủy
     for payment in expired_payments:
-        # Cập nhật trạng thái payment thành 'failed'
-        # payment.payment_status = 'failed'
-        # payment.save()
+        try:
+            print(f"   ♻️ Đang xử lý Payment PK: {payment.pk}")
+            order = payment.order
+            
+            # Xóa payment
+            payment.delete()
 
-        # Lấy đơn hàng liên quan đến payment này
-        order = payment.order
+            # Hủy đơn
+            order.order_status = 'cancelled'
+            order.save() 
 
-        payment.delete()
+            # Hoàn vé & Promotion
+            order_details = OrderDetail.objects.filter(order=order)
+            for order_detail in order_details:
+                section_price = order_detail.pricing
+                section_price.available_seats += 1
+                section_price.save()
 
-        # Cập nhật trạng thái đơn hàng thành 'cancelled'
-        order.order_status = 'cancelled'
-        order.save()
+                if order_detail.promotion:
+                    promotion = order_detail.promotion
+                    promotion.usage_limit += 1
+                    promotion.save()
 
-        # Lấy tất cả OrderDetail liên quan đến Order này
-        order_details = OrderDetail.objects.filter(order=order)
-
-        # Cập nhật thông tin seat_id trong OrderDetail thành null và quản lý usage_limit của Promotion
-        for order_detail in order_details:
-            # Cập nhật lại số ghế còn lại trong SectionPrice
-            section_price = order_detail.pricing
-            section_price.available_seats += 1
-            section_price.save()
-
-            # Nếu OrderDetail có promotion, tăng usage_limit của Promotion
-            if order_detail.promotion:
-                promotion = order_detail.promotion
-                promotion.usage_limit += 1
-                promotion.save()
-
-                # Log để kiểm tra các promotion đã được cập nhật
-                print(f"Promotion {promotion.promo_code} usage_limit increased to {promotion.usage_limit}.")
-
-        # Đảm bảo các thay đổi đã được lưu vào database
-        print(f"Order {order.order_id} has been cancelled and all associated seats have been freed.")
+            print(f"      ✅ Đã hủy Order {order.order_id} thành công.")
+            
+        except Exception as e:
+            print(f"      ❌ Lỗi khi xử lý Payment {payment.pk}: {str(e)}")
+            
+    print(f"------------------------------------------------")
 
 def extract_error_message(e):
     """

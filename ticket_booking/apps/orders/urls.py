@@ -3,6 +3,7 @@ from .views import *
 
 urlpatterns = [
     path('matches/', MatchListAPIView.as_view(), name='match-list'),
+
     path('matches/<int:match_id>/', MatchDetailAPIView.as_view(), name='match-detail'),
     path('promotions/<int:match_id>/<int:section_id>/', PromotionListView.as_view(), name='promotion_list'),
 

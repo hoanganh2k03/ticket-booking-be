@@ -79,3 +79,8 @@ celerybeat-schedule-wal
 sessions.json
 env_310/
 *.log
+*.log
+*.dat
+__pycache__/
+db.sqlite3
+.env

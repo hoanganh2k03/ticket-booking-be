@@ -13565,3 +13565,11 @@ Not Found: /media/Layout B
 [33mHTTP GET /media/Layout%20B 404 [0.06, 127.0.0.1:49738][0m
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20A 404 [0.08, 127.0.0.1:50168][0m
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20B 404 [0.09, 127.0.0.1:49938][0m
+[mHTTP GET /api/events/matches/ 200 [0.22, 127.0.0.1:57135][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:57135][0m
+[mHTTP GET /api/events/matches/ 200 [0.20, 127.0.0.1:61311][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:61311][0m

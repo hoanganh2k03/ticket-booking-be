@@ -13563,3 +13563,5 @@ Not Found: /media/Layout A
 [33mHTTP GET /media/Layout%20A 404 [0.07, 127.0.0.1:60601][0m
 Not Found: /media/Layout B
 [33mHTTP GET /media/Layout%20B 404 [0.06, 127.0.0.1:49738][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader

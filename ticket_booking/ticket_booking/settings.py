@@ -130,7 +130,7 @@ INSTALLED_APPS = [
     "apps.promotions",
     "apps.returns",
     "apps.reports",
-    #   "apps.chatbot"
+      "apps.chatbot"
 ]
 
 MIDDLEWARE = [

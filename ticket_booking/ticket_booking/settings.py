@@ -11,6 +11,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import sys
+
+# Ensure stdout/stderr use UTF-8 encoding on Windows consoles to avoid logging Unicode errors
+try:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,7 +63,7 @@ EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
 # EMAIL_HOST_USER = 'vuquochoanganh2k3@gmail.com'
 # EMAIL_HOST_PASSWORD = 'tgai qoii itcl oroc'
 
-GROQ_API_KEY='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'
+GROQ_API_KEY='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'
 # calery
 from celery.schedules import crontab  # Thêm import ở đây
 

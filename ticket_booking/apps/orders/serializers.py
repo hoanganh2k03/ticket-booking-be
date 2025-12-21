@@ -155,16 +155,19 @@ def extract_error_message(e):
 
 
 def raise_custom_validation_error(message):
-        """
-        Tạo lỗi validation tùy chỉnh với mã lỗi và thông điệp.
-        Trả về một định dạng lỗi dễ xử lý hơn.
-        """
-        # error_message = str(message) if isinstance(message, str) else str(message)
-        error_detail = {
-            "status": "error",
-            "message": message
-        }
-        raise ValidationError(error_detail)
+    """
+    Tạo lỗi validation tùy chỉnh và chuẩn hóa thông điệp trả về.
+    - Nếu `message` không phải chuỗi, cố gắng trích xuất chuỗi bằng `extract_error_message`.
+    - Trả về `ValidationError` với key `message` (dễ đọc trên frontend).
+    """
+    # Chuẩn hóa message về chuỗi
+    if not isinstance(message, str):
+        normalized = extract_error_message(message)
+    else:
+        normalized = message
+
+    # Trả về cấu trúc đơn giản để frontend dễ hiển thị
+    raise ValidationError({"message": normalized})
 
 
 # ==========================================

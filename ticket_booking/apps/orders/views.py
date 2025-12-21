@@ -120,19 +120,23 @@ class OrderCreateAPIView(generics.CreateAPIView):
             print("Sanitized payload:", data)
 
             serializer = self.get_serializer(data=data)
-            if serializer.is_valid():
-                order = serializer.save()
-                return Response({
-                    "status": "success",
-                    "message": "Đơn hàng được đặt thành công.",
-                    "data": OrderSerializer(order).data
-                }, status=status.HTTP_201_CREATED)
+            # Raise ValidationError immediately if data is invalid so we can return structured 400
+            serializer.is_valid(raise_exception=True)
+            order = serializer.save()
 
-            print("Errors:", serializer.errors)
+            return Response({
+                "status": "success",
+                "message": "Đơn hàng được đặt thành công.",
+                "data": OrderSerializer(order).data
+            }, status=status.HTTP_201_CREATED)
+
+        except ValidationError as ve:
+            # Return structured validation error (400) instead of a Python string
+            print("ValidationError:", ve.detail)
             return Response({
                 "status": "error",
-                "message": "Lỗi khi thực hiện mua vé.",
-                "errors": serializer.errors
+                "message": extract_error_message(ve),
+                "errors": ve.detail
             }, status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
@@ -250,91 +254,127 @@ import uuid
 import hmac
 import hashlib
 import requests
+import logging
 
+logger = logging.getLogger(__name__)
 
 class MoMoPaymentAPIView(APIView):
 
     def post(self, request):
-        # Extract order ID and other details from the request
+        try:
+            # Basic validation
+            order_id = request.data.get('order')
+            if not order_id:
+                return Response({"error": "Missing 'order' field."}, status=status.HTTP_400_BAD_REQUEST)
 
-        order_id = request.data.get('order')
-        amount = request.data.get('amount', 50000)  # You can adjust this
-        order_info = request.data.get('order_info', 'Pay with MoMo')
-        CURRENT_DOMAIN = "https://willene-spiriferous-drucilla.ngrok-free.dev"
-        ipn_url = f"{CURRENT_DOMAIN}/api/orders/done-payment/"        # Trỏ về đúng cái view vừa tạo ở bước 1 và 2
-        redirect_url = f"{CURRENT_DOMAIN}/api/orders/payment-result/"
+            try:
+                order = Order.objects.get(order_id=order_id)
+            except Order.DoesNotExist:
+                return Response({"error": "Order not found."}, status=status.HTTP_400_BAD_REQUEST)
 
-         # Extract order ID and other details from the request
+            # Extract amount and ensure it's an integer
+            amount_raw = request.data.get('amount', 50000)
+            try:
+                amount = int(amount_raw)
+            except (ValueError, TypeError):
+                return Response({"error": "Invalid 'amount' value."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # order_id = request.data.get('order')
-        # amount = request.data.get('amount', 50000)  # You can adjust this
-        # order_info = request.data.get('order_info', 'Pay with MoMo')
-        # redirect_url = request.data.get('redirect_url', 'https://your-redirect-url.com')
-        # ipn_url = request.data.get('ipn_url', 'https://your-ipn-url.com')
-        
-        # Prepare parameters for MoMo request
-        access_key = "F8BBA842ECF85"
-        secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
-        partner_code = "MOMO"
-        request_type = "payWithMethod"
+            order_info = request.data.get('order_info', 'Pay with MoMo')
 
-        order = Order.objects.get(order_id=order_id)
+            # NOTE: set your domain appropriately for production; keep local/ngrok for dev
+            CURRENT_DOMAIN = request.data.get('current_domain') or "https://willene-spiriferous-drucilla.ngrok-free.dev"
+            ipn_url = f"{CURRENT_DOMAIN}/api/orders/done-payment/"
+            redirect_url = f"{CURRENT_DOMAIN}/api/orders/payment-result/"
 
-        # order_id = str(uuid.uuid4())
-        request_id = str(uuid.uuid4())
-        extra_data = ""  # Can encode in base64 if needed
+            # Prepare parameters for MoMo request
+            access_key = "F8BBA842ECF85"
+            secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+            partner_code = "MOMO"
+            request_type = "payWithMethod"
 
-        # Create raw signature
-        raw_signature = f"accessKey={access_key}&amount={amount}&extraData={extra_data}&ipnUrl={ipn_url}&orderId={order_id}&orderInfo={order_info}&partnerCode={partner_code}&redirectUrl={redirect_url}&requestId={request_id}&requestType={request_type}"
-        
-        # Generate the signature
-        h = hmac.new(secret_key.encode('utf-8'), raw_signature.encode('utf-8'), hashlib.sha256)
+            request_id = str(uuid.uuid4())
+            extra_data = ""
 
-        signature = h.hexdigest()
-
-        # Prepare data to send to MoMo
-        data = {
-            'partnerCode': partner_code,
-            'orderId': order_id,
-            'partnerName': 'MoMo Payment',
-            'storeId': 'Test Store',
-            'ipnUrl': ipn_url,
-            'amount': str(amount),
-            'lang': 'vi',
-            'requestType': request_type,
-            'redirectUrl': redirect_url,
-            'autoCapture': True,
-            'orderInfo': order_info,
-            'requestId': request_id,
-            'extraData': extra_data,
-            'signature': signature,
-            'orderGroupId': ''
-        }
-
-        # Send request to MoMo
-        endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
-        response = requests.post(endpoint, json=data)
-
-        print(response.json())
-
-        # If MoMo payment URL is returned successfully
-        if response.status_code == 200:
-            payment_data = response.json()
-
-            expiration_time = timezone.now() + timedelta(minutes=5)
-
-            # check_payment_expiration.delay()
-            # Create a new Payment object in the database
-            payment = Payment.objects.create(
-                order=order,
-                payment_method='transfer',
-                payment_status='pending',
-                transaction_code=payment_data.get('transactionCode'),
-                expiration_time=expiration_time,
+            raw_signature = (
+                f"accessKey={access_key}&amount={amount}&extraData={extra_data}&ipnUrl={ipn_url}"
+                f"&orderId={order_id}&orderInfo={order_info}&partnerCode={partner_code}"
+                f"&redirectUrl={redirect_url}&requestId={request_id}&requestType={request_type}"
             )
-            return Response(payment_data, status=status.HTTP_200_OK)
-        
-        return Response({"error": "Payment request failed"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Generate the signature
+            h = hmac.new(secret_key.encode('utf-8'), raw_signature.encode('utf-8'), hashlib.sha256)
+            signature = h.hexdigest()
+
+            payload = {
+                'partnerCode': partner_code,
+                'orderId': order_id,
+                'partnerName': 'MoMo Payment',
+                'storeId': 'Test Store',
+                'ipnUrl': ipn_url,
+                'amount': str(amount),
+                'lang': 'vi',
+                'requestType': request_type,
+                'redirectUrl': redirect_url,
+                'autoCapture': True,
+                'orderInfo': order_info,
+                'requestId': request_id,
+                'extraData': extra_data,
+                'signature': signature,
+                'orderGroupId': ''
+            }
+
+            # Create or reuse a pending Payment for tracking (so UI can retry if gateway times out)
+            expiration_time = timezone.now() + timedelta(minutes=5)
+            existing_payment = Payment.objects.filter(order=order, payment_status='pending').order_by('-created_at').first()
+            if existing_payment and existing_payment.expiration_time and existing_payment.expiration_time > timezone.now():
+                payment = existing_payment
+            else:
+                payment = Payment.objects.create(
+                    order=order,
+                    payment_method='transfer',
+                    payment_status='pending',
+                    transaction_code=None,
+                    expiration_time=expiration_time,
+                )
+
+            endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
+
+            # Try with retries and exponential backoff
+            payment_data = None
+            attempts = 3
+            backoff = [1, 2, 4]
+            for attempt in range(attempts):
+                try:
+                    resp = requests.post(endpoint, json=payload, timeout=30)
+                    resp.raise_for_status()
+                    payment_data = resp.json()
+                    break
+                except requests.RequestException as req_err:
+                    logger.warning("Attempt %s: Error communicating with MoMo: %s", attempt + 1, req_err)
+                    if attempt < attempts - 1:
+                        time.sleep(backoff[attempt])
+                    else:
+                        logger.exception("All attempts failed contacting MoMo")
+                except ValueError as val_err:
+                    logger.exception("Invalid JSON from MoMo: %s", val_err)
+                    return Response({"error": "Invalid response from payment gateway."}, status=status.HTTP_502_BAD_GATEWAY)
+
+            if payment_data is None:
+                # Gateway unreachable after retries — return payment id so frontend can retry safely
+                return Response({"error": "Failed to contact payment gateway after retries.", "payment_id": payment.payment_id}, status=status.HTTP_502_BAD_GATEWAY)
+
+            # Persist transaction code from gateway
+            transaction_code = payment_data.get('transactionCode') or payment_data.get('transaction_code')
+            if transaction_code:
+                payment.transaction_code = transaction_code
+                payment.save()
+
+            return Response({"payment": payment_data, "payment_id": payment.payment_id}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            # Log full traceback for debugging and return a generic message
+            logger.exception("Internal Server Error on %s", request.path)
+            return Response({"error": "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
 class MoMoIPNAPIView(APIView):

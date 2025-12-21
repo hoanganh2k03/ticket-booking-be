@@ -13883,3 +13883,565 @@ Watching for file changes with StatReloader
 [mHTTP GET /api/orders/matches/ 200 [0.44, 127.0.0.1:56316][0m
 [mHTTP POST /api/chat/send/ 200 [4.41, 127.0.0.1:64197][0m
 [mHTTP POST /api/chat/send/ 200 [2.27, 127.0.0.1:50784][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=34 200 [0.05, 127.0.0.1:65482][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.32, 127.0.0.1:65482][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.18, 127.0.0.1:65482][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:51791]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:51791]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.13, 127.0.0.1:65482][0m
+[mHTTP POST /api/accounts/auth/token/refresh/ 200 [0.06, 127.0.0.1:65482][0m
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.07, 127.0.0.1:65482][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.05, 127.0.0.1:55894][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [1.67, 127.0.0.1:55705][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [1.63, 127.0.0.1:59790][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.09, 127.0.0.1:59790][0m
+[mHTTP GET /api/orders/promotions/2/6/ 200 [0.03, 127.0.0.1:59790][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:51791]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.05, 127.0.0.1:51272][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.09, 127.0.0.1:51272][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:60772]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:60772]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.02, 127.0.0.1:51272][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:60772]
+[mHTTP POST /api/accounts/auth/login 200 [1.21, 127.0.0.1:62516][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.05, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.05, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.04, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:64540][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:62516][0m
+Not Found: /media/Layout A
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20A 404 [0.07, 127.0.0.1:58129][0m
+[33mHTTP GET /media/Layout%20B 404 [0.07, 127.0.0.1:60668][0m
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.04, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/stadiums/3/sections/ 200 [0.04, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/stadiums/4/sections/ 200 [0.05, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/stadiums/1/sections/ 200 [0.05, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/stadiums/?sport_id=2 200 [0.05, 127.0.0.1:62516][0m
+Not Found: /media/Layout B
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20B 404 [0.02, 127.0.0.1:55818][0m
+[33mHTTP GET /media/Layout%20A 404 [0.03, 127.0.0.1:49673][0m
+[mHTTP GET /api/events/stadiums/?sport_id=1 200 [0.04, 127.0.0.1:62516][0m
+Not Found: /media/Layout B
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20B 404 [0.02, 127.0.0.1:51436][0m
+[33mHTTP GET /media/Layout%20A 404 [0.02, 127.0.0.1:49704][0m
+[mHTTP GET /api/events/stadiums/?sport_id=2 200 [0.03, 127.0.0.1:62516][0m
+Not Found: /media/Layout B
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20B 404 [0.02, 127.0.0.1:50404][0m
+[33mHTTP GET /media/Layout%20A 404 [0.02, 127.0.0.1:52910][0m
+[mHTTP GET /api/events/stadiums/?sport_id=1 200 [0.04, 127.0.0.1:62516][0m
+Not Found: /media/Layout B
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20B 404 [0.02, 127.0.0.1:55210][0m
+[33mHTTP GET /media/Layout%20A 404 [0.03, 127.0.0.1:60249][0m
+Bad Request: /api/accounts/auth/login
+[31;1mHTTP POST /api/accounts/auth/login 400 [0.05, 127.0.0.1:62516][0m
+Bad Request: /api/accounts/auth/login
+[31;1mHTTP POST /api/accounts/auth/login 400 [0.02, 127.0.0.1:62354][0m
+[mHTTP GET /api/events/matches/ 200 [0.16, 127.0.0.1:62354][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:62354][0m
+[mHTTP GET /api/events/matches/ 200 [0.14, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/matches/ 200 [0.12, 127.0.0.1:62354][0m
+[mHTTP GET /api/events/sports/ 200 [0.02, 127.0.0.1:62354][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.04, 127.0.0.1:62354][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.02, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/sports/ 200 [0.02, 127.0.0.1:62354][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:62516][0m
+Not Found: /media/Layout B
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20B 404 [0.03, 127.0.0.1:51579][0m
+[33mHTTP GET /media/Layout%20A 404 [0.03, 127.0.0.1:51594][0m
+[mHTTP GET /api/events/matches/ 200 [0.09, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:62516][0m
+[mHTTP GET /api/events/matches/ 200 [0.10, 127.0.0.1:62354][0m
+[mHTTP GET /api/events/sports/ 200 [0.02, 127.0.0.1:62354][0m
+[mHTTP GET /api/promotions/ 200 [0.06, 127.0.0.1:62354][0m
+[mHTTP GET /api/promotions/ 200 [0.04, 127.0.0.1:62516][0m
+[mHTTP GET /api/returns/?_=1766249942746 200 [0.05, 127.0.0.1:62516][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [0.56, 127.0.0.1:62516][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.05, 127.0.0.1:62516][0m
+[mHTTP GET /api/orders/matches/ 200 [0.08, 127.0.0.1:62354][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.03, 127.0.0.1:62354][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.06, 127.0.0.1:62354][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:49287]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:49287]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.01, 127.0.0.1:62354][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:49287]
+[mHTTP GET /api/orders/matches/2/ 200 [0.46, 127.0.0.1:62354][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:49670]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:49670]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.02, 127.0.0.1:62354][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:49670]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.21, 127.0.0.1:57984][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.16, 127.0.0.1:57984][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:55908]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:55908]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.02, 127.0.0.1:57984][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:55908]
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.14, 127.0.0.1:51541][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:58010][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.04, 127.0.0.1:58010][0m
+[mHTTP GET /api/orders/matches/ 200 [0.10, 127.0.0.1:58010][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.05, 127.0.0.1:58010][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.06, 127.0.0.1:58010][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:49336]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:49336]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.02, 127.0.0.1:58010][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:49336]
+[mHTTP GET /api/chat/history/?customer_id=34 200 [1.03, 127.0.0.1:64225][0m
+[mHTTP GET /api/orders/matches/ 200 [0.92, 127.0.0.1:51348][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.06, 127.0.0.1:49671][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.10, 127.0.0.1:49671][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:52914]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:52914]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.03, 127.0.0.1:49671][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:52914]
+[mHTTP GET /api/orders/matches/2/ 200 [0.08, 127.0.0.1:60285][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:57359]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:57359]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.02, 127.0.0.1:60285][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:57359]
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.28, 127.0.0.1:59835][0m
+[mHTTP GET /api/orders/matches/ 200 [0.29, 127.0.0.1:53244][0m
+[mHTTP GET /api/chat/history/?customer_id=1 200 [0.08, 127.0.0.1:53244][0m
+[mHTTP GET /api/orders/matches/ 200 [0.11, 127.0.0.1:59835][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [1.31, 127.0.0.1:52438][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.13, 127.0.0.1:52438][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:58116][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.05, 127.0.0.1:50301][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.09, 127.0.0.1:50301][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:61551]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:61551]
+Unauthorized: /api/events/stadiums/2/sections/
+[31;1mHTTP GET /api/events/stadiums/2/sections/ 401 [0.03, 127.0.0.1:50301][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:61551]
+Unauthorized: /api/accounts/employee/profile/
+[31;1mHTTP GET /api/accounts/employee/profile/ 401 [0.05, 127.0.0.1:58740][0m
+[mHTTP POST /api/accounts/auth/login 200 [2.11, 127.0.0.1:55789][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.06, 127.0.0.1:55789][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.05, 127.0.0.1:55789][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.04, 127.0.0.1:56517][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:55789][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:56517][0m
+Not Found: /media/Layout B
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20B 404 [0.06, 127.0.0.1:62567][0m
+[33mHTTP GET /media/Layout%20A 404 [0.07, 127.0.0.1:64200][0m
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.04, 127.0.0.1:56517][0m
+[mHTTP PUT /api/events/stadiums/2/sections/4/update/ 200 [0.09, 127.0.0.1:56517][0m
+[mHTTP PUT /api/events/stadiums/2/sections/5/update/ 200 [0.04, 127.0.0.1:56517][0m
+[mHTTP PUT /api/events/stadiums/2/sections/6/update/ 200 [0.03, 127.0.0.1:56517][0m
+[mHTTP PUT /api/events/stadiums/2/sections/4/update/ 200 [0.04, 127.0.0.1:56517][0m
+[mHTTP PUT /api/events/stadiums/2/sections/5/update/ 200 [0.05, 127.0.0.1:56517][0m
+[mHTTP PUT /api/events/stadiums/2/sections/6/update/ 200 [0.04, 127.0.0.1:56517][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.09, 127.0.0.1:56517][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:56517][0m
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20A 404 [0.06, 127.0.0.1:62709][0m
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20B 404 [0.06, 127.0.0.1:54388][0m
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:56517][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.03, 127.0.0.1:56517][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:56517][0m
+Not Found: /media/Layout A
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20A 404 [0.05, 127.0.0.1:52656][0m
+[33mHTTP GET /media/Layout%20B 404 [0.04, 127.0.0.1:64532][0m
+[mHTTP GET /api/events/stadiums/1/sections/ 200 [0.03, 127.0.0.1:56517][0m
+Bad Request: /api/accounts/auth/login
+[31;1mHTTP POST /api/accounts/auth/login 400 [0.15, 127.0.0.1:63247][0m
+Unauthorized: /api/events/stadiums/3/sections/
+[31;1mHTTP GET /api/events/stadiums/3/sections/ 401 [0.23, 127.0.0.1:56527][0m
+[mHTTP POST /api/accounts/auth/token/refresh/ 200 [0.22, 127.0.0.1:56527][0m
+[mHTTP GET /api/events/stadiums/3/sections/ 200 [0.08, 127.0.0.1:56527][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.40, 127.0.0.1:64197][0m
+[mHTTP GET /api/events/sports/ 200 [0.08, 127.0.0.1:64197][0m
+Not Found: /media/Layout A
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20A 404 [0.11, 127.0.0.1:56375][0m
+[33mHTTP GET /media/Layout%20B 404 [0.12, 127.0.0.1:54094][0m
+[mHTTP GET /api/events/sports/ 200 [0.12, 127.0.0.1:64197][0m
+[mHTTP GET /api/events/sports/ 200 [0.09, 127.0.0.1:59576][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.25, 127.0.0.1:57981][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.28, 127.0.0.1:50128][0m
+[mHTTP GET /api/events/sports/ 200 [0.08, 127.0.0.1:64197][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.15, 127.0.0.1:59576][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.16, 127.0.0.1:57981][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.24, 127.0.0.1:64197][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.23, 127.0.0.1:59576][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.24, 127.0.0.1:57981][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.15, 127.0.0.1:59576][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.17, 127.0.0.1:57981][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.09, 127.0.0.1:57981][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.08, 127.0.0.1:57981][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.08, 127.0.0.1:59576][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:64197][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.12, 127.0.0.1:57981][0m
+[mHTTP GET /api/events/sports/ 200 [0.08, 127.0.0.1:50128][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.13, 127.0.0.1:59576][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.11, 127.0.0.1:64197][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.11, 127.0.0.1:50128][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.09, 127.0.0.1:50128][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.11, 127.0.0.1:64197][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.10, 127.0.0.1:50128][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.06, 127.0.0.1:50128][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.06, 127.0.0.1:64197][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.11, 127.0.0.1:64197][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.12, 127.0.0.1:50128][0m
+[mHTTP GET /api/events/sports/ 200 [0.06, 127.0.0.1:59576][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.12, 127.0.0.1:64197][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.13, 127.0.0.1:50128][0m
+[mHTTP GET /api/events/sports/ 200 [0.07, 127.0.0.1:57981][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.10, 127.0.0.1:64197][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.11, 127.0.0.1:59576][0m
+[mHTTP GET /api/tickets/matches/without-tickets/ 200 [0.13, 127.0.0.1:59576][0m
+[mHTTP GET /api/tickets/match-detail/5/ 200 [0.08, 127.0.0.1:59576][0m
+[mHTTP OPTIONS /api/tickets/match/5/section/10/price/ 200 [0.00, 127.0.0.1:59576][0m
+[mHTTP POST /api/tickets/match/5/section/10/price/ 201 [0.09, 127.0.0.1:59576][0m
+[mHTTP GET /api/events/sports/ 200 [0.09, 127.0.0.1:57981][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.14, 127.0.0.1:64197][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.15, 127.0.0.1:59576][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:55280][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:56557][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.03, 127.0.0.1:55280][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.04, 127.0.0.1:56557][0m
+[mHTTP GET /api/reports/revenue/?start_date=2025-12-14&end_date=2025-12-20 200 [0.07, 127.0.0.1:55280][0m
+[mHTTP GET /api/reports/revenue/?start_date=2025-12-14&end_date=2025-12-20 200 [0.04, 127.0.0.1:56557][0m
+[mHTTP GET /api/reports/ticket-status/?start_date=2025-12-14&end_date=2025-12-20 200 [0.08, 127.0.0.1:55280][0m
+[mHTTP GET /api/reports/returns-report/?start_date=2025-12-14&end_date=2025-12-20 200 [0.04, 127.0.0.1:55280][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.63, 127.0.0.1:55211][0m
+[mHTTP GET /api/orders/matches/ 200 [0.49, 127.0.0.1:51848][0m
+[mHTTP GET /api/chat/history/?customer_id=1 200 [0.11, 127.0.0.1:51848][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:55211][0m
+[mHTTP OPTIONS /api/accounts/auth/customer/login/ 200 [0.01, 127.0.0.1:62179][0m
+Bad Request: /api/accounts/auth/customer/login/
+Bad Request: /api/accounts/auth/customer/login/
+[31;1mHTTP POST /api/accounts/auth/customer/login/ 400 [0.09, 127.0.0.1:55906][0m
+[31;1mHTTP POST /api/accounts/auth/customer/login/ 400 [0.09, 127.0.0.1:62179][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [0.95, 127.0.0.1:63373][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.07, 127.0.0.1:63373][0m
+[mHTTP GET /api/orders/matches/ 200 [0.11, 127.0.0.1:54783][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.07, 127.0.0.1:62146][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.11, 127.0.0.1:62146][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:56081]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:56081]
+[mHTTP OPTIONS /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:62146][0m
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:62146][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:56081]
+[mHTTP GET /api/chat/history/?customer_id=1 200 [0.11, 127.0.0.1:56568][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:54962][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [1.03, 127.0.0.1:50319][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [1.13, 127.0.0.1:51516][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.06, 127.0.0.1:51516][0m
+[mHTTP GET /api/orders/matches/ 200 [0.12, 127.0.0.1:50319][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.06, 127.0.0.1:50319][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:50319][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.06, 127.0.0.1:53165][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.12, 127.0.0.1:53165][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:55089]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:55089]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.07, 127.0.0.1:53165][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.10, 127.0.0.1:51190][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:51190][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.19, 127.0.0.1:51190][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:55089]
+[mHTTP GET /api/chat/history/?customer_id=1 200 [0.09, 127.0.0.1:54610][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:64480][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [1.09, 127.0.0.1:64196][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.12, 127.0.0.1:64196][0m
+[mHTTP GET /api/orders/matches/ 200 [0.18, 127.0.0.1:62319][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.04, 127.0.0.1:62319][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.07, 127.0.0.1:62319][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:54718]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:54718]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.05, 127.0.0.1:62319][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.09, 127.0.0.1:51174][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.13, 127.0.0.1:55316][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.09, 127.0.0.1:55316][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.05, 127.0.0.1:60060][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.10, 127.0.0.1:60060][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.44, 127.0.0.1:55096][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.10, 127.0.0.1:55096][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.11, 127.0.0.1:54873][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.11, 127.0.0.1:52897][0m
+[mHTTP GET /api/orders/promotions/2/5/ 200 [0.40, 127.0.0.1:50642][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.22, 127.0.0.1:50642][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.12, 127.0.0.1:52589][0m
+Watching for file changes with StatReloader
+[mHTTP OPTIONS /api/accounts/auth/login 200 [0.02, 127.0.0.1:55449][0m
+[mHTTP POST /api/accounts/auth/login 200 [2.66, 127.0.0.1:55449][0m
+[mHTTP OPTIONS /api/accounts/employee/profile/ 200 [0.02, 127.0.0.1:55449][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.11, 127.0.0.1:55449][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.55, 127.0.0.1:54961][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.24, 127.0.0.1:54961][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:57215]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:57215]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.13, 127.0.0.1:54961][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.11, 127.0.0.1:56985][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [2.71, 127.0.0.1:56985][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.08, 127.0.0.1:64688][0m
+Internal Server Error: /api/orders/create-order/
+[35;1mHTTP POST /api/orders/create-order/ 500 [0.09, 127.0.0.1:59570][0m
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:64605]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:64605]
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:64605]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.84, 127.0.0.1:53970][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.28, 127.0.0.1:53970][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:54923]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:54923]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.48, 127.0.0.1:53970][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:54923]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=34 200 [0.01, 127.0.0.1:64348][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.06, 127.0.0.1:64348][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.08, 127.0.0.1:64348][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:57657]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:57657]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.05, 127.0.0.1:64348][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.04, 127.0.0.1:64348][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.12, 127.0.0.1:64348][0m
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:53565]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:53565]
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:53565]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=34 200 [0.03, 127.0.0.1:57098][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.13, 127.0.0.1:57098][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.19, 127.0.0.1:57098][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:55510]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:55510]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.42, 127.0.0.1:57098][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.07, 127.0.0.1:57098][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:55510]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.56, 127.0.0.1:58837][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.21, 127.0.0.1:58837][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:51396]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:51396]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.09, 127.0.0.1:58837][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.06, 127.0.0.1:63604][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:51396]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=34 200 [0.01, 127.0.0.1:63604][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.06, 127.0.0.1:63604][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.09, 127.0.0.1:63604][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:60086]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:60086]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.08, 127.0.0.1:63604][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.03, 127.0.0.1:63604][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.15, 127.0.0.1:63604][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:60086]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.13, 127.0.0.1:51078][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.16, 127.0.0.1:51078][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:60897]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:60897]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.07, 127.0.0.1:51078][0m
+[mHTTP GET /api/orders/promotions/2/5/ 200 [0.03, 127.0.0.1:58595][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.07, 127.0.0.1:58595][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:60897]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.07, 127.0.0.1:62955][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.09, 127.0.0.1:62955][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:59004]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:59004]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.07, 127.0.0.1:62955][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:59004]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.04, 127.0.0.1:62955][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.06, 127.0.0.1:62955][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:55761]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:55761]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:62955][0m
+[mHTTP GET /api/orders/promotions/2/6/ 200 [0.05, 127.0.0.1:49277][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.11, 127.0.0.1:49277][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.11, 127.0.0.1:53814][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.04, 127.0.0.1:59864][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.08, 127.0.0.1:59864][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.09, 127.0.0.1:51031][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.07, 127.0.0.1:51031][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:55761]
+[mHTTP GET /api/orders/matches/2/ 200 [0.10, 127.0.0.1:65083][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:56282]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:56282]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.05, 127.0.0.1:65083][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:56282]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.04, 127.0.0.1:65083][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.07, 127.0.0.1:65083][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:54890]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:54890]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.04, 127.0.0.1:65083][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.03, 127.0.0.1:65083][0m
+Bad Request: /api/orders/create-order/
+[31;1mHTTP POST /api/orders/create-order/ 400 [0.07, 127.0.0.1:65083][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:54890]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.46, 127.0.0.1:54504][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.26, 127.0.0.1:54504][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:65190]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:65190]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.08, 127.0.0.1:54504][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:65190]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.07, 127.0.0.1:54504][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.11, 127.0.0.1:54504][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:64201]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:64201]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.07, 127.0.0.1:54504][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.04, 127.0.0.1:54504][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.15, 127.0.0.1:54504][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:54504][0m
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [1.71, 127.0.0.1:54504][0m
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:56160]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:56160]
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:56160]
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.49, 127.0.0.1:59996][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.30, 127.0.0.1:59996][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:49297]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:49297]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.23, 127.0.0.1:59996][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.14, 127.0.0.1:64197][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.28, 127.0.0.1:55186][0m
+Bad Gateway: /api/orders/momo-payment/
+[35;1mHTTP POST /api/orders/momo-payment/ 502 [11.76, 127.0.0.1:55186][0m
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:50671]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:50671]
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:50671]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=34 200 [0.02, 127.0.0.1:54834][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.20, 127.0.0.1:54834][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.30, 127.0.0.1:54834][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:58688]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:58688]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.19, 127.0.0.1:54834][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.08, 127.0.0.1:54834][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.63, 127.0.0.1:60620][0m
+Bad Gateway: /api/orders/momo-payment/
+[35;1mHTTP POST /api/orders/momo-payment/ 502 [53.18, 127.0.0.1:60620][0m
+Method Not Allowed: /api/orders/momo-payment/
+[31;1mHTTP GET /api/orders/momo-payment/ 405 [0.93, 127.0.0.1:58066][0m
+[mHTTP GET /static/rest_framework/css/prettify.css 200 [0.31, 127.0.0.1:64195][0m
+[mHTTP GET /static/rest_framework/css/bootstrap.min.css 200 [0.36, 127.0.0.1:58066][0m
+[mHTTP GET /static/rest_framework/css/bootstrap-tweaks.css 200 [0.36, 127.0.0.1:56838][0m
+[mHTTP GET /static/rest_framework/css/default.css 200 [0.37, 127.0.0.1:56573][0m
+[mHTTP GET /static/rest_framework/js/csrf.js 200 [0.14, 127.0.0.1:64195][0m
+[mHTTP GET /static/rest_framework/js/default.js 200 [0.08, 127.0.0.1:56573][0m
+[mHTTP GET /static/rest_framework/js/prettify-min.js 200 [0.13, 127.0.0.1:56838][0m
+[mHTTP GET /static/rest_framework/js/bootstrap.min.js 200 [0.14, 127.0.0.1:58066][0m
+[mHTTP GET /static/rest_framework/js/ajax-form.js 200 [0.47, 127.0.0.1:59277][0m
+[mHTTP GET /static/rest_framework/js/load-ajax-form.js 200 [0.05, 127.0.0.1:64195][0m
+[mHTTP GET /static/rest_framework/img/grid.png 200 [0.04, 127.0.0.1:56573][0m
+[mHTTP GET /static/rest_framework/js/jquery-3.7.1.min.js 200 [0.53, 127.0.0.1:50622][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.10, 127.0.0.1:50622][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP OPTIONS /api/accounts/auth/login 200 [0.13, 127.0.0.1:50060][0m
+[mHTTP POST /api/accounts/auth/login 200 [3.25, 127.0.0.1:50060][0m
+[mHTTP OPTIONS /api/accounts/employee/profile/ 200 [0.01, 127.0.0.1:55889][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.06, 127.0.0.1:55889][0m
+[36mHTTP GET /media/employee_images/gorilla_zgYH5nz_37Gf1NN.png 304 [0.02, 127.0.0.1:55966][0m
+[mHTTP GET /api/events/sports/ 200 [0.08, 127.0.0.1:58786][0m
+[mHTTP GET /api/events/sports/ 200 [0.10, 127.0.0.1:60308][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.20, 127.0.0.1:55889][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.20, 127.0.0.1:54834][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.11, 127.0.0.1:60308][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.12, 127.0.0.1:58786][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.10, 127.0.0.1:58786][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.08, 127.0.0.1:60308][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.07, 127.0.0.1:60308][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.07, 127.0.0.1:58786][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.03, 127.0.0.1:58786][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.03, 127.0.0.1:55889][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [0.48, 127.0.0.1:60308][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [0.52, 127.0.0.1:55889][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.04, 127.0.0.1:55889][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [0.54, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:55889][0m
+[mHTTP GET /api/events/leagues/ 200 [0.07, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/leagues/ 200 [0.06, 127.0.0.1:55889][0m
+[mHTTP GET /api/events/teams/ 200 [0.05, 127.0.0.1:55889][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:55889][0m
+[mHTTP GET /api/events/teams/ 200 [0.06, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.05, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.03, 127.0.0.1:55889][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:55889][0m
+[mHTTP GET /api/events/matches/ 200 [0.22, 127.0.0.1:55889][0m
+[mHTTP GET /api/events/sports/ 200 [0.06, 127.0.0.1:55889][0m
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20B 404 [0.71, 127.0.0.1:50064][0m
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20A 404 [0.73, 127.0.0.1:55966][0m
+[mHTTP GET /api/events/matches/ 200 [0.24, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/sports/ 200 [0.06, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/matches/ 200 [0.23, 127.0.0.1:55889][0m
+[mHTTP GET /api/promotions/ 200 [0.10, 127.0.0.1:60308][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:55889][0m
+[mHTTP GET /api/promotions/ 200 [0.05, 127.0.0.1:58786][0m
+[mHTTP GET /api/returns/?_=1766356921557 200 [0.07, 127.0.0.1:58786][0m
+[mHTTP GET /api/promotions/ 200 [0.04, 127.0.0.1:58786][0m
+[mHTTP GET /api/events/matches/ 200 [0.13, 127.0.0.1:58786][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:58786][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.02, 127.0.0.1:58786][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:58786][0m
+Not Found: /media/Layout A
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20A 404 [0.04, 127.0.0.1:49670][0m
+[33mHTTP GET /media/Layout%20B 404 [0.04, 127.0.0.1:64178][0m
+[mHTTP GET /api/events/teams/ 200 [0.06, 127.0.0.1:58786][0m
+[mHTTP GET /api/events/sports/ 200 [0.02, 127.0.0.1:58786][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:58786][0m
+[mHTTP GET /api/events/leagues/ 200 [0.04, 127.0.0.1:58786][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.04, 127.0.0.1:58786][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [0.40, 127.0.0.1:55889][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.05, 127.0.0.1:55889][0m
+[mHTTP GET /api/accounts/employees/ 200 [0.08, 127.0.0.1:55889][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:60308][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.07, 127.0.0.1:55889][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.08, 127.0.0.1:58786][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.06, 127.0.0.1:54260][0m
+[mHTTP GET /api/orders/matches/ 200 [0.08, 127.0.0.1:53412][0m
+[mHTTP GET /api/chat/history/?customer_id=1 200 [0.04, 127.0.0.1:53412][0m
+[mHTTP GET /api/orders/matches/ 200 [0.06, 127.0.0.1:54260][0m
+[mHTTP OPTIONS /api/accounts/auth/customer/google/ 200 [0.01, 127.0.0.1:54660][0m
+[mHTTP POST /api/accounts/auth/customer/google/ 200 [1.17, 127.0.0.1:54660][0m
+[mHTTP GET /api/chat/history/?customer_id=35 200 [0.05, 127.0.0.1:54660][0m
+[mHTTP GET /api/orders/matches/ 200 [0.10, 127.0.0.1:52408][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=35 200 [0.01, 127.0.0.1:52408][0m
+[mHTTP GET /api/accounts/customer/profile/?id=35 200 [0.04, 127.0.0.1:52408][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.07, 127.0.0.1:52408][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:60128]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:60128]
+[mHTTP OPTIONS /api/events/stadiums/2/sections/ 200 [0.04, 127.0.0.1:52408][0m
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:52408][0m

@@ -242,100 +242,161 @@ class PaymentStatusCheckView(APIView):
         else:
             # Nếu thanh toán đã hết thời gian hoặc không còn trong Redis
             return Response({"error": "Payment has expired or already processed."}, status=status.HTTP_400_BAD_REQUEST)
+# Phần momo đang bị lỗi
+# import json
+# import uuid
+# import hmac
+# import hashlib
+# import requests
+# class MoMoPaymentAPIView(APIView):
+#     def post(self, request):
+#         # Extract order ID and other details from the request
 
+#         order_id = request.data.get('order')
+#         amount = request.data.get('amount', 50000)  # You can adjust this
+#         order_info = request.data.get('order_info', 'Pay with MoMo')
+#         CURRENT_DOMAIN = "https://willene-spiriferous-drucilla.ngrok-free.dev"
+#         ipn_url = f"{CURRENT_DOMAIN}/api/orders/done-payment/"        # Trỏ về đúng cái view vừa tạo ở bước 1 và 2
+#         redirect_url = f"{CURRENT_DOMAIN}/api/orders/payment-result/"
 
+#          # Extract order ID and other details from the request
 
-import json
-import uuid
-import hmac
-import hashlib
-import requests
+#         # order_id = request.data.get('order')
+#         # amount = request.data.get('amount', 50000)  # You can adjust this
+#         # order_info = request.data.get('order_info', 'Pay with MoMo')
+#         # redirect_url = request.data.get('redirect_url', 'https://your-redirect-url.com')
+#         # ipn_url = request.data.get('ipn_url', 'https://your-ipn-url.com')
+        
+#         # Prepare parameters for MoMo request
+#         access_key = "F8BBA842ECF85"
+#         secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+#         partner_code = "MOMO"
+#         request_type = "payWithMethod"
 
+#         order = Order.objects.get(order_id=order_id)
+
+#         # order_id = str(uuid.uuid4())
+#         request_id = str(uuid.uuid4())
+#         extra_data = ""  # Can encode in base64 if needed
+
+#         # Create raw signature
+#         raw_signature = f"accessKey={access_key}&amount={amount}&extraData={extra_data}&ipnUrl={ipn_url}&orderId={order_id}&orderInfo={order_info}&partnerCode={partner_code}&redirectUrl={redirect_url}&requestId={request_id}&requestType={request_type}"
+        
+#         # Generate the signature
+#         h = hmac.new(secret_key.encode('utf-8'), raw_signature.encode('utf-8'), hashlib.sha256)
+
+#         signature = h.hexdigest()
+
+#         # Prepare data to send to MoMo
+#         data = {
+#             'partnerCode': partner_code,
+#             'orderId': order_id,
+#             'partnerName': 'MoMo Payment',
+#             'storeId': 'Test Store',
+#             'ipnUrl': ipn_url,
+#             'amount': str(amount),
+#             'lang': 'vi',
+#             'requestType': request_type,
+#             'redirectUrl': redirect_url,
+#             'autoCapture': True,
+#             'orderInfo': order_info,
+#             'requestId': request_id,
+#             'extraData': extra_data,
+#             'signature': signature,
+#             'orderGroupId': ''
+#         }
+
+#         # Send request to MoMo
+#         endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
+#         response = requests.post(endpoint, json=data)
+
+#         print(response.json())
+
+#         # If MoMo payment URL is returned successfully
+#         if response.status_code == 200:
+#             payment_data = response.json()
+
+#             expiration_time = timezone.now() + timedelta(minutes=5)
+
+#             # check_payment_expiration.delay()
+#             # Create a new Payment object in the database
+#             payment = Payment.objects.create(
+#                 order=order,
+#                 payment_method='transfer',
+#                 payment_status='pending',
+#                 transaction_code=payment_data.get('transactionCode'),
+#                 expiration_time=expiration_time,
+#             )
+#             return Response(payment_data, status=status.HTTP_200_OK)
+        
+#         return Response({"error": "Payment request failed"}, status=status.HTTP_400_BAD_REQUEST)
+# giả lập thanh toán
+import time
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.utils import timezone
+from datetime import timedelta
+from .models import Order, Payment 
 
 class MoMoPaymentAPIView(APIView):
-
     def post(self, request):
-        # Extract order ID and other details from the request
-
+        print("\n---------- ⚠️ CHẾ ĐỘ GIẢ LẬP THANH TOÁN (BYPASS MOMO) ----------")
+        
+        # 1. Lấy dữ liệu từ Frontend gửi lên
         order_id = request.data.get('order')
-        amount = request.data.get('amount', 50000)  # You can adjust this
-        order_info = request.data.get('order_info', 'Pay with MoMo')
-        CURRENT_DOMAIN = "https://willene-spiriferous-drucilla.ngrok-free.dev"
-        ipn_url = f"{CURRENT_DOMAIN}/api/orders/done-payment/"        # Trỏ về đúng cái view vừa tạo ở bước 1 và 2
-        redirect_url = f"{CURRENT_DOMAIN}/api/orders/payment-result/"
-
-         # Extract order ID and other details from the request
-
-        # order_id = request.data.get('order')
-        # amount = request.data.get('amount', 50000)  # You can adjust this
-        # order_info = request.data.get('order_info', 'Pay with MoMo')
-        # redirect_url = request.data.get('redirect_url', 'https://your-redirect-url.com')
-        # ipn_url = request.data.get('ipn_url', 'https://your-ipn-url.com')
         
-        # Prepare parameters for MoMo request
-        access_key = "F8BBA842ECF85"
-        secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
-        partner_code = "MOMO"
-        request_type = "payWithMethod"
-
-        order = Order.objects.get(order_id=order_id)
-
-        # order_id = str(uuid.uuid4())
-        request_id = str(uuid.uuid4())
-        extra_data = ""  # Can encode in base64 if needed
-
-        # Create raw signature
-        raw_signature = f"accessKey={access_key}&amount={amount}&extraData={extra_data}&ipnUrl={ipn_url}&orderId={order_id}&orderInfo={order_info}&partnerCode={partner_code}&redirectUrl={redirect_url}&requestId={request_id}&requestType={request_type}"
+        # Frontend đã gửi sẵn link trang đích (qrcode.html) trong biến này
+        # Code JS: redirect_url: window.location.origin + '/pages/customer/qrcode.html'
+        frontend_redirect_url = request.data.get('redirect_url') 
         
-        # Generate the signature
-        h = hmac.new(secret_key.encode('utf-8'), raw_signature.encode('utf-8'), hashlib.sha256)
-
-        signature = h.hexdigest()
-
-        # Prepare data to send to MoMo
-        data = {
-            'partnerCode': partner_code,
-            'orderId': order_id,
-            'partnerName': 'MoMo Payment',
-            'storeId': 'Test Store',
-            'ipnUrl': ipn_url,
-            'amount': str(amount),
-            'lang': 'vi',
-            'requestType': request_type,
-            'redirectUrl': redirect_url,
-            'autoCapture': True,
-            'orderInfo': order_info,
-            'requestId': request_id,
-            'extraData': extra_data,
-            'signature': signature,
-            'orderGroupId': ''
-        }
-
-        # Send request to MoMo
-        endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
-        response = requests.post(endpoint, json=data)
-
-        print(response.json())
-
-        # If MoMo payment URL is returned successfully
-        if response.status_code == 200:
-            payment_data = response.json()
-
-            expiration_time = timezone.now() + timedelta(minutes=5)
-
-            # check_payment_expiration.delay()
-            # Create a new Payment object in the database
-            payment = Payment.objects.create(
+        try:
+            # 2. XỬ LÝ DATABASE NGAY LẬP TỨC (Update thành công luôn)
+            order = Order.objects.get(order_id=order_id)
+            
+            # 2.1. Tạo bản ghi Payment thành công
+            expiration_time = timezone.now() + timedelta(minutes=10)
+            fake_trans_id = f"MOCK_{int(time.time())}"
+            
+            Payment.objects.create(
                 order=order,
-                payment_method='transfer',
-                payment_status='pending',
-                transaction_code=payment_data.get('transactionCode'),
+                payment_method='transfer',   # Hoặc 'momo'
+                payment_status='success',    # <--- QUAN TRỌNG: success/completed
+                transaction_code=fake_trans_id,
                 expiration_time=expiration_time,
             )
-            return Response(payment_data, status=status.HTTP_200_OK)
-        
-        return Response({"error": "Payment request failed"}, status=status.HTTP_400_BAD_REQUEST)
-    
+
+            # 2.2. Cập nhật trạng thái đơn hàng
+            # Dựa vào code cũ (MoMoIPNAPIView), bạn dùng trạng thái 'received'
+            order.order_status = 'received' 
+            order.save()
+            
+            print(f"✅ Đã giả lập thanh toán thành công cho đơn: {order_id}")
+
+            # 3. TẠO LINK GIẢ LẬP ĐỂ TRẢ VỀ FRONTEND
+            # Thay vì trả về link MoMo, ta trả về link trang qrcode.html kèm tham số thành công
+            # Frontend sẽ chạy dòng: window.location.href = mock_url -> Nhảy trang luôn
+            
+            mock_url = f"{frontend_redirect_url}?resultCode=0&orderId={order_id}&message=GiaoDichThanhCong"
+
+            return Response({
+                'payUrl': mock_url,  # Frontend chỉ cần biến này để redirect
+                'message': 'Giả lập thanh toán thành công'
+            }, status=status.HTTP_200_OK)
+
+        except Order.DoesNotExist:
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print("❌ Lỗi Server:", str(e))
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+# Giả lập thanh toán MoMo 
+
+
+
 
 class MoMoIPNAPIView(APIView):
     def post(self, request):

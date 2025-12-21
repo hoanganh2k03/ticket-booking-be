@@ -15807,3 +15807,1963 @@ Bad Request: /api/promotions/analyze/
 [mHTTP GET /api/tickets/completed-matches/ 200 [1.17, 127.0.0.1:54688][0m
 [mHTTP GET /api/tickets/section-prices/ 200 [4.89, 127.0.0.1:53437][0m
 [mHTTP GET /api/tickets/section-prices/ 200 [4.05, 127.0.0.1:54688][0m
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:61782]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:61782]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:49808]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:49808]
+Watching for file changes with StatReloader
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:61782]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.08, 127.0.0.1:49755][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:49755][0m
+[mHTTP OPTIONS /api/accounts/customer/loyalty/?id=502 200 [0.00, 127.0.0.1:49755][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=502 200 [0.07, 127.0.0.1:49755][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.02, 127.0.0.1:49755][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:49755][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.03, 127.0.0.1:49755][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.05, 127.0.0.1:49755][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:63918]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:63918]
+[mHTTP GET /api/orders/promotions/264/10/ 200 [0.05, 127.0.0.1:51906][0m
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:63918]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.03, 127.0.0.1:51906][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:51906][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.03, 127.0.0.1:51906][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:51906][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:59946]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:59946]
+[mHTTP GET /api/orders/promotions/262/4/ 200 [0.02, 127.0.0.1:51906][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:51906][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [1.18, 127.0.0.1:51906][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.05, 127.0.0.1:55137][0m
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:55537]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:55537]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.04, 127.0.0.1:56990][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:60736][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.04, 127.0.0.1:60736][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.05, 127.0.0.1:60736][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51509]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51509]
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.03, 127.0.0.1:60736][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.13, 127.0.0.1:50867][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.20, 127.0.0.1:50867][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:62693][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.08, 127.0.0.1:62693][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:62693][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.15, 127.0.0.1:62693][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:51509]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:54641][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.02, 127.0.0.1:54641][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.07, 127.0.0.1:54641][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:64338]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:64338]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.23, 127.0.0.1:64120][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.23, 127.0.0.1:54516][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.01, 127.0.0.1:54641][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:53890][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:53890][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:53890][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [20.14, 127.0.0.1:53890][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:64338]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:60835][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.03, 127.0.0.1:60835][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:60835][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:56525]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:56525]
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:60191][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.02, 127.0.0.1:58682][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.05, 127.0.0.1:60835][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:55970][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:55970][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:55970][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:53685][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.06, 127.0.0.1:53685][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:53685][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.15, 127.0.0.1:53685][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:56525]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.03, 127.0.0.1:53685][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:53685][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.01, 127.0.0.1:50564][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[mHTTP OPTIONS /api/accounts/customer/loyalty/?id=502 200 [0.02, 127.0.0.1:53685][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=502 200 [0.08, 127.0.0.1:53685][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.03, 127.0.0.1:53685][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:53685][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.01, 127.0.0.1:50564][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:51332][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.02, 127.0.0.1:51332][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.05, 127.0.0.1:51332][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:52240]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:52240]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.02, 127.0.0.1:56070][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:56545][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.05, 127.0.0.1:51332][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:51332][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.07, 127.0.0.1:51332][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:51332][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.16, 127.0.0.1:51332][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:52240]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:64331][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.03, 127.0.0.1:64331][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:64331][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51324]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51324]
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:60590][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.02, 127.0.0.1:55619][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:51324]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=1 404 [0.03, 127.0.0.1:64331][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:64331][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.01, 127.0.0.1:55619][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=1 404 [0.03, 127.0.0.1:65245][0m
+[mHTTP GET /api/orders/matches/ 200 [0.19, 127.0.0.1:65245][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.01, 127.0.0.1:60471][0m
+[mHTTP OPTIONS /api/accounts/auth/customer/login/ 200 [0.00, 127.0.0.1:53676][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [0.33, 127.0.0.1:53676][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.03, 127.0.0.1:53676][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:53676][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:55294][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:53676][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.03, 127.0.0.1:53676][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:53676][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:61087]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:61087]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.02, 127.0.0.1:55294][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:63771][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:53676][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:58880][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.07, 127.0.0.1:58880][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:58880][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.16, 127.0.0.1:58880][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:61087]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:50867][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.09, 127.0.0.1:50867][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.07, 127.0.0.1:50867][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:57870]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:57870]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.02, 127.0.0.1:64880][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:49974][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:57870]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.00, 127.0.0.1:57709][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.04, 127.0.0.1:57709][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.03, 127.0.0.1:57709][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:55110]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:55110]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.00, 127.0.0.1:50289][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.00, 127.0.0.1:52775][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:55110]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:57709][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.03, 127.0.0.1:57709][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:57709][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:63359]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:63359]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.03, 127.0.0.1:50289][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:52775][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.05, 127.0.0.1:55284][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:55284][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.12, 127.0.0.1:55284][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:55284][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.16, 127.0.0.1:55284][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:50794]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:50794]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:50900]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:50900]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:50794]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:54728][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.04, 127.0.0.1:54728][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.02, 127.0.0.1:54728][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:59048]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:59048]
+[mHTTP GET /media/team_logos/default.webp 200 [0.11, 127.0.0.1:50949][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.11, 127.0.0.1:50962][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:59048]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.00, 127.0.0.1:53457][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.03, 127.0.0.1:53457][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.07, 127.0.0.1:53457][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:63609]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:63609]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.01, 127.0.0.1:65506][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:51850][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:63609]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.00, 127.0.0.1:62984][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.05, 127.0.0.1:62984][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:62984][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:58478]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:58478]
+[mHTTP GET /media/team_logos/default.webp 200 [0.01, 127.0.0.1:60160][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.01, 127.0.0.1:51300][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:58478]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:62984][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.04, 127.0.0.1:62984][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.05, 127.0.0.1:62984][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:57715]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:57715]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.03, 127.0.0.1:51300][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:60160][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.06, 127.0.0.1:61670][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:61670][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.33, 127.0.0.1:61670][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:61670][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.28, 127.0.0.1:61670][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:60761]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:60761]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51399]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51399]
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:61927]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:61927]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:61640]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:61640]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:61927]
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.06, 127.0.0.1:51839][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.10, 127.0.0.1:51839][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:65103]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:65103]
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:59861][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:59861][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:59861][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:59861][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [13.23, 127.0.0.1:59861][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:65103]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.00, 127.0.0.1:56427][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.02, 127.0.0.1:56427][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.03, 127.0.0.1:56427][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:59750]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:59750]
+[mHTTP GET /media/team_logos/default.webp 200 [0.13, 127.0.0.1:65162][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.13, 127.0.0.1:53976][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:59750]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:50349][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:50349][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.03, 127.0.0.1:50349][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:55146]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:55146]
+[mHTTP GET /media/team_logos/default.webp 200 [0.01, 127.0.0.1:50060][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.01, 127.0.0.1:61420][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:55146]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:50349][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.05, 127.0.0.1:50349][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:50349][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:60540]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:60540]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.03, 127.0.0.1:61420][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:50060][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:54901][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:54901][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:54901][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:54901][0m
+Internal Server Error: /api/orders/momo-payment/
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 976, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 518, in thread_handler
+    raise exc_info[1]
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 468, in __call__
+    ret = await asyncio.shield(exec_coro)
+  File "C:\Users\maiki\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 52, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\asgiref\sync.py", line 522, in thread_handler
+    return func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py", line 318, in post
+    print(response.json())
+  File "D:\ÐATN\ticket-booking-be\env_310\lib\site-packages\requests\models.py", line 980, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.17, 127.0.0.1:54901][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:56406]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:56406]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:49372]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:49372]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:56406]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:52788][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.05, 127.0.0.1:52788][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:52788][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:52043]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:52043]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.20, 127.0.0.1:53791][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.20, 127.0.0.1:63385][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.03, 127.0.0.1:52788][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:57309][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:57309][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:57309][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [7.34, 127.0.0.1:57309][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:54252]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:54252]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:54795]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:54795]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:54795]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:52065][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.05, 127.0.0.1:52065][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.07, 127.0.0.1:52065][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:60779]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:60779]
+[mHTTP GET /media/team_logos/default.webp 200 [0.25, 127.0.0.1:53200][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.25, 127.0.0.1:49769][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:52065][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:57907][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:57907][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:57907][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:59828][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.08, 127.0.0.1:59828][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:59828][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [30.13, 127.0.0.1:57907][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [30.12, 127.0.0.1:59828][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:56911]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:56911]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51646]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51646]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:56911]
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.05, 127.0.0.1:52543][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:52543][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:52382]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:52382]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:52382]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.04, 127.0.0.1:52543][0m
+[mHTTP GET /api/orders/matches/ 200 [0.19, 127.0.0.1:52543][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.03, 127.0.0.1:52543][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.07, 127.0.0.1:52543][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:57311]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:57311]
+[mHTTP GET /api/orders/promotions/264/10/ 200 [0.03, 127.0.0.1:55517][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:55517][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:55517][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:55517][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [30.12, 127.0.0.1:55517][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:56528]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:56528]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:59657]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:59657]
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:56528]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.00, 127.0.0.1:52243][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.05, 127.0.0.1:52243][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.05, 127.0.0.1:52243][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:51958]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:51958]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.11, 127.0.0.1:60729][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.12, 127.0.0.1:61155][0m
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:51958]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.00, 127.0.0.1:60530][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.13, 127.0.0.1:60530][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.08, 127.0.0.1:60530][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:63437]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:63437]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.04, 127.0.0.1:62099][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.04, 127.0.0.1:55348][0m
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:63437]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.06, 127.0.0.1:60530][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:60530][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.05, 127.0.0.1:60530][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.07, 127.0.0.1:60530][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:56819]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:56819]
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:60530][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:60530][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:60530][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.21, 127.0.0.1:60530][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.43, 127.0.0.1:60530][0m
+Not Found: /
+[33mHTTP GET / 404 [0.01, 127.0.0.1:54005][0m
+Not Found: /
+[33mHTTP GET / 404 [0.02, 127.0.0.1:61351][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:56819]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:50458][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.07, 127.0.0.1:50458][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.04, 127.0.0.1:50458][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:64804]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:64804]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.02, 127.0.0.1:59226][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:60516][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:64330]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:64330]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:57251]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:57251]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:64330]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:51784][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.06, 127.0.0.1:51784][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:51784][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:53863]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:53863]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.21, 127.0.0.1:63428][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.21, 127.0.0.1:51465][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.06, 127.0.0.1:54078][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:54078][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:54078][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:54078][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.18, 127.0.0.1:54078][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:59755]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:59755]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:57291]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:57291]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:59755]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:58177][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.07, 127.0.0.1:58177][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:58177][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:53966]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:53966]
+[mHTTP GET /media/team_logos/default.webp 200 [0.20, 127.0.0.1:53155][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.22, 127.0.0.1:57819][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.05, 127.0.0.1:58177][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:58177][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:58177][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:58177][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [27.25, 127.0.0.1:58177][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=502 200 [0.01, 127.0.0.1:54033][0m
+[mHTTP GET /api/accounts/customer/profile/?id=502 200 [0.02, 127.0.0.1:54033][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:54033][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.18, 127.0.0.1:65366][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.18, 127.0.0.1:65300][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:50759]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:50759]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51475]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51475]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:51475]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=502 404 [0.04, 127.0.0.1:54033][0m
+[mHTTP GET /api/orders/matches/ 200 [0.20, 127.0.0.1:54033][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.01, 127.0.0.1:65300][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=1 404 [0.03, 127.0.0.1:54033][0m
+[mHTTP GET /api/orders/matches/ 200 [0.18, 127.0.0.1:54033][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.01, 127.0.0.1:65300][0m
+[mHTTP OPTIONS /api/accounts/auth/customer/login/ 200 [0.01, 127.0.0.1:58691][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [0.33, 127.0.0.1:58691][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:58691][0m
+[mHTTP GET /api/orders/matches/ 200 [0.18, 127.0.0.1:58691][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:52399][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=501 200 [0.01, 127.0.0.1:58691][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:58691][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.17, 127.0.0.1:58691][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:55865]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:55865]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.02, 127.0.0.1:57752][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:52399][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:58691][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:58691][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:58691][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:58691][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.20, 127.0.0.1:58691][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:63968]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:63968]
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:50824]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:50824]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:63968]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:50824]
+Watching for file changes with StatReloader
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.29, 127.0.0.1:49906][0m
+[mHTTP GET /api/orders/matches/ 200 [0.32, 127.0.0.1:64811][0m
+[mHTTP OPTIONS /api/accounts/customer/loyalty/?id=501 200 [0.01, 127.0.0.1:64811][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.16, 127.0.0.1:64811][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:64811][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:64811][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=501 200 [0.01, 127.0.0.1:64811][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.02, 127.0.0.1:64811][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.04, 127.0.0.1:64811][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:52840]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:52840]
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:64811][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:64811][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.12, 127.0.0.1:64811][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:64811][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [30.20, 127.0.0.1:64811][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:52840]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:64048][0m
+[mHTTP OPTIONS /api/orders/customer/?customer_id=501 200 [0.01, 127.0.0.1:64048][0m
+[mHTTP GET /api/orders/customer/?customer_id=501 200 [0.49, 127.0.0.1:64048][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:64048][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:64048][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.08, 127.0.0.1:64048][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:64048][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:64048][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:64048][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:64048][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:56894]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:56894]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:56894]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:64048][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.06, 127.0.0.1:64048][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:54257]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:54257]
+[mHTTP GET /api/orders/promotions/264/10/ 200 [0.03, 127.0.0.1:64048][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.08, 127.0.0.1:64048][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [20.14, 127.0.0.1:64048][0m
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:54257]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=501 200 [0.01, 127.0.0.1:53191][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:53191][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.07, 127.0.0.1:53191][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:55588]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:55588]
+[mHTTP GET /media/team_logos/default.webp 200 [0.25, 127.0.0.1:59490][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.25, 127.0.0.1:52026][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.05, 127.0.0.1:51370][0m
+[mHTTP GET /api/promotions/ 200 [0.20, 127.0.0.1:51370][0m
+[mHTTP GET /api/promotions/ 200 [0.12, 127.0.0.1:54447][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:54447][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:51370][0m
+[mHTTP GET /api/events/leagues/ 200 [0.03, 127.0.0.1:54447][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:56914][0m
+[mHTTP GET /api/events/leagues/ 200 [0.04, 127.0.0.1:51370][0m
+[mHTTP GET /api/events/sports/ 200 [0.02, 127.0.0.1:54447][0m
+[mHTTP GET /api/events/leagues/ 200 [0.04, 127.0.0.1:56914][0m
+[mHTTP GET /api/events/leagues/ 200 [0.04, 127.0.0.1:54447][0m
+[mHTTP GET /api/events/teams/ 200 [0.08, 127.0.0.1:54447][0m
+[mHTTP GET /api/events/teams/ 200 [0.09, 127.0.0.1:56914][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.04, 127.0.0.1:56914][0m
+[mHTTP GET /api/events/stadiums/ 200 [0.04, 127.0.0.1:54447][0m
+[mHTTP GET /api/orders/promotions/264/10/ 200 [0.05, 127.0.0.1:55687][0m
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:55588]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.07, 127.0.0.1:52843][0m
+[mHTTP GET /api/orders/matches/ 200 [0.18, 127.0.0.1:52843][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.08, 127.0.0.1:52843][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:51822][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:51822][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:51822][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.04, 127.0.0.1:51822][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:54049]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:54049]
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.03, 127.0.0.1:51822][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:51822][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.07, 127.0.0.1:51822][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:51822][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.16, 127.0.0.1:51822][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:50691]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:50691]
+[mHTTP GET /api/events/stadiums/ 200 [0.09, 127.0.0.1:64509][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.17, 127.0.0.1:64509][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.13, 127.0.0.1:58741][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [0.18, 127.0.0.1:64509][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.03, 127.0.0.1:60544][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.04, 127.0.0.1:57693][0m
+[mHTTP GET /api/events/sports/ 200 [0.07, 127.0.0.1:57693][0m
+[mHTTP GET /api/events/sports/ 200 [0.02, 127.0.0.1:60544][0m
+[mHTTP GET /api/events/leagues/ 200 [0.03, 127.0.0.1:57693][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:59131][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:57693][0m
+[mHTTP GET /api/events/leagues/ 200 [0.06, 127.0.0.1:60544][0m
+[mHTTP GET /api/events/leagues/ 200 [0.04, 127.0.0.1:57693][0m
+[mHTTP GET /api/events/leagues/ 200 [0.02, 127.0.0.1:60544][0m
+Watching for file changes with StatReloader
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\utils.py changed, reloading.
+Watching for file changes with StatReloader
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\utils.py changed, reloading.
+Watching for file changes with StatReloader
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\utils.py changed, reloading.
+Watching for file changes with StatReloader
+[mHTTP GET /api/events/sports/ 200 [0.09, 127.0.0.1:59480][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:62306][0m
+[mHTTP GET /api/events/leagues/ 200 [0.09, 127.0.0.1:59480][0m
+[mHTTP GET /api/events/leagues/ 200 [0.05, 127.0.0.1:62306][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.35, 127.0.0.1:62306][0m
+[mHTTP GET /api/orders/matches/ 200 [0.39, 127.0.0.1:59480][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=501 200 [0.01, 127.0.0.1:60760][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.10, 127.0.0.1:60760][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:60760][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:49670]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:49670]
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.07, 127.0.0.1:60760][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:60760][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.27, 127.0.0.1:60760][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:60760][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.21, 127.0.0.1:60760][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:49670]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:60760][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:60760][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:60760][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:65000]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:65000]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.28, 127.0.0.1:54455][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.28, 127.0.0.1:60493][0m
+[mHTTP GET /api/orders/promotions/262/4/ 200 [0.04, 127.0.0.1:60760][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:60760][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.12, 127.0.0.1:60760][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:60760][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.14, 127.0.0.1:60760][0m
+Not Found: //api/orders/momo-payment/
+[33mHTTP GET //api/orders/momo-payment/ 404 [0.08, 127.0.0.1:54649][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.03, 127.0.0.1:54649][0m
+Method Not Allowed: /api/orders/momo-payment/
+[31;1mHTTP GET /api/orders/momo-payment/ 405 [0.39, 127.0.0.1:54649][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\utils.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:58028]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:58028]
+Method Not Allowed: /api/orders/momo-payment/
+[31;1mHTTP GET /api/orders/momo-payment/ 405 [0.14, 127.0.0.1:65318][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:58028]
+[mHTTP GET /api/events/sports/ 200 [0.14, 127.0.0.1:64665][0m
+[mHTTP GET /api/events/sports/ 200 [0.10, 127.0.0.1:61104][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=501 200 [0.02, 127.0.0.1:59251][0m
+[mHTTP GET /api/events/leagues/ 200 [0.13, 127.0.0.1:64665][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.08, 127.0.0.1:59251][0m
+[mHTTP GET /api/events/leagues/ 200 [0.10, 127.0.0.1:61104][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.11, 127.0.0.1:59251][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:58891]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:58891]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.31, 127.0.0.1:61816][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.31, 127.0.0.1:58920][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.28, 127.0.0.1:59251][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:58891]
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=501 200 [0.01, 127.0.0.1:61309][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:61309][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:61309][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:57140]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:57140]
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:51524][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.02, 127.0.0.1:64788][0m
+[mHTTP GET /api/orders/promotions/262/4/ 200 [0.05, 127.0.0.1:61309][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:61309][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.13, 127.0.0.1:61309][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:61309][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [30.21, 127.0.0.1:61309][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:57140]
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:61309][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:62895][0m
+[mHTTP GET /api/events/leagues/ 200 [0.08, 127.0.0.1:61309][0m
+[mHTTP GET /api/events/leagues/ 200 [0.07, 127.0.0.1:62895][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:62895][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:62895][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51614]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51614]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.04, 127.0.0.1:57345][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.05, 127.0.0.1:50529][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:51614]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.07, 127.0.0.1:62895][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:62895][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:60690]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:60690]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.04, 127.0.0.1:57345][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.04, 127.0.0.1:50529][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:62895][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.02, 127.0.0.1:62895][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:62895][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:62895][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.14, 127.0.0.1:62895][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:50767]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:50767]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:50767]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.07, 127.0.0.1:52820][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.09, 127.0.0.1:52820][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:57843]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:57843]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.28, 127.0.0.1:55771][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.30, 127.0.0.1:50686][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:52820][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:61992][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.14, 127.0.0.1:61992][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:61992][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [1.60, 127.0.0.1:61992][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:63013]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:63013]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:63013]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.14, 127.0.0.1:62898][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.11, 127.0.0.1:62898][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:55856]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:55856]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.30, 127.0.0.1:57275][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.30, 127.0.0.1:53089][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.06, 127.0.0.1:62898][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:62898][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:62898][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:62898][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.47, 127.0.0.1:62898][0m
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:52487]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:52487]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:52487]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:57421][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.10, 127.0.0.1:57421][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:57744]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:57744]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.33, 127.0.0.1:63815][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.33, 127.0.0.1:50307][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.07, 127.0.0.1:52672][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:52672][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:52672][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:52672][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.19, 127.0.0.1:52672][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:60143]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:60143]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:60143]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.08, 127.0.0.1:55678][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.09, 127.0.0.1:55678][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:54088]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:54088]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.34, 127.0.0.1:61408][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.35, 127.0.0.1:49666][0m
+[mHTTP GET /api/orders/promotions/262/4/ 200 [0.04, 127.0.0.1:55678][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:55678][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:55678][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:55678][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.18, 127.0.0.1:55678][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:64196]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:64196]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:64196]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:58757][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.09, 127.0.0.1:58757][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:62765]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:62765]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.31, 127.0.0.1:52445][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.31, 127.0.0.1:65244][0m
+[mHTTP GET /api/orders/promotions/262/4/ 200 [0.06, 127.0.0.1:58757][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:62765]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.06, 127.0.0.1:58757][0m
+[mHTTP GET /api/orders/matches/ 200 [0.26, 127.0.0.1:58757][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:65244][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:57025][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.05, 127.0.0.1:57025][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:58127]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:58127]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.06, 127.0.0.1:54875][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.07, 127.0.0.1:52049][0m
+[mHTTP GET /api/orders/promotions/264/9/ 200 [0.02, 127.0.0.1:57025][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:57025][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:57025][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:57025][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [1.16, 127.0.0.1:57025][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.05, 127.0.0.1:57562][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.08, 127.0.0.1:57562][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:59005]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:59005]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.33, 127.0.0.1:54727][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.35, 127.0.0.1:54141][0m
+[mHTTP GET /api/orders/promotions/264/10/ 200 [0.05, 127.0.0.1:57562][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:57562][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.09, 127.0.0.1:57562][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:57562][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [19.55, 127.0.0.1:57562][0m
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:59005]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:57562][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:63032][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:57562][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.08, 127.0.0.1:63032][0m
+[mHTTP GET /api/events/leagues/ 200 [0.07, 127.0.0.1:61015][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:55765]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:55765]
+[mHTTP GET /media/team_logos/default.webp 200 [0.05, 127.0.0.1:50648][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.05, 127.0.0.1:58162][0m
+[mHTTP GET /api/events/leagues/ 200 [0.07, 127.0.0.1:63032][0m
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:55765]
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:63032][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:61015][0m
+[mHTTP GET /api/events/leagues/ 200 [0.05, 127.0.0.1:63032][0m
+[mHTTP GET /api/events/leagues/ 200 [0.07, 127.0.0.1:61015][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:61015][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.05, 127.0.0.1:61015][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:52572]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:52572]
+[mHTTP GET /media/team_logos/default.webp 200 [0.05, 127.0.0.1:50648][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.05, 127.0.0.1:58162][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.10, 127.0.0.1:60625][0m
+[mHTTP GET /api/orders/matches/ 200 [0.25, 127.0.0.1:60625][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.20, 127.0.0.1:54427][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:60625][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:60625][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:52749]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:52749]
+[mHTTP GET /media/team_logos/default.webp 200 [0.07, 127.0.0.1:54427][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.04, 127.0.0.1:57570][0m
+[mHTTP GET /api/orders/promotions/262/3/ 200 [0.04, 127.0.0.1:60625][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:60625][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:60625][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:60625][0m
+Not Found: /
+[33mHTTP GET / 404 [0.02, 127.0.0.1:55527][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [11.38, 127.0.0.1:60625][0m
+Not Found: /
+[33mHTTP GET / 404 [0.03, 127.0.0.1:52120][0m
+Not Found: /
+[33mHTTP GET / 404 [0.02, 127.0.0.1:63352][0m
+Not Found: /
+[33mHTTP GET / 404 [0.02, 127.0.0.1:52949][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:55029]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:55029]
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51596]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51596]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:51596]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.10, 127.0.0.1:62398][0m
+[mHTTP GET /api/orders/matches/ 200 [0.25, 127.0.0.1:62398][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.22, 127.0.0.1:62201][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:58651][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:58651][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:49230]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:49230]
+[mHTTP GET /media/team_logos/default.webp 200 [0.05, 127.0.0.1:65467][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.10, 127.0.0.1:55244][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:58651][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:49748][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.15, 127.0.0.1:49748][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:49748][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.15, 127.0.0.1:49748][0m
+Not Found: /
+[33mHTTP GET / 404 [0.19, 127.0.0.1:49700][0m
+Not Found: /
+[33mHTTP GET / 404 [0.04, 127.0.0.1:49700][0m
+Not Found: /
+[33mHTTP GET / 404 [0.03, 127.0.0.1:49700][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:54763]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:54763]
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:56740]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:56740]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:56740]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:56052][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:56052][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:62979]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:62979]
+[mHTTP GET /media/team_logos/default.webp 200 [0.29, 127.0.0.1:54691][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.29, 127.0.0.1:63425][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:56052][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:56052][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.09, 127.0.0.1:56052][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:56052][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.14, 127.0.0.1:56052][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:55382]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:55382]
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:55393]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:55393]
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:49763]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:49763]
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:50623]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:50623]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:50623]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.05, 127.0.0.1:62000][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.07, 127.0.0.1:62000][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:59922]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:59922]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.25, 127.0.0.1:52745][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.25, 127.0.0.1:63558][0m
+[mHTTP GET /api/orders/promotions/262/4/ 200 [0.04, 127.0.0.1:62000][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:62000][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:62000][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:62000][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [30.14, 127.0.0.1:62000][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:57723]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:57723]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:57723]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.08, 127.0.0.1:64950][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.06, 127.0.0.1:64950][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:61730]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:61730]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.31, 127.0.0.1:56665][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.32, 127.0.0.1:57135][0m
+[mHTTP GET /api/orders/promotions/262/4/ 200 [0.04, 127.0.0.1:64950][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:64950][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:64950][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:64950][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.13, 127.0.0.1:64950][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.10, 127.0.0.1:52038][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:52038][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:54330]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:54330]
+[mHTTP GET /media/team_logos/default.webp 200 [0.29, 127.0.0.1:50910][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.29, 127.0.0.1:58468][0m
+[mHTTP GET /api/orders/promotions/262/4/ 200 [0.05, 127.0.0.1:62319][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:62319][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:62319][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:62319][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.12, 127.0.0.1:62319][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.05, 127.0.0.1:51385][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:51385][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.14, 127.0.0.1:51385][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:51385][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.35, 127.0.0.1:51385][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:61254]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:61254]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:61254]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.08, 127.0.0.1:55516][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.07, 127.0.0.1:55516][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51806]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51806]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.29, 127.0.0.1:65188][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.30, 127.0.0.1:62406][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.04, 127.0.0.1:55516][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:55516][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.13, 127.0.0.1:55516][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:55516][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [1.20, 127.0.0.1:55516][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:53357]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:53357]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:53357]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.14, 127.0.0.1:56904][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.14, 127.0.0.1:56904][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:58000]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:58000]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.41, 127.0.0.1:58440][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.41, 127.0.0.1:60330][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:58000]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:56904][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.09, 127.0.0.1:56904][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:54713]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:54713]
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.03, 127.0.0.1:58440][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:60330][0m
+[mHTTP GET /api/events/sports/ 200 [0.03, 127.0.0.1:56904][0m
+[mHTTP GET /api/events/sports/ 200 [0.04, 127.0.0.1:64628][0m
+[mHTTP GET /api/events/leagues/ 200 [0.05, 127.0.0.1:56904][0m
+[mHTTP GET /api/events/leagues/ 200 [0.05, 127.0.0.1:64628][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.05, 127.0.0.1:64628][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:64628][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.12, 127.0.0.1:64628][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:64628][0m
+Not Found: /
+[33mHTTP GET / 404 [0.05, 127.0.0.1:59137][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [21.23, 127.0.0.1:64628][0m
+Not Found: /
+[33mHTTP GET / 404 [0.03, 127.0.0.1:62458][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:60157]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:60157]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:60157]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.26, 127.0.0.1:53264][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:53264][0m
+[mHTTP GET /api/orders/matches/ 200 [0.25, 127.0.0.1:53264][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.22, 127.0.0.1:64299][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:53264][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.05, 127.0.0.1:53264][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:50248]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:50248]
+[mHTTP GET /media/team_logos/default.webp 200 [0.02, 127.0.0.1:64299][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.04, 127.0.0.1:55102][0m
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.05, 127.0.0.1:53264][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:52534][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.12, 127.0.0.1:52534][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:52534][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.21, 127.0.0.1:52534][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:50248]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:60901][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.09, 127.0.0.1:60901][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51381]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51381]
+[mHTTP GET /media/team_logos/default.webp 200 [0.03, 127.0.0.1:59306][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.04, 127.0.0.1:63490][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:51381]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.04, 127.0.0.1:60901][0m
+[mHTTP GET /api/orders/matches/ 200 [0.22, 127.0.0.1:60901][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.05, 127.0.0.1:63490][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:60901][0m
+[mHTTP GET /api/orders/matches/267/ 200 [0.05, 127.0.0.1:60901][0m
+WebSocket HANDSHAKING /ws/book/267/ [127.0.0.1:54711]
+WebSocket CONNECT /ws/book/267/ [127.0.0.1:54711]
+[mHTTP GET /media/team_logos/default.webp 200 [0.04, 127.0.0.1:63490][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.04, 127.0.0.1:59306][0m
+[mHTTP GET /api/orders/promotions/267/8/ 200 [0.04, 127.0.0.1:60901][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:60901][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.09, 127.0.0.1:60901][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:60901][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.21, 127.0.0.1:60901][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/267/ [127.0.0.1:49666]
+WebSocket CONNECT /ws/book/267/ [127.0.0.1:49666]
+WebSocket DISCONNECT /ws/book/267/ [127.0.0.1:49666]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.07, 127.0.0.1:64332][0m
+[mHTTP GET /api/orders/matches/ 200 [0.26, 127.0.0.1:64332][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:64332][0m
+[mHTTP GET /api/orders/matches/266/ 200 [0.07, 127.0.0.1:64332][0m
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:51636]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:51636]
+[mHTTP GET /api/orders/promotions/266/6/ 200 [0.04, 127.0.0.1:64332][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:64332][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.12, 127.0.0.1:64332][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:64332][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [1.24, 127.0.0.1:64332][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:50606]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:50606]
+WebSocket DISCONNECT /ws/book/266/ [127.0.0.1:50606]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.13, 127.0.0.1:64037][0m
+[mHTTP GET /api/orders/matches/ 200 [0.29, 127.0.0.1:64037][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.27, 127.0.0.1:61138][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:58353][0m
+[mHTTP GET /api/orders/matches/264/ 200 [0.07, 127.0.0.1:58353][0m
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:63057]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:63057]
+[mHTTP GET /media/team_logos/default.webp 200 [0.04, 127.0.0.1:64589][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.03, 127.0.0.1:55867][0m
+[mHTTP GET /api/orders/promotions/264/9/ 200 [0.06, 127.0.0.1:58353][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:58353][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:58353][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:58353][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.17, 127.0.0.1:58353][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/264/ [127.0.0.1:61253]
+WebSocket CONNECT /ws/book/264/ [127.0.0.1:61253]
+WebSocket DISCONNECT /ws/book/264/ [127.0.0.1:61253]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.13, 127.0.0.1:60534][0m
+[mHTTP GET /api/orders/matches/ 200 [0.11, 127.0.0.1:60534][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.05, 127.0.0.1:57884][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:53296][0m
+[mHTTP GET /api/orders/matches/254/ 200 [0.07, 127.0.0.1:53296][0m
+WebSocket HANDSHAKING /ws/book/254/ [127.0.0.1:52303]
+WebSocket CONNECT /ws/book/254/ [127.0.0.1:52303]
+[mHTTP GET /media/team_logos/default.webp 200 [0.23, 127.0.0.1:55644][0m
+[mHTTP GET /media/stadium_layouts/stadium-1.png 200 [0.23, 127.0.0.1:57033][0m
+[mHTTP GET /api/orders/promotions/254/127/ 200 [0.03, 127.0.0.1:55642][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.01, 127.0.0.1:55642][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:55642][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.00, 127.0.0.1:55642][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.15, 127.0.0.1:55642][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/254/ [127.0.0.1:60720]
+WebSocket CONNECT /ws/book/254/ [127.0.0.1:60720]
+WebSocket DISCONNECT /ws/book/254/ [127.0.0.1:60720]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.06, 127.0.0.1:61997][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:60622][0m
+[mHTTP GET /media/team_logos/default.webp 200 [0.25, 127.0.0.1:57511][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:60622][0m
+[mHTTP GET /api/orders/matches/257/ 200 [0.07, 127.0.0.1:60622][0m
+WebSocket HANDSHAKING /ws/book/257/ [127.0.0.1:63238]
+WebSocket CONNECT /ws/book/257/ [127.0.0.1:63238]
+[mHTTP GET /api/orders/promotions/257/1/ 200 [0.04, 127.0.0.1:60622][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:60622][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.23, 127.0.0.1:60622][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/257/ [127.0.0.1:56140]
+WebSocket CONNECT /ws/book/257/ [127.0.0.1:56140]
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/257/ [127.0.0.1:53341]
+WebSocket CONNECT /ws/book/257/ [127.0.0.1:53341]
+WebSocket DISCONNECT /ws/book/257/ [127.0.0.1:53341]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.05, 127.0.0.1:59195][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:59195][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:59195][0m
+[mHTTP GET /api/orders/matches/266/ 200 [0.05, 127.0.0.1:59195][0m
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:62875]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:62875]
+[mHTTP GET /api/orders/promotions/266/5/ 200 [0.05, 127.0.0.1:50793][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:50793][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.14, 127.0.0.1:50793][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:53504]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:53504]
+WebSocket DISCONNECT /ws/book/266/ [127.0.0.1:53504]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:49171][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:49171][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:49171][0m
+[mHTTP GET /api/orders/matches/265/ 200 [0.06, 127.0.0.1:49171][0m
+WebSocket HANDSHAKING /ws/book/265/ [127.0.0.1:62149]
+WebSocket CONNECT /ws/book/265/ [127.0.0.1:62149]
+[mHTTP GET /api/orders/promotions/265/8/ 200 [0.03, 127.0.0.1:49171][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.08, 127.0.0.1:49171][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.12, 127.0.0.1:49171][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/265/ [127.0.0.1:54558]
+WebSocket CONNECT /ws/book/265/ [127.0.0.1:54558]
+WebSocket DISCONNECT /ws/book/265/ [127.0.0.1:54558]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.05, 127.0.0.1:55287][0m
+[mHTTP GET /api/orders/matches/266/ 200 [0.05, 127.0.0.1:55287][0m
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:57943]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:57943]
+[mHTTP GET /api/orders/promotions/266/5/ 200 [0.03, 127.0.0.1:55287][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:55287][0m
+[mHTTP POST /api/orders/momo-payment/ 200 [0.05, 127.0.0.1:55287][0m
+[32mHTTP GET /api/orders/payment-result/?partnerCode=MOMO&orderId=d2cf0bdb-cd15-45f8-bfc3-00c53b52d27f&requestId=MOCK_1766300397&amount=135000&orderInfo=ThanhToanGiaLap&orderType=momo_wallet_app&transId=MOCK_1766300397&resultCode=0&message=GiaoDichThanhCong 302 [0.03, 127.0.0.1:64812][0m
+WebSocket DISCONNECT /ws/book/266/ [127.0.0.1:57943]
+[mHTTP OPTIONS /api/orders/order/details/qr/ 200 [0.01, 127.0.0.1:51125][0m
+[mHTTP POST /api/orders/order/details/qr/ 200 [0.40, 127.0.0.1:51125][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.06, 127.0.0.1:49670][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:49670][0m
+[mHTTP OPTIONS /api/accounts/customer/loyalty/?id=501 200 [0.01, 127.0.0.1:49670][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.13, 127.0.0.1:49670][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:61416][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:61416][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.09, 127.0.0.1:61416][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:61416][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:61416][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.04, 127.0.0.1:61416][0m
+[mHTTP GET /api/orders/matches/266/ 200 [0.04, 127.0.0.1:61416][0m
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:61506]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:61506]
+[mHTTP GET /api/orders/promotions/266/6/ 200 [0.04, 127.0.0.1:51764][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:51764][0m
+[mHTTP POST /api/orders/momo-payment/ 200 [0.04, 127.0.0.1:51764][0m
+[32mHTTP GET /api/orders/payment-result/?partnerCode=MOMO&orderId=d9392ec0-5210-4cc8-ab90-344a500d57d4&requestId=MOCK_1766300670&amount=540000&orderInfo=Thanh%20to%C3%A1n%20%C4%91%C6%A1n%20h%C3%A0ng%20d9392ec0-5210-4cc8-ab90-344a500d57d4&orderType=momo_wallet_app&transId=TRANS_1766300670&resultCode=0&message=GiaoDichThanhCong 302 [0.09, 127.0.0.1:65335][0m
+WebSocket DISCONNECT /ws/book/266/ [127.0.0.1:61506]
+[mHTTP POST /api/orders/order/details/qr/ 200 [0.24, 127.0.0.1:51764][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:63758][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:63758][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.10, 127.0.0.1:63758][0m
+[mHTTP OPTIONS /api/orders/customer/?customer_id=501 200 [0.01, 127.0.0.1:63758][0m
+[mHTTP GET /api/orders/customer/?customer_id=501 200 [0.98, 127.0.0.1:63758][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.13, 127.0.0.1:58087][0m
+[mHTTP GET /api/orders/matches/ 200 [0.24, 127.0.0.1:58087][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:58087][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.08, 127.0.0.1:58087][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:51270]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:51270]
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.08, 127.0.0.1:58087][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.13, 127.0.0.1:58087][0m
+[mHTTP POST /api/orders/momo-payment/ 200 [0.05, 127.0.0.1:58087][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:58087][0m
+Internal Server Error: /api/orders/momo-payment/
+[35;1mHTTP POST /api/orders/momo-payment/ 500 [0.03, 127.0.0.1:58087][0m
+[32mHTTP GET /api/orders/payment-result/?partnerCode=MOMO&orderId=b0924a31-613a-42a1-9eec-5e45bdec1c24&requestId=MOCK_1766303992&amount=72000&orderInfo=Thanh%20to%C3%A1n%20%C4%91%C6%A1n%20h%C3%A0ng%20b0924a31-613a-42a1-9eec-5e45bdec1c24&orderType=momo_wallet_app&transId=TRANS_1766303992&resultCode=0&message=GiaoDichThanhCong 302 [0.01, 127.0.0.1:55933][0m
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:51270]
+[mHTTP POST /api/orders/order/details/qr/ 200 [0.12, 127.0.0.1:58087][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.28, 127.0.0.1:59496][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:50630][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:50630][0m
+[mHTTP GET /api/orders/matches/262/ 200 [0.07, 127.0.0.1:50630][0m
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:65278]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:65278]
+[mHTTP GET /api/orders/promotions/262/129/ 200 [0.03, 127.0.0.1:50630][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.00, 127.0.0.1:50630][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.12, 127.0.0.1:50630][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:50630][0m
+Bad Request: /api/orders/momo-payment/
+[31;1mHTTP POST /api/orders/momo-payment/ 400 [0.20, 127.0.0.1:50630][0m
+D:\ÐATN\ticket-booking-be\ticket_booking\apps\orders\views.py changed, reloading.
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/262/ [127.0.0.1:54867]
+WebSocket CONNECT /ws/book/262/ [127.0.0.1:54867]
+WebSocket DISCONNECT /ws/book/262/ [127.0.0.1:54867]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.08, 127.0.0.1:55602][0m
+[mHTTP GET /api/orders/matches/266/ 200 [0.08, 127.0.0.1:55602][0m
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:58094]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:58094]
+WebSocket DISCONNECT /ws/book/266/ [127.0.0.1:58094]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.04, 127.0.0.1:55602][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:55602][0m
+[mHTTP OPTIONS /api/accounts/customer/loyalty/?id=501 200 [0.01, 127.0.0.1:55602][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.11, 127.0.0.1:55602][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:55602][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:55602][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.02, 127.0.0.1:63846][0m
+[mHTTP GET /api/orders/matches/266/ 200 [0.06, 127.0.0.1:63846][0m
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:49735]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:49735]
+[mHTTP GET /api/orders/promotions/266/6/ 200 [0.05, 127.0.0.1:63846][0m
+WebSocket DISCONNECT /ws/book/266/ [127.0.0.1:49735]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:60685][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:60685][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.06, 127.0.0.1:60685][0m
+[mHTTP GET /api/orders/matches/267/ 200 [0.12, 127.0.0.1:60685][0m
+WebSocket HANDSHAKING /ws/book/267/ [127.0.0.1:49380]
+WebSocket CONNECT /ws/book/267/ [127.0.0.1:49380]
+[mHTTP GET /api/orders/promotions/267/8/ 200 [0.04, 127.0.0.1:60685][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.10, 127.0.0.1:60685][0m
+[mHTTP POST /api/orders/momo-payment/ 200 [0.05, 127.0.0.1:60685][0m
+WebSocket DISCONNECT /ws/book/267/ [127.0.0.1:49380]
+[mHTTP OPTIONS /api/orders/order/details/qr/ 200 [0.01, 127.0.0.1:60685][0m
+[mHTTP POST /api/orders/order/details/qr/ 200 [3.47, 127.0.0.1:60685][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:60685][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:60685][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.07, 127.0.0.1:56400][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:53381][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:53381][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.11, 127.0.0.1:53381][0m
+[mHTTP OPTIONS /api/accounts/employee/profile/ 200 [0.02, 127.0.0.1:53381][0m
+[mHTTP OPTIONS /api/accounts/employee/profile/ 200 [0.00, 127.0.0.1:62565][0m
+Unauthorized: /api/accounts/employee/profile/
+[31;1mHTTP GET /api/accounts/employee/profile/ 401 [0.01, 127.0.0.1:62565][0m
+Unauthorized: /api/accounts/employee/profile/
+[31;1mHTTP GET /api/accounts/employee/profile/ 401 [0.01, 127.0.0.1:62565][0m
+[mHTTP OPTIONS /api/accounts/auth/login 200 [0.00, 127.0.0.1:56468][0m
+[mHTTP POST /api/accounts/auth/login 200 [0.60, 127.0.0.1:56468][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.06, 127.0.0.1:56468][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.05, 127.0.0.1:56468][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.05, 127.0.0.1:58247][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.03, 127.0.0.1:58247][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.03, 127.0.0.1:58247][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.05, 127.0.0.1:56468][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.05, 127.0.0.1:58247][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.01, 127.0.0.1:49182][0m
+[mHTTP GET /api/reports/revenue/?start_date=2025-12-15&end_date=2025-12-21 200 [0.25, 127.0.0.1:56468][0m
+[mHTTP GET /api/reports/revenue/?start_date=2025-12-15&end_date=2025-12-21 200 [0.12, 127.0.0.1:49182][0m
+[mHTTP GET /api/reports/ticket-status/?start_date=2025-12-15&end_date=2025-12-21 200 [0.22, 127.0.0.1:56468][0m
+[mHTTP GET /api/reports/returns-report/?start_date=2025-12-15&end_date=2025-12-21 200 [0.03, 127.0.0.1:56468][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [1.21, 127.0.0.1:56468][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [1.01, 127.0.0.1:58247][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [4.64, 127.0.0.1:49182][0m
+[mHTTP GET /api/tickets/matches/without-tickets/ 200 [1.55, 127.0.0.1:49182][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:56959][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:56959][0m
+[mHTTP GET /api/tickets/match-detail/266/ 200 [0.06, 127.0.0.1:59581][0m
+[mHTTP GET /api/tickets/matches/without-tickets/ 200 [1.93, 127.0.0.1:65508][0m
+[mHTTP GET /api/tickets/match-detail/254/ 200 [0.06, 127.0.0.1:64324][0m
+[mHTTP GET /api/tickets/match-detail/255/ 200 [0.08, 127.0.0.1:49667][0m
+[mHTTP OPTIONS /api/tickets/suggest-price/ 200 [0.00, 127.0.0.1:49667][0m
+[mHTTP POST /api/tickets/suggest-price/ 200 [10.92, 127.0.0.1:49667][0m
+[mHTTP OPTIONS /api/tickets/match/255/section/5/price/ 200 [0.01, 127.0.0.1:57344][0m
+[mHTTP POST /api/tickets/match/255/section/5/price/ 201 [0.05, 127.0.0.1:57344][0m
+[mHTTP OPTIONS /api/tickets/match/255/section/6/price/ 200 [0.01, 127.0.0.1:57344][0m
+[mHTTP POST /api/tickets/match/255/section/6/price/ 201 [0.05, 127.0.0.1:57344][0m
+[mHTTP OPTIONS /api/tickets/match/255/section/132/price/ 200 [0.00, 127.0.0.1:57344][0m
+[mHTTP POST /api/tickets/match/255/section/132/price/ 201 [0.05, 127.0.0.1:57344][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:54392][0m
+[mHTTP GET /api/orders/matches/ 200 [0.27, 127.0.0.1:54392][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:53013][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:53013][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:56084][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:54774][0m
+[mHTTP GET /api/tickets/matches/without-tickets/ 200 [0.99, 127.0.0.1:56084][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:56084][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:56084][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.05, 127.0.0.1:56084][0m
+[mHTTP GET /api/orders/matches/266/ 200 [0.05, 127.0.0.1:56084][0m
+WebSocket HANDSHAKING /ws/book/266/ [127.0.0.1:52548]
+WebSocket CONNECT /ws/book/266/ [127.0.0.1:52548]
+[mHTTP GET /api/orders/promotions/266/6/ 200 [0.04, 127.0.0.1:56084][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.11, 127.0.0.1:56084][0m
+[mHTTP POST /api/orders/momo-payment/ 200 [0.06, 127.0.0.1:56084][0m
+WebSocket DISCONNECT /ws/book/266/ [127.0.0.1:52548]
+[mHTTP POST /api/orders/order/details/qr/ 200 [3.25, 127.0.0.1:56084][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:56084][0m
+[mHTTP GET /api/orders/matches/ 200 [0.13, 127.0.0.1:56084][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.10, 127.0.0.1:56084][0m
+[mHTTP OPTIONS /api/orders/customer/?customer_id=501 200 [0.00, 127.0.0.1:53495][0m
+[mHTTP GET /api/orders/customer/?customer_id=501 200 [1.07, 127.0.0.1:53495][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:53495][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:53495][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.08, 127.0.0.1:53495][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:53495][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:53495][0m
+[mHTTP OPTIONS /api/orders/order-list/?customer_id=501 200 [0.01, 127.0.0.1:50986][0m
+[mHTTP GET /api/orders/order-list/?customer_id=501 200 [0.14, 127.0.0.1:50986][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:50986][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:50986][0m
+[mHTTP GET /api/promotions/ 200 [0.41, 127.0.0.1:64286][0m
+[mHTTP GET /api/promotions/ 200 [0.34, 127.0.0.1:52536][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [1.85, 127.0.0.1:53140][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [5.02, 127.0.0.1:65278][0m
+[mHTTP GET /api/promotions/ 200 [0.11, 127.0.0.1:65278][0m
+[mHTTP GET /api/promotions/match/ 200 [0.06, 127.0.0.1:65278][0m
+[mHTTP GET /api/promotions/match/ 200 [0.11, 127.0.0.1:65278][0m
+[mHTTP OPTIONS /api/promotions/analyze/ 200 [0.00, 127.0.0.1:65278][0m
+[mHTTP POST /api/promotions/analyze/ 200 [0.60, 127.0.0.1:65278][0m
+[mHTTP POST /api/promotions/analyze/ 200 [0.39, 127.0.0.1:65278][0m
+[mHTTP POST /api/promotions/analyze/ 200 [0.39, 127.0.0.1:65278][0m
+[mHTTP OPTIONS /api/promotions/ 200 [0.01, 127.0.0.1:62211][0m
+[mHTTP POST /api/promotions/ 201 [4.67, 127.0.0.1:62211][0m
+[mHTTP GET /api/promotions/ 200 [0.18, 127.0.0.1:62211][0m
+[mHTTP OPTIONS /api/promotions/bulk_toggle/ 200 [0.01, 127.0.0.1:52313][0m
+[mHTTP PATCH /api/promotions/bulk_toggle/ 200 [0.03, 127.0.0.1:52313][0m
+[mHTTP GET /api/promotions/ 200 [0.12, 127.0.0.1:52313][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:52555][0m
+[mHTTP GET /api/orders/matches/ 200 [0.18, 127.0.0.1:52555][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:52555][0m
+[mHTTP GET /api/orders/matches/ 200 [0.19, 127.0.0.1:52555][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.05, 127.0.0.1:52555][0m
+[mHTTP GET /api/orders/matches/257/ 200 [0.04, 127.0.0.1:52555][0m
+WebSocket HANDSHAKING /ws/book/257/ [127.0.0.1:63943]
+WebSocket CONNECT /ws/book/257/ [127.0.0.1:63943]
+WebSocket DISCONNECT /ws/book/257/ [127.0.0.1:63943]
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.05, 127.0.0.1:63004][0m
+[mHTTP GET /api/orders/matches/257/ 200 [0.07, 127.0.0.1:63004][0m
+WebSocket HANDSHAKING /ws/book/257/ [127.0.0.1:54390]
+WebSocket CONNECT /ws/book/257/ [127.0.0.1:54390]
+WebSocket DISCONNECT /ws/book/257/ [127.0.0.1:54390]
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:63004][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:63004][0m
+[mHTTP OPTIONS /api/promotions/6/ 200 [0.01, 127.0.0.1:63004][0m
+[mHTTP DELETE /api/promotions/6/ 200 [0.04, 127.0.0.1:63004][0m
+[mHTTP GET /api/promotions/ 200 [0.16, 127.0.0.1:63004][0m
+[mHTTP GET /api/promotions/match/ 200 [0.07, 127.0.0.1:63004][0m
+[mHTTP GET /api/promotions/match/ 200 [0.07, 127.0.0.1:63004][0m
+[mHTTP POST /api/promotions/analyze/ 200 [0.25, 127.0.0.1:63004][0m
+[mHTTP GET /api/promotions/section/?match=257 200 [0.02, 127.0.0.1:52957][0m
+Bad Request: /api/promotions/
+[31;1mHTTP POST /api/promotions/ 400 [0.06, 127.0.0.1:52957][0m
+[mHTTP GET /api/promotions/section/?match=257 200 [0.04, 127.0.0.1:57098][0m
+Bad Request: /api/promotions/
+[31;1mHTTP POST /api/promotions/ 400 [0.06, 127.0.0.1:57098][0m
+[mHTTP GET /api/promotions/section/?match=257 200 [0.06, 127.0.0.1:57098][0m
+[mHTTP POST /api/promotions/ 201 [0.15, 127.0.0.1:57098][0m
+[mHTTP GET /api/promotions/ 200 [0.26, 127.0.0.1:53606][0m
+[mHTTP PATCH /api/promotions/bulk_toggle/ 200 [0.04, 127.0.0.1:53606][0m
+[mHTTP GET /api/promotions/ 200 [0.19, 127.0.0.1:53606][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:52031][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:52031][0m
+[mHTTP GET /api/accounts/customer/profile/?id=501 200 [0.03, 127.0.0.1:54715][0m
+[mHTTP GET /api/orders/matches/257/ 200 [0.07, 127.0.0.1:54715][0m
+WebSocket HANDSHAKING /ws/book/257/ [127.0.0.1:57579]
+WebSocket CONNECT /ws/book/257/ [127.0.0.1:57579]
+[mHTTP GET /api/orders/promotions/257/1/ 200 [0.03, 127.0.0.1:54715][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.08, 127.0.0.1:55518][0m
+[mHTTP POST /api/orders/momo-payment/ 200 [0.05, 127.0.0.1:55518][0m
+WebSocket DISCONNECT /ws/book/257/ [127.0.0.1:57579]
+[mHTTP POST /api/orders/order/details/qr/ 200 [3.13, 127.0.0.1:55518][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.03, 127.0.0.1:55518][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:55518][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.09, 127.0.0.1:55518][0m
+[mHTTP GET /api/orders/customer/?customer_id=501 200 [0.87, 127.0.0.1:51286][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:51286][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:51286][0m
+[mHTTP GET /api/accounts/customer/loyalty/?id=501 200 [0.10, 127.0.0.1:51286][0m
+Not Found: /api/chat/history/
+[33mHTTP GET /api/chat/history/?customer_id=501 404 [0.02, 127.0.0.1:53046][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:53046][0m

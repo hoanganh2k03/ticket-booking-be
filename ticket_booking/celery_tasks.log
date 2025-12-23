@@ -14445,3 +14445,144 @@ WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:60128]
 WebSocket CONNECT /ws/book/2/ [127.0.0.1:60128]
 [mHTTP OPTIONS /api/events/stadiums/2/sections/ 200 [0.04, 127.0.0.1:52408][0m
 [mHTTP GET /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:52408][0m
+Watching for file changes with StatReloader
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:60842]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:60842]
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP OPTIONS /api/accounts/auth/customer/login/ 200 [0.05, 127.0.0.1:52321][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [1.25, 127.0.0.1:52321][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.17, 127.0.0.1:52321][0m
+[mHTTP GET /api/orders/matches/ 200 [0.22, 127.0.0.1:49670][0m
+[mHTTP OPTIONS /api/accounts/customer/profile/?id=34 200 [0.01, 127.0.0.1:49670][0m
+[mHTTP GET /api/accounts/customer/profile/?id=34 200 [0.04, 127.0.0.1:49670][0m
+[mHTTP GET /api/orders/matches/2/ 200 [0.07, 127.0.0.1:49670][0m
+WebSocket HANDSHAKING /ws/book/2/ [127.0.0.1:60751]
+WebSocket CONNECT /ws/book/2/ [127.0.0.1:60751]
+[mHTTP GET /api/events/stadiums/2/sections/ 200 [0.06, 127.0.0.1:49670][0m
+[mHTTP GET /api/orders/promotions/2/4/ 200 [0.06, 127.0.0.1:51263][0m
+[mHTTP OPTIONS /api/orders/create-order/ 200 [0.02, 127.0.0.1:62653][0m
+[mHTTP POST /api/orders/create-order/ 201 [0.70, 127.0.0.1:62653][0m
+[mHTTP OPTIONS /api/orders/momo-payment/ 200 [0.01, 127.0.0.1:62653][0m
+[mHTTP POST /api/orders/momo-payment/ 200 [0.20, 127.0.0.1:62653][0m
+WebSocket DISCONNECT /ws/book/2/ [127.0.0.1:60751]
+[mHTTP OPTIONS /api/orders/order/details/qr/ 200 [0.02, 127.0.0.1:62653][0m
+[mHTTP POST /api/orders/order/details/qr/ 200 [5.60, 127.0.0.1:62653][0m
+[mHTTP GET /api/chat/history/?customer_id=1 200 [0.15, 127.0.0.1:49838][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:52464][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [1.21, 127.0.0.1:52464][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.07, 127.0.0.1:52464][0m
+[mHTTP GET /api/orders/matches/ 200 [0.14, 127.0.0.1:52491][0m
+Unauthorized: /api/accounts/employee/profile/
+[31;1mHTTP GET /api/accounts/employee/profile/ 401 [0.06, 127.0.0.1:52491][0m
+Bad Request: /api/accounts/auth/login
+[31;1mHTTP POST /api/accounts/auth/login 400 [0.02, 127.0.0.1:64715][0m
+[mHTTP POST /api/accounts/auth/login 200 [1.27, 127.0.0.1:63134][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [0.03, 127.0.0.1:63134][0m
+[mHTTP GET /api/chat/history/?customer_id=1 200 [0.05, 127.0.0.1:63134][0m
+[mHTTP GET /api/orders/matches/ 200 [0.08, 127.0.0.1:50514][0m
+[mHTTP OPTIONS /api/accounts/auth/customer/register/ 200 [0.01, 127.0.0.1:59807][0m
+[mHTTP POST /api/accounts/auth/customer/register/ 201 [5.14, 127.0.0.1:59807][0m
+Bad Request: /api/accounts/auth/customer/register/
+[31;1mHTTP POST /api/accounts/auth/customer/register/ 400 [0.23, 127.0.0.1:61813][0m
+Bad Request: /api/accounts/auth/customer/register/
+[31;1mHTTP POST /api/accounts/auth/customer/register/ 400 [0.06, 127.0.0.1:59334][0m
+[mHTTP GET /api/promotions/ 200 [0.21, 127.0.0.1:56535][0m
+[mHTTP GET /api/promotions/ 200 [0.08, 127.0.0.1:64200][0m
+[mHTTP GET /api/returns/?_=1766358716819 200 [0.10, 127.0.0.1:64200][0m
+Bad Request: /api/returns/1/process/
+[31;1mHTTP POST /api/returns/1/process/ 400 [0.10, 127.0.0.1:51819][0m
+Bad Request: /api/returns/1/process/
+[31;1mHTTP POST /api/returns/1/process/ 400 [0.04, 127.0.0.1:52208][0m
+[mHTTP GET /api/promotions/ 200 [0.07, 127.0.0.1:62029][0m
+[mHTTP GET /api/promotions/ 200 [0.05, 127.0.0.1:64571][0m
+[mHTTP GET /api/returns/?_=1766358716820 200 [0.04, 127.0.0.1:64571][0m
+[mHTTP OPTIONS /api/reports/revenue/?start_date=2025-12-14&end_date=2025-12-21 200 [0.01, 127.0.0.1:64571][0m
+[mHTTP GET /api/reports/revenue/?start_date=2025-12-14&end_date=2025-12-21 200 [0.09, 127.0.0.1:64571][0m
+[mHTTP GET /api/reports/ticket-status/?start_date=2025-12-14&end_date=2025-12-21 200 [0.10, 127.0.0.1:54444][0m
+[mHTTP GET /api/reports/ticket-status/?start_date=2025-12-14&end_date=2025-12-21 200 [0.05, 127.0.0.1:61028][0m
+[mHTTP GET /api/reports/payments/?page=1 200 [0.04, 127.0.0.1:61028][0m
+[mHTTP GET /api/reports/payments/?page=1 200 [0.03, 127.0.0.1:54444][0m
+[mHTTP GET /api/reports/payments/7/ 200 [0.03, 127.0.0.1:52583][0m
+[mHTTP GET /api/reports/revenue/?start_date=2025-12-14&end_date=2025-12-21 200 [0.04, 127.0.0.1:50653][0m
+[mHTTP GET /api/reports/ticket-status/?start_date=2025-12-14&end_date=2025-12-21 200 [0.07, 127.0.0.1:50653][0m
+[mHTTP GET /api/reports/ticket-status/?start_date=2025-12-14&end_date=2025-12-21 200 [0.08, 127.0.0.1:51677][0m
+[mHTTP GET /api/returns/?_=1766358716821 200 [0.05, 127.0.0.1:51677][0m
+Bad Request: /api/returns/1/process/
+[31;1mHTTP POST /api/returns/1/process/ 400 [0.23, 127.0.0.1:64480][0m
+Bad Request: /api/returns/1/process/
+[31;1mHTTP POST /api/returns/1/process/ 400 [0.05, 127.0.0.1:64860][0m
+[mHTTP POST /api/returns/1/process/ 200 [5.75, 127.0.0.1:50705][0m
+Bad Request: /api/returns/1/process/
+[31;1mHTTP POST /api/returns/1/process/ 400 [0.07, 127.0.0.1:63960][0m
+[mHTTP GET /api/returns/?_=1766359398036 200 [0.10, 127.0.0.1:54029][0m
+[mHTTP POST /api/accounts/auth/customer/login/ 200 [1.18, 127.0.0.1:57230][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.07, 127.0.0.1:57230][0m
+[mHTTP GET /api/orders/matches/ 200 [0.16, 127.0.0.1:62761][0m
+[mHTTP OPTIONS /api/orders/customer/?customer_id=34 200 [0.01, 127.0.0.1:62322][0m
+[mHTTP GET /api/orders/customer/?customer_id=34 200 [0.33, 127.0.0.1:62322][0m
+[mHTTP OPTIONS /api/orders/order-list/?customer_id=34 200 [0.01, 127.0.0.1:62322][0m
+Not Found: /api/orders/order-list/
+[33mHTTP GET /api/orders/order-list/?customer_id=34 404 [0.05, 127.0.0.1:62322][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.36, 127.0.0.1:52852][0m
+[mHTTP GET /api/orders/matches/ 200 [0.41, 127.0.0.1:49672][0m
+[mHTTP OPTIONS /api/chat/send/ 200 [0.00, 127.0.0.1:49675][0m
+[mHTTP POST /api/chat/send/ 200 [0.05, 127.0.0.1:49675][0m
+[mHTTP POST /api/chat/send/ 200 [0.05, 127.0.0.1:52212][0m
+[mHTTP POST /api/chat/send/ 200 [0.16, 127.0.0.1:53489][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.15, 127.0.0.1:60258][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:49224][0m
+[mHTTP POST /api/chat/send/ 200 [0.03, 127.0.0.1:57180][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.25, 127.0.0.1:64943][0m
+[mHTTP GET /api/orders/matches/ 200 [0.20, 127.0.0.1:54617][0m
+[mHTTP POST /api/chat/send/ 200 [13.65, 127.0.0.1:54617][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.10, 127.0.0.1:65072][0m
+[mHTTP GET /api/orders/matches/ 200 [0.15, 127.0.0.1:65072][0m
+[mHTTP POST /api/chat/send/ 200 [0.04, 127.0.0.1:65072][0m
+[mHTTP POST /api/chat/send/ 200 [0.03, 127.0.0.1:64835][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.09, 127.0.0.1:63988][0m
+[mHTTP GET /api/orders/matches/ 200 [0.17, 127.0.0.1:63988][0m
+[mHTTP POST /api/chat/send/ 200 [0.04, 127.0.0.1:63988][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.19, 127.0.0.1:64644][0m
+[mHTTP GET /api/orders/matches/ 200 [0.30, 127.0.0.1:60120][0m
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.16, 127.0.0.1:60120][0m
+[mHTTP GET /api/orders/matches/ 200 [0.21, 127.0.0.1:60120][0m
+[mHTTP POST /api/chat/send/ 200 [5.00, 127.0.0.1:49670][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[mHTTP GET /api/chat/history/?customer_id=34 200 [0.21, 127.0.0.1:52703][0m
+[mHTTP GET /api/orders/matches/ 200 [0.27, 127.0.0.1:61850][0m
+[mHTTP POST /api/chat/send/ 200 [3.08, 127.0.0.1:49396][0m
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader

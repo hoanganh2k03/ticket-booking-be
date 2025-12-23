@@ -4,7 +4,7 @@ from django.conf import settings
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
-
+from django.utils import timezone
 # Cố định CHROMA_PATH trong thư mục chatbot
 CHROMA_PATH = os.path.join(settings.BASE_DIR, "apps", "chatbot", "chroma_index")
 
@@ -55,7 +55,12 @@ def build_chroma_index():
 
     # Lấy dữ liệu từ DB
     try:
-        matches = Match.objects.select_related("team_1", "team_2", "league")
+        now = timezone.now()
+        matches = (
+            Match.objects.filter(match_time__gt=now)
+            .select_related("team_1", "team_2", "league")
+            .order_by("match_time")
+        )
     except Exception as e:
         print(f"⚠️ Lỗi khi query Match: {e}")
         return

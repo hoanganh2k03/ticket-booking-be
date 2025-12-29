@@ -3,13 +3,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 from apps.accounts.models import Customer
-from ticket_booking.apps.accounts.permissions import IsCustomer
 from .models import ChatHistory
 from .serializers import ChatHistorySerializer
 from .services.faq_service import get_faq_answer
 from .services.db_service import search_chroma, build_chroma_index
 from .services.nlp_service import generate_ai_response, rewrite_query_with_context
-from rest_framework.permissions import IsAuthenticated
+
 
 class ChatbotAPIView(APIView):
     """
@@ -63,7 +62,6 @@ class ChatbotAPIView(APIView):
 
 
 class ChatHistoryAPIView(APIView):
-    permission_classes = [IsCustomer]
     """
     API để lấy lịch sử chat của một phiên hội thoại
     GET: /api/chat/history/?session_id=<session_id>&customer_id=<customer_id>

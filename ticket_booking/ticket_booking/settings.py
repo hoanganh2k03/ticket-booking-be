@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import sys
 
-# Ensure stdout/stderr use UTF-8 encoding on Windows consoles to avoid logging Unicode errors
+# Ensure stdout/stderr use UTF-8 encoding on Windows consoles to avoid logging Unicode errorshhh
 try:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")

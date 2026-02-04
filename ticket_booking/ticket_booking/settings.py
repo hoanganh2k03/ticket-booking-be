@@ -58,7 +58,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hattoriheiji48691810@gmail.com'
 EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
-#GROQ_API_KEY='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'
+
 # EMAIL_HOST_USER = 'vuquochoanganh2k3@gmail.com'
 # EMAIL_HOST_PASSWORD = 'tgai qoii itcl oroc'
 # calery

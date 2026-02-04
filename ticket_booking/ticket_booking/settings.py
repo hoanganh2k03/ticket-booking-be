@@ -63,7 +63,7 @@ EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
 # EMAIL_HOST_USER = 'vuquochoanganh2k3@gmail.com'
 # EMAIL_HOST_PASSWORD = 'tgai qoii itcl oroc'
 
-GROQ_API_KEY='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'
+#GROQ_API_KEY='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'
 # calery
 from celery.schedules import crontab  # Thêm import ở đây
 

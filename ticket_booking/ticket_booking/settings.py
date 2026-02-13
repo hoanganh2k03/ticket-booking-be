@@ -26,8 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 FONT_URL = [
     # Thay đổi đường dẫn dưới đây thành đường dẫn thực tế đến các tệp phông chữ trên hệ thống 
-    r'D:\ĐATN\ticket-booking-fe\assets\fonts\Nunito-Bold.ttf',
-    r'D:\ĐATN\ticket-booking-fe\assets\fonts\Nunito-Medium.ttf',
+    r'D:\DATN\ticket-booking-fe\assets\fonts\Nunito-Bold.ttf',
+    r'D:\DATN\ticket-booking-fe\assets\fonts\Nunito-Medium.ttf',
 ]
 
 # Quick-start development settings - unsuitable for production
@@ -58,7 +58,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hattoriheiji48691810@gmail.com'
 EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
-
+GROQ_API_KEY='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'
 # EMAIL_HOST_USER = 'vuquochoanganh2k3@gmail.com'
 # EMAIL_HOST_PASSWORD = 'tgai qoii itcl oroc'
 # calery

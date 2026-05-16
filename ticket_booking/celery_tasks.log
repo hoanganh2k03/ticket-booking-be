@@ -34374,3 +34374,7 @@ Watching for file changes with StatReloader
 D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.28, 127.0.0.1:61505][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [1.09, 127.0.0.1:61835][0m
+D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+Watching for file changes with StatReloader

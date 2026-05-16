@@ -34363,3 +34363,14 @@ Watching for file changes with StatReloader
 [mHTTP GET /api/reports/orders/?page=1 200 [1.19, 127.0.0.1:55568][0m
 [mHTTP GET /api/reports/orders/leagues/ 200 [0.21, 127.0.0.1:62743][0m
 [mHTTP GET /api/reports/orders/?page=1 200 [0.94, 127.0.0.1:58176][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.09, 127.0.0.1:58107][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [0.78, 127.0.0.1:50881][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.27, 127.0.0.1:51332][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [1.18, 127.0.0.1:49171][0m
+D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+Watching for file changes with StatReloader
+D:\DATN\ticket-booking-be\ticket_booking\apps\reports\views.py changed, reloading.
+Watching for file changes with StatReloader
+D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader

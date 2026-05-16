@@ -25,11 +25,8 @@ except Exception:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-FONT_URL = [
-    # Thay đổi đường dẫn dưới đây thành đường dẫn thực tế đến các tệp phông chữ trên hệ thống 
-    r'D:\DATN\ticket-booking-fe\assets\fonts\Nunito-Bold.ttf',
-    r'D:\DATN\ticket-booking-fe\assets\fonts\Nunito-Medium.ttf',
-]
+# Font paths - for production, fonts are optional
+FONT_URL = []
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -252,6 +249,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

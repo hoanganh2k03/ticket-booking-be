@@ -58,9 +58,14 @@ from django.http import HttpResponse
 
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
-# Đăng ký font hỗ trợ tiếng Việt (đảm bảo đã copy file DejaVuSans.ttf và DejaVuSans-Bold.ttf vào đúng path)
-pdfmetrics.registerFont(TTFont('Nunito-Medium', settings.FONT_URL[0]))
-pdfmetrics.registerFont(TTFont('Nunito-Bold', settings.FONT_URL[1]))
+# Register fonts - fallback to default if fonts not available in production
+try:
+    if settings.FONT_URL and len(settings.FONT_URL) >= 2:
+        pdfmetrics.registerFont(TTFont('Nunito-Medium', settings.FONT_URL[0]))
+        pdfmetrics.registerFont(TTFont('Nunito-Bold', settings.FONT_URL[1]))
+except Exception:
+    # Fonts not available in production, fallback to default fonts
+    pass
 
 styles = getSampleStyleSheet()
 info_style = ParagraphStyle(

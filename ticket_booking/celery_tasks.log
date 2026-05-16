@@ -34378,3 +34378,39 @@ Watching for file changes with StatReloader
 [mHTTP GET /api/reports/orders/?page=1 200 [1.09, 127.0.0.1:61835][0m
 D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
 Watching for file changes with StatReloader
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.35, 127.0.0.1:60614][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [1.76, 127.0.0.1:61051][0m
+D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+Watching for file changes with StatReloader
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.40, 127.0.0.1:63329][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [1.85, 127.0.0.1:54937][0m
+Watching for file changes with StatReloader
+[32mHTTP GET /api/orders/matches 301 [0.26, 127.0.0.1:51376][0m
+[mHTTP GET /api/orders/matches/ 200 [0.97, 127.0.0.1:51376][0m
+[mHTTP GET /static/rest_framework/css/bootstrap-tweaks.css 200 [0.23, 127.0.0.1:61633][0m
+[mHTTP GET /static/rest_framework/css/prettify.css 200 [0.23, 127.0.0.1:49879][0m
+[mHTTP GET /static/rest_framework/css/default.css 200 [0.22, 127.0.0.1:52969][0m
+[mHTTP GET /static/rest_framework/css/bootstrap.min.css 200 [0.25, 127.0.0.1:51376][0m
+[mHTTP GET /static/rest_framework/js/default.js 200 [0.09, 127.0.0.1:51376][0m
+[mHTTP GET /static/rest_framework/js/ajax-form.js 200 [0.33, 127.0.0.1:54604][0m
+[mHTTP GET /static/rest_framework/js/csrf.js 200 [0.11, 127.0.0.1:49879][0m
+[mHTTP GET /static/rest_framework/js/bootstrap.min.js 200 [0.12, 127.0.0.1:61633][0m
+[mHTTP GET /static/rest_framework/js/prettify-min.js 200 [0.12, 127.0.0.1:52969][0m
+[mHTTP GET /static/rest_framework/img/grid.png 200 [0.02, 127.0.0.1:49879][0m
+[mHTTP GET /static/rest_framework/js/load-ajax-form.js 200 [0.02, 127.0.0.1:54604][0m
+[mHTTP GET /static/rest_framework/js/jquery-3.7.1.min.js 200 [0.38, 127.0.0.1:59342][0m
+Not Found: /favicon.ico
+[33mHTTP GET /favicon.ico 404 [0.02, 127.0.0.1:59342][0m
+[mHTTP GET /api/orders/matches/ 200 [0.30, 127.0.0.1:63833][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/orders/matches/ 200 [0.43, 127.0.0.1:54480][0m
+[mHTTP GET /api/orders/matches/ 200 [0.11, 127.0.0.1:54480][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.19, 127.0.0.1:56433][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.07, 127.0.0.1:62463][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [0.88, 127.0.0.1:56433][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:57062][0m
+[mHTTP GET /api/events/sports/ 200 [0.05, 127.0.0.1:57201][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.12, 127.0.0.1:56433][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.14, 127.0.0.1:62463][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [0.10, 127.0.0.1:57201][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [0.10, 127.0.0.1:56433][0m

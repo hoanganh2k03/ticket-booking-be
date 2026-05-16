@@ -10,4 +10,5 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput || echo "Static files collection skipped"
 
 echo "Starting Daphne server..."
-exec daphne -b 0.0.0.0 -p 10000 ticket_booking.asgi:application
+PORT="${PORT:-10000}"
+exec daphne -b 0.0.0.0 -p "$PORT" ticket_booking.asgi:application

@@ -427,6 +427,145 @@ class MoMoPaymentAPIView(APIView):
             print("❌ Lỗi Server:", str(e))
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class MoMoPaymentAPIView(APIView):
+    def post(self, request):
+        try:
+            order_id = request.data.get('order')
+            if not order_id:
+                return Response({"error": "Missing 'order' field."}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                order = Order.objects.get(order_id=order_id)
+            except Order.DoesNotExist:
+                return Response({"error": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+
+            amount_raw = request.data.get('amount', order.total_amount)
+            try:
+                amount = int(float(amount_raw))
+            except (TypeError, ValueError):
+                return Response({"error": "Invalid 'amount' value."}, status=status.HTTP_400_BAD_REQUEST)
+
+            order_info = request.data.get('order_info') or f"Thanh toan don hang {order_id}"
+
+            backend_base_url = request.data.get('backend_url')
+            if not backend_base_url:
+                backend_base_url = request.build_absolute_uri('/').rstrip('/')
+            backend_base_url = backend_base_url.rstrip('/')
+
+            frontend_redirect_url = request.data.get('redirect_url')
+            if not frontend_redirect_url:
+                frontend_redirect_url = f"{backend_base_url}/pages/customer/qrcode.html"
+
+            ipn_url = request.data.get('ipn_url') or f"{backend_base_url}/api/orders/done-payment/"
+            momo_redirect_url = f"{backend_base_url}/api/orders/payment-result/"
+
+            access_key = "F8BBA842ECF85"
+            secret_key = "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+            partner_code = "MOMO"
+            request_type = "payWithMethod"
+            request_id = str(uuid.uuid4())
+
+            extra_payload = {
+                "frontend_redirect_url": frontend_redirect_url,
+            }
+            extra_data = base64.b64encode(
+                json.dumps(extra_payload, separators=(',', ':')).encode('utf-8')
+            ).decode('utf-8')
+
+            raw_signature = (
+                f"accessKey={access_key}&amount={amount}&extraData={extra_data}&ipnUrl={ipn_url}"
+                f"&orderId={order_id}&orderInfo={order_info}&partnerCode={partner_code}"
+                f"&redirectUrl={momo_redirect_url}&requestId={request_id}&requestType={request_type}"
+            )
+            signature = hmac.new(
+                secret_key.encode('utf-8'),
+                raw_signature.encode('utf-8'),
+                hashlib.sha256
+            ).hexdigest()
+
+            payload = {
+                "partnerCode": partner_code,
+                "partnerName": "MoMo Payment",
+                "storeId": "Ticket Booking",
+                "requestId": request_id,
+                "amount": str(amount),
+                "orderId": str(order_id),
+                "orderInfo": order_info,
+                "redirectUrl": momo_redirect_url,
+                "ipnUrl": ipn_url,
+                "lang": "vi",
+                "requestType": request_type,
+                "autoCapture": True,
+                "extraData": extra_data,
+                "orderGroupId": "",
+                "signature": signature,
+            }
+
+            expiration_time = timezone.now() + timedelta(minutes=10)
+            payment, _ = Payment.objects.get_or_create(
+                order=order,
+                defaults={
+                    "payment_method": "transfer",
+                    "payment_status": "pending",
+                    "transaction_code": None,
+                    "expiration_time": expiration_time,
+                }
+            )
+            payment.payment_status = 'pending'
+            payment.payment_method = 'transfer'
+            payment.expiration_time = expiration_time
+            payment.save(update_fields=['payment_status', 'payment_method', 'expiration_time'])
+
+            endpoint = "https://test-payment.momo.vn/v2/gateway/api/create"
+            payment_data = None
+            attempts = 3
+            backoff = [1, 2, 4]
+
+            for attempt in range(attempts):
+                try:
+                    resp = requests.post(endpoint, json=payload, timeout=30)
+                    resp.raise_for_status()
+                    payment_data = resp.json()
+                    break
+                except requests.RequestException as req_err:
+                    logger.warning("Attempt %s: Error communicating with MoMo: %s", attempt + 1, req_err)
+                    if attempt < attempts - 1:
+                        time.sleep(backoff[attempt])
+                    else:
+                        logger.exception("All attempts failed contacting MoMo")
+                except ValueError as val_err:
+                    logger.exception("Invalid JSON from MoMo: %s", val_err)
+                    return Response({"error": "Invalid response from payment gateway."}, status=status.HTTP_502_BAD_GATEWAY)
+
+            if payment_data is None:
+                return Response(
+                    {"error": "Failed to contact payment gateway after retries.", "payment_id": payment.payment_id},
+                    status=status.HTTP_502_BAD_GATEWAY
+                )
+
+            result_code = str(payment_data.get('resultCode', ''))
+            if result_code not in ('', '0'):
+                logger.warning("MoMo create payment failed for order %s: %s", order_id, payment_data)
+                return Response(
+                    {
+                        "error": payment_data.get('message') or "MoMo payment link creation failed.",
+                        "payment_id": payment.payment_id,
+                        **payment_data,
+                    },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            transaction_code = payment_data.get('transId') or payment_data.get('requestId')
+            if transaction_code:
+                payment.transaction_code = str(transaction_code)
+                payment.save(update_fields=['transaction_code'])
+
+            return Response({**payment_data, "payment_id": payment.payment_id}, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.exception("Internal Server Error on %s", request.path)
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class MoMoIPNAPIView(APIView):
     def post(self, request):
         # Lấy thông tin từ MoMo gửi về (MoMo gửi dưới dạng POST)
@@ -1111,3 +1250,57 @@ def payment_result_view(request):
         # Cần mã hóa tin nhắn lỗi (vì có thể chứa tiếng Việt/ký tự đặc biệt)
         encoded_message = urllib.parse.quote(message)
         return redirect(f"{FRONTEND_URL}?resultCode={result_code}&orderId={order_id}&message={encoded_message}")
+
+
+def payment_result_view(request):
+    result_code = request.GET.get('resultCode')
+    order_id = request.GET.get('orderId')
+    message = request.GET.get('message', '')
+    trans_id = request.GET.get('transId')
+    frontend_url = request.GET.get('redirect_url')
+    extra_data = request.GET.get('extraData')
+
+    if extra_data:
+        try:
+            decoded_extra = base64.b64decode(extra_data).decode('utf-8')
+            extra_payload = json.loads(decoded_extra)
+            frontend_url = frontend_url or extra_payload.get('frontend_redirect_url')
+        except Exception:
+            logger.warning("Failed to decode MoMo extraData for order %s", order_id)
+
+    if not frontend_url:
+        frontend_url = "http://127.0.0.1:5500/pages/customer/qrcode.html"
+
+    if order_id:
+        try:
+            order = Order.objects.get(order_id=order_id)
+            payment, _ = Payment.objects.get_or_create(
+                order=order,
+                defaults={
+                    "payment_method": "transfer",
+                    "payment_status": "pending",
+                    "transaction_code": None,
+                    "expiration_time": timezone.now() + timedelta(minutes=10),
+                }
+            )
+            if str(result_code) == '0':
+                payment.payment_status = 'success'
+                payment.payment_method = 'transfer'
+                if trans_id:
+                    payment.transaction_code = str(trans_id)
+                payment.save()
+                if order.order_status != 'received':
+                    order.order_status = 'received'
+                    order.save(update_fields=['order_status'])
+            else:
+                payment.payment_status = 'failed'
+                if trans_id:
+                    payment.transaction_code = str(trans_id)
+                payment.save()
+        except Order.DoesNotExist:
+            logger.warning("Order %s not found while handling MoMo redirect", order_id)
+        except Exception:
+            logger.exception("Failed to sync payment status from MoMo redirect for order %s", order_id)
+
+    encoded_message = urllib.parse.quote(message)
+    return redirect(f"{frontend_url}?resultCode={result_code}&orderId={order_id}&message={encoded_message}")

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import sys
+import os
 
 # Ensure stdout/stderr use UTF-8 encoding on Windows consoles to avoid logging Unicode errorshhh
 try:
@@ -33,39 +34,39 @@ FONT_URL = [
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# Load .env in local development if present
+if (Path(__file__).resolve().parent.parent / '.env').exists():
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parent.parent / '.env')
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-opx%#(^al3$yv0&^76_skx%e=9y4^b9xo^$w+*pkwn)42ks41+"
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-opx%#(^al3$yv0&^76_skx%e=9y4^b9xo^$w+*pkwn)42ks41+')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('1', 'true', 'yes')
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 AUTH_USER_MODEL = 'accounts.EmployeeAccount'
 
-# settings.py
-
 # Redis config
-REDIS_URL = "redis://localhost:6379/0"
+REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
 
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('1', 'true', 'yes')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'vuquochoanganh2k3@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'tgai qoii itcl oroc')
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY', 'abcdef');
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'hattoriheiji48691810@gmail.com'
-EMAIL_HOST_PASSWORD = 'yunn cvuv glju xebd'
-GROQ_API_KEY='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'
-# EMAIL_HOST_USER = 'vuquochoanganh2k3@gmail.com'
-# EMAIL_HOST_PASSWORD = 'tgai qoii itcl oroc'
-# calery
+# celery
 from celery.schedules import crontab  # Thêm import ở đây
 
 # Các cấu hình khác của Django và Celery
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis làm broker
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', REDIS_URL)
 CELERY_ACCEPT_CONTENT = ['json']  # Celery chấp nhận dữ liệu định dạng JSON
 CELERY_TASK_SERIALIZER = 'json'  # Sử dụng JSON để serialize tasks
 
@@ -184,17 +185,13 @@ WSGI_APPLICATION = "ticket_booking.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-       # 'NAME': 'sports',
-         'USER': 'sa',
-         'NAME':'sport',
-        #'USER':'root',
-       # 'PASSWORD': '1234',
-        'PASSWORD': 'kc',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': os.environ.get('MYSQL_DATABASE', 'sport'),
+        'USER': os.environ.get('MYSQL_USER', 'sa'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'kc'),
+        'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
+        'PORT': os.environ.get('MYSQL_PORT', '3306'),
     }
 }
-import os
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -273,10 +270,20 @@ SIMPLE_JWT = {
 #     'django.contrib.auth.backends.ModelBackend',  # Backend mặc định của Django
 # ]
 
-CHANNEL_LAYERS = {
-    'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+if REDIS_URL:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                'hosts': [REDIS_URL],
+            },
+        }
     }
-}
+else:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        }
+    }
 
 

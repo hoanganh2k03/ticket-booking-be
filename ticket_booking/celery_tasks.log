@@ -34356,3 +34356,10 @@ Watching for file changes with StatReloader
 [mHTTP GET /api/tickets/completed-matches/ 200 [0.14, 127.0.0.1:60251][0m
 [mHTTP GET /api/tickets/section-prices/ 200 [0.11, 127.0.0.1:57378][0m
 [mHTTP GET /api/tickets/completed-matches/ 200 [0.10, 127.0.0.1:60919][0m
+Watching for file changes with StatReloader
+[32mHTTP GET /api/reports/orders/leagues 301 [0.22, 127.0.0.1:55568][0m
+[32mHTTP GET /api/reports/orders?page=1 301 [0.19, 127.0.0.1:57124][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.05, 127.0.0.1:57124][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [1.19, 127.0.0.1:55568][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [0.21, 127.0.0.1:62743][0m
+[mHTTP GET /api/reports/orders/?page=1 200 [0.94, 127.0.0.1:58176][0m

@@ -60,29 +60,28 @@ except Exception as exc:
     sys.exit(1)
 PY
 
-echo "Running migrations..."
-count=0
-while [ "$count" -lt 30 ]; do
-    "$PYTHON" manage.py migrate --noinput && break || {
-        echo "migrate attempt $((count + 1)) failed, retrying..."
-        sleep 2
-        count=$((count + 1))
-    }
-done
+echo "Starting migration and static collection in background..."
+"$PYTHON" manage.py migrate --noinput &
+MIGRATE_PID=$!
 
-if [ "$count" -ge 30 ]; then
-    echo "ERROR: manage.py migrate failed after 30 attempts."
-    exit 1
-fi
+echo "Started migrate (pid=$MIGRATE_PID)"
 
-echo "Collecting static files..."
-"$PYTHON" manage.py collectstatic --noinput
+"$PYTHON" manage.py collectstatic --noinput &
+COLLECTSTATIC_PID=$!
+
+echo "Started collectstatic (pid=$COLLECTSTATIC_PID)"
 
 echo "Starting celery worker..."
 "$PYTHON" -m celery -A ticket_booking.celery worker -l info &
+CELERY_WORKER_PID=$!
+
+echo "Started celery worker (pid=$CELERY_WORKER_PID)"
 
 echo "Starting celery beat..."
 "$PYTHON" -m celery -A ticket_booking.celery beat -l info &
+CELERY_BEAT_PID=$!
+
+echo "Started celery beat (pid=$CELERY_BEAT_PID)"
 
 echo "Starting daphne on 0.0.0.0:${PORT:-10000}..."
 exec "$PYTHON" -m daphne -b 0.0.0.0 -p "${PORT:-10000}" ticket_booking.asgi:application

@@ -66,8 +66,8 @@ GROQ_API_KEY = os.environ.get('GROQ_API_KEY', 'abcdef');
 from celery.schedules import crontab  # Thêm import ở đây
 
 # Các cấu hình khác của Django và Celery
-CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', REDIS_URL)
-if CELERY_BROKER_URL and ('${REDIS_URL}' in CELERY_BROKER_URL or '$REDIS_URL' in CELERY_BROKER_URL):
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', '').strip()
+if not CELERY_BROKER_URL or CELERY_BROKER_URL in ('${REDIS_URL}', '$REDIS_URL'):
     CELERY_BROKER_URL = REDIS_URL
 CELERY_ACCEPT_CONTENT = ['json']  # Celery chấp nhận dữ liệu định dạng JSON
 CELERY_TASK_SERIALIZER = 'json'  # Sử dụng JSON để serialize tasks

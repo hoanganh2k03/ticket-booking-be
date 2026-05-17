@@ -1,7 +1,7 @@
 services:
   - type: web
     name: ticket-booking-backend-web
-    env: python
+    runtime: python
     buildCommand: pip install -r ticket_booking/requirements.txt
     startCommand: bash entrypoint-web.sh
     envVars:
@@ -14,7 +14,7 @@ services:
 
   - type: worker
     name: ticket-booking-celery-worker
-    env: python
+    runtime: python
     buildCommand: pip install -r ticket_booking/requirements.txt
     startCommand: bash entrypoint-worker.sh
     envVars:
@@ -25,7 +25,7 @@ services:
 
   - type: worker
     name: ticket-booking-celery-beat
-    env: python
+    runtime: python
     buildCommand: pip install -r ticket_booking/requirements.txt
     startCommand: bash entrypoint-beat.sh
     envVars:

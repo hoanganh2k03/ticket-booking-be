@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 
-cd ticket_booking
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR/ticket_booking"
 
 PYTHON=python
 if ! command -v "$PYTHON" >/dev/null 2>&1; then
@@ -60,16 +61,14 @@ except Exception as exc:
     sys.exit(1)
 PY
 
-echo "Starting migration and static collection in background..."
-"$PYTHON" manage.py migrate --noinput &
-MIGRATE_PID=$!
+echo "Running migration and static collection..."
+"$PYTHON" manage.py migrate --noinput
 
-echo "Started migrate (pid=$MIGRATE_PID)"
+echo "Migration completed"
 
-"$PYTHON" manage.py collectstatic --noinput &
-COLLECTSTATIC_PID=$!
+"$PYTHON" manage.py collectstatic --noinput
 
-echo "Started collectstatic (pid=$COLLECTSTATIC_PID)"
+echo "Collectstatic completed"
 
 echo "Starting celery worker..."
 "$PYTHON" -m celery -A ticket_booking.celery worker -l info &

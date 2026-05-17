@@ -21,8 +21,6 @@ RUN chmod +x /app/entrypoint.sh
 ENV DJANGO_SETTINGS_MODULE=ticket_booking.settings
 ENV PORT=10000
 
-WORKDIR /app/ticket_booking
-
 EXPOSE 10000
 
 ENTRYPOINT ["/app/entrypoint.sh"]

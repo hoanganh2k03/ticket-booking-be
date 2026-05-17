@@ -34420,3 +34420,111 @@ Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 Watching for file changes with StatReloader
+[mHTTP OPTIONS /api/accounts/auth/login 200 [0.01, 127.0.0.1:51837][0m
+[mHTTP POST /api/accounts/auth/login 200 [3.74, 127.0.0.1:51837][0m
+[mHTTP OPTIONS /api/accounts/employee/profile/ 200 [0.01, 127.0.0.1:51837][0m
+[mHTTP GET /api/accounts/employee/profile/ 200 [2.04, 127.0.0.1:51837][0m
+Not Found: /media/employee_images/Screenshot_2026-04-14_221955_VgWvMym.png
+[33mHTTP GET /media/employee_images/Screenshot_2026-04-14_221955_VgWvMym.png 404 [0.01, 127.0.0.1:49390][0m
+[mHTTP GET /api/events/sports/ 200 [2.05, 127.0.0.1:51837][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [1.82, 127.0.0.1:51837][0m
+[mHTTP GET /api/events/sports/ 200 [2.14, 127.0.0.1:62853][0m
+[mHTTP GET /api/reports/orders/leagues/ 200 [2.44, 127.0.0.1:62853][0m
+[mHTTP GET /api/events/sports/ 200 [2.46, 127.0.0.1:51837][0m
+[mHTTP GET /api/events/sports/ 200 [2.35, 127.0.0.1:55867][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [8.69, 127.0.0.1:59522][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [11.11, 127.0.0.1:57934][0m
+Watching for file changes with StatReloader
+[mHTTP GET /api/events/sports/ 200 [2.13, 127.0.0.1:51850][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [9.26, 127.0.0.1:60740][0m
+[mHTTP GET /api/events/sports/ 200 [2.25, 127.0.0.1:63245][0m
+[mHTTP GET /api/events/sports/ 200 [2.09, 127.0.0.1:50910][0m
+[mHTTP GET /api/events/sports/ 200 [2.37, 127.0.0.1:63245][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [7.84, 127.0.0.1:60740][0m
+[mHTTP GET /api/accounts/employees/ 200 [8.67, 127.0.0.1:50368][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [11.03, 127.0.0.1:51850][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [7.66, 127.0.0.1:63245][0m
+[mHTTP GET /api/accounts/employees/ 200 [9.62, 127.0.0.1:60740][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [10.82, 127.0.0.1:50368][0m
+[mHTTP GET /api/tickets/section-prices/ 200 [8.69, 127.0.0.1:51850][0m
+[mHTTP GET /api/accounts/employees/ 200 [9.53, 127.0.0.1:60740][0m
+[mHTTP GET /api/tickets/completed-matches/ 200 [10.98, 127.0.0.1:63245][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [4.74, 127.0.0.1:60740][0m
+[mHTTP GET /api/accounts/employees/ 200 [9.15, 127.0.0.1:51850][0m
+[mHTTP GET /api/accounts/staff/customers/ 200 [5.21, 127.0.0.1:63245][0m
+[mHTTP GET /api/events/sports/ 200 [2.30, 127.0.0.1:63245][0m
+[mHTTP GET /api/events/sports/ 200 [2.37, 127.0.0.1:51850][0m
+[mHTTP GET /api/events/leagues/ 200 [5.82, 127.0.0.1:63245][0m
+[mHTTP GET /api/events/leagues/ 200 [5.45, 127.0.0.1:51850][0m
+[mHTTP GET /api/events/teams/ 200 [3.39, 127.0.0.1:51850][0m
+[mHTTP GET /api/events/sports/ 200 [2.09, 127.0.0.1:51850][0m
+Not Found: /media/team_logos/citywing_logo.jpg
+Not Found: /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg
+[33mHTTP GET /media/team_logos/citywing_logo.jpg 404 [0.02, 127.0.0.1:55867][0m
+[33mHTTP GET /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg 404 [0.02, 127.0.0.1:54073][0m
+Not Found: /media/team_logos/saigonheat_logo.png
+[33mHTTP GET /media/team_logos/saigonheat_logo.png 404 [0.02, 127.0.0.1:56234][0m
+[mHTTP GET /api/events/teams/ 200 [3.32, 127.0.0.1:63245][0m
+[mHTTP GET /api/events/sports/ 200 [2.09, 127.0.0.1:63245][0m
+Not Found: /media/team_logos/citywing_logo.jpg
+Not Found: /media/team_logos/saigonheat_logo.png
+Not Found: /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg
+[33mHTTP GET /media/team_logos/citywing_logo.jpg 404 [0.03, 127.0.0.1:54870][0m
+[33mHTTP GET /media/team_logos/saigonheat_logo.png 404 [0.03, 127.0.0.1:52792][0m
+[33mHTTP GET /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg 404 [0.03, 127.0.0.1:55036][0m
+[mHTTP GET /api/events/stadiums/ 200 [2.44, 127.0.0.1:63245][0m
+[mHTTP GET /api/events/stadiums/ 200 [2.12, 127.0.0.1:51850][0m
+[mHTTP GET /api/events/sports/ 200 [2.13, 127.0.0.1:63245][0m
+Not Found: /media/Layout A
+[33mHTTP GET /media/Layout%20A 404 [0.02, 127.0.0.1:63368][0m
+Not Found: /media/Layout B
+Not Found: /media/stadium_layouts/Screenshot_2026-04-14_175736.png
+[33mHTTP GET /media/Layout%20B 404 [0.02, 127.0.0.1:63769][0m
+[33mHTTP GET /media/stadium_layouts/Screenshot_2026-04-14_175736.png 404 [0.01, 127.0.0.1:50807][0m
+[mHTTP GET /api/events/sports/ 200 [2.43, 127.0.0.1:51850][0m
+Not Found: /media/team_logos/citywing_logo.jpg
+Not Found: /media/Layout A
+Not Found: /media/team_logos/saigonheat_logo.png
+[33mHTTP GET /media/team_logos/citywing_logo.jpg 404 [0.02, 127.0.0.1:50675][0m
+Not Found: /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg
+[33mHTTP GET /media/Layout%20A 404 [0.02, 127.0.0.1:49842][0m
+[33mHTTP GET /media/team_logos/saigonheat_logo.png 404 [0.03, 127.0.0.1:64718][0m
+[33mHTTP GET /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg 404 [0.03, 127.0.0.1:51465][0m
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20B 404 [0.01, 127.0.0.1:59999][0m
+Not Found: /media/stadium_layouts/Screenshot_2026-04-14_175736.png
+[33mHTTP GET /media/stadium_layouts/Screenshot_2026-04-14_175736.png 404 [0.01, 127.0.0.1:56230][0m
+Not Found: /media/team_logos/citywing_logo.jpg
+[33mHTTP GET /media/team_logos/citywing_logo.jpg 404 [0.02, 127.0.0.1:52408][0m
+Not Found: /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg
+Not Found: /media/team_logos/saigonheat_logo.png
+[33mHTTP GET /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg 404 [0.02, 127.0.0.1:56618][0m
+Not Found: /media/Layout A
+[33mHTTP GET /media/team_logos/saigonheat_logo.png 404 [0.02, 127.0.0.1:64737][0m
+[33mHTTP GET /media/Layout%20A 404 [0.02, 127.0.0.1:60504][0m
+Not Found: /media/Layout B
+[33mHTTP GET /media/Layout%20B 404 [0.01, 127.0.0.1:52134][0m
+Not Found: /media/stadium_layouts/Screenshot_2026-04-14_175736.png
+[33mHTTP GET /media/stadium_layouts/Screenshot_2026-04-14_175736.png 404 [0.01, 127.0.0.1:54276][0m
+[mHTTP GET /api/events/matches/ 200 [21.69, 127.0.0.1:63245][0m
+[mHTTP GET /api/events/sports/ 200 [2.24, 127.0.0.1:63245][0m
+[mHTTP GET /api/events/matches/ 200 [21.55, 127.0.0.1:51850][0m
+Not Found: /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg
+Not Found: /media/team_logos/saigonheat_logo.png
+[33mHTTP GET /media/team_logos/z7202802905429_7edb5f667dfa2862698695f8d7bb3467.jpg 404 [0.02, 127.0.0.1:53670][0m
+Not Found: /media/team_logos/citywing_logo.jpg
+Not Found: /media/Layout B
+Not Found: /media/Layout A
+[33mHTTP GET /media/team_logos/saigonheat_logo.png 404 [0.02, 127.0.0.1:58142][0m
+[33mHTTP GET /media/team_logos/citywing_logo.jpg 404 [0.02, 127.0.0.1:54802][0m
+[33mHTTP GET /media/Layout%20B 404 [0.02, 127.0.0.1:52698][0m
+[33mHTTP GET /media/Layout%20A 404 [0.02, 127.0.0.1:63724][0m
+Not Found: /media/stadium_layouts/Screenshot_2026-04-14_175736.png
+[33mHTTP GET /media/stadium_layouts/Screenshot_2026-04-14_175736.png 404 [0.01, 127.0.0.1:51700][0m
+[mHTTP GET /api/events/sports/ 200 [2.47, 127.0.0.1:51850][0m
+[mHTTP GET /api/events/matches/ 200 [21.38, 127.0.0.1:51850][0m
+[mHTTP GET /api/events/sports/ 200 [2.10, 127.0.0.1:51850][0m
+[mHTTP GET /api/events/matches/ 200 [24.96, 127.0.0.1:65411][0m
+[mHTTP GET /api/events/sports/ 200 [2.61, 127.0.0.1:52978][0m
+D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\asgi.py changed, reloading.
+Watching for file changes with StatReloader

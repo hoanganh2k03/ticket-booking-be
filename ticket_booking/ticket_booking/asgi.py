@@ -36,11 +36,14 @@ from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 
-# Import routing after Django is configured
-import apps.orders.routing 
+# Create ASGI application first so Django apps are loaded
+django_asgi_app = get_asgi_application()
+
+# Import routing after Django setup to avoid AppRegistryNotReady
+import apps.orders.routing
 
 application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
+    "http": django_asgi_app,
     
     # 2. Cấu hình WebSocket
     "websocket": AuthMiddlewareStack(

@@ -1,21 +1,32 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 cd ticket_booking
 
+PYTHON=python
+if ! command -v "$PYTHON" >/dev/null 2>&1; then
+    PYTHON=python3
+fi
+
+printf 'Using Python interpreter: %s\n' "$PYTHON"
+command -v "$PYTHON" || true
+"$PYTHON" --version || true
+
 echo "Running migrations..."
-for i in {1..30}; do
-    python manage.py migrate --noinput && break || sleep 2
+count=0
+while [ "$count" -lt 30 ]; do
+    "$PYTHON" manage.py migrate --noinput && break || sleep 2
+    count=$((count + 1))
 done
 
 echo "Collecting static files..."
-python manage.py collectstatic --noinput
+"$PYTHON" manage.py collectstatic --noinput
 
 echo "Starting celery worker..."
-python -m celery -A ticket_booking.celery worker -l info &
+"$PYTHON" -m celery -A ticket_booking.celery worker -l info &
 
 echo "Starting celery beat..."
-python -m celery -A ticket_booking.celery beat -l info &
+"$PYTHON" -m celery -A ticket_booking.celery beat -l info &
 
 echo "Starting daphne on 0.0.0.0:${PORT:-10000}..."
-exec python -m daphne -b 0.0.0.0 -p "${PORT:-10000}" ticket_booking.asgi:application
+exec "$PYTHON" -m daphne -b 0.0.0.0 -p "${PORT:-10000}" ticket_booking.asgi:application

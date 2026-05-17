@@ -34414,3 +34414,9 @@ Watching for file changes with StatReloader
 [mHTTP GET /api/tickets/completed-matches/ 200 [0.14, 127.0.0.1:62463][0m
 [mHTTP GET /api/tickets/section-prices/ 200 [0.10, 127.0.0.1:57201][0m
 [mHTTP GET /api/tickets/completed-matches/ 200 [0.10, 127.0.0.1:56433][0m
+Watching for file changes with StatReloader
+D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader

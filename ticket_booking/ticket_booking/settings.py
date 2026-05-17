@@ -185,11 +185,11 @@ WSGI_APPLICATION = "ticket_booking.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE', 'sport'),
-        'USER': os.environ.get('MYSQL_USER', 'sa'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'kc'),
-        'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
-        'PORT': os.environ.get('MYSQL_PORT', '3306'),
+        'NAME': os.environ.get('MYSQL_DATABASE', 'ssss'),
+        'USER': os.environ.get('MYSQL_USER', 'sasss'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'kcsss'),
+        'HOST': os.environ.get('MYSQL_HOST', 'localhostsss'),
+        'PORT': os.environ.get('MYSQL_PORT', '3306ss'),
     }
 }
 

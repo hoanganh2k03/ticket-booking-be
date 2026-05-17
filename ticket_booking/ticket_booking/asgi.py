@@ -28,14 +28,16 @@
 #     ),
 # })
 import os
+
+# Set Django settings FIRST before any other imports
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ticket_booking.settings")
+
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 
-# 1. Import file routing từ app orders
+# Import routing after Django is configured
 import apps.orders.routing 
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ticket_booking.settings")
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),

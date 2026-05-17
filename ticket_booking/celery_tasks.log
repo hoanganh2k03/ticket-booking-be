@@ -34560,3 +34560,8 @@ Watching for file changes with StatReloader
 [mHTTP GET /api/accounts/employees/ 200 [8.51, 127.0.0.1:52970][0m
 [mHTTP GET /api/accounts/employees/ 200 [9.39, 127.0.0.1:52970][0m
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+Watching for file changes with StatReloader
+D:\DATN\ticket-booking-be\ticket_booking\ticket_booking\settings.py changed, reloading.
+Watching for file changes with StatReloader

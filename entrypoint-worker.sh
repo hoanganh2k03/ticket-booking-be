@@ -13,4 +13,4 @@ if ! command -v "$PYTHON" >/dev/null 2>&1; then
 fi
 
 printf 'Using Python interpreter: %s\n' "$PYTHON"
-exec "$PYTHON" -m celery -A ticket_booking.celery worker -l info
+exec "$PYTHON" -m celery -A ticket_booking.celery worker -l info --concurrency=1 --pool=solo

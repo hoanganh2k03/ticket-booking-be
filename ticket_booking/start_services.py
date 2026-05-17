@@ -57,8 +57,8 @@ def main():
 
     # Start celery processes (they will run alongside daphne)
     cmds = [
-        ('celery_worker', ['celery', '-A', 'ticket_booking', 'worker', '-l', 'info']),
-        ('celery_beat', ['celery', '-A', 'ticket_booking', 'beat', '-l', 'info']),
+        ('celery_worker', ['python', '-m', 'celery', '-A', 'ticket_booking.celery', 'worker', '-l', 'info']),
+        ('celery_beat', ['python', '-m', 'celery', '-A', 'ticket_booking.celery', 'beat', '-l', 'info']),
     ]
 
     for name, cmd in cmds:

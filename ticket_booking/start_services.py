@@ -58,15 +58,19 @@ def main():
     mgmt_thread = threading.Thread(target=run_manage_commands, daemon=True)
     mgmt_thread.start()
 
-    # Start celery processes (they will run alongside daphne)
-    cmds = [
-        ('celery_worker', [python, '-m', 'celery', '-A', 'ticket_booking.celery', 'worker', '-l', 'info']),
-        ('celery_beat', [python, '-m', 'celery', '-A', 'ticket_booking.celery', 'beat', '-l', 'info']),
-    ]
+    # Optionally skip starting celery (useful when running dedicated worker/beat services)
+    skip_celery = os.environ.get('SKIP_CELERY', '0').lower() in ('1', 'true', 'yes')
 
-    for name, cmd in cmds:
-        p = start_process(cmd, env=env)
-        processes.append((name, p))
+    if not skip_celery:
+        # Start celery processes (they will run alongside daphne)
+        cmds = [
+            ('celery_worker', [python, '-m', 'celery', '-A', 'ticket_booking.celery', 'worker', '-l', 'info']),
+            ('celery_beat', [python, '-m', 'celery', '-A', 'ticket_booking.celery', 'beat', '-l', 'info']),
+        ]
+
+        for name, cmd in cmds:
+            p = start_process(cmd, env=env)
+            processes.append((name, p))
 
     def handle_exit(signum, frame):
         for _name, p in processes:

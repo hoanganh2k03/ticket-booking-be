@@ -16,11 +16,11 @@ RUN pip install --upgrade pip \
 
 COPY . /app/
 
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh /app/entrypoint-web.sh /app/entrypoint-worker.sh /app/entrypoint-beat.sh
 
 ENV DJANGO_SETTINGS_MODULE=ticket_booking.settings
 ENV PORT=10000
 
 EXPOSE 10000
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["/app/entrypoint.sh"]

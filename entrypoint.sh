@@ -60,27 +60,5 @@ except Exception as exc:
     print('Redis connectivity test failed:', exc)
     sys.exit(1)
 PY
-
-echo "Running migration and static collection..."
-"$PYTHON" manage.py migrate --noinput
-
-echo "Migration completed"
-
-"$PYTHON" manage.py collectstatic --noinput
-
-echo "Collectstatic completed"
-
-echo "Starting celery worker..."
-"$PYTHON" -m celery -A ticket_booking.celery worker -l info &
-CELERY_WORKER_PID=$!
-
-echo "Started celery worker (pid=$CELERY_WORKER_PID)"
-
-echo "Starting celery beat..."
-"$PYTHON" -m celery -A ticket_booking.celery beat -l info &
-CELERY_BEAT_PID=$!
-
-echo "Started celery beat (pid=$CELERY_BEAT_PID)"
-
-echo "Starting daphne on 0.0.0.0:${PORT:-10000}..."
-exec "$PYTHON" -m daphne -b 0.0.0.0 -p "${PORT:-10000}" ticket_booking.asgi:application
+echo "Launching start_services.py (spawns daphne, celery, and runs migrations)..."
+exec "$PYTHON" start_services.py

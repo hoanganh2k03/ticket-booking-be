@@ -67,6 +67,8 @@ from celery.schedules import crontab  # Thêm import ở đây
 
 # Các cấu hình khác của Django và Celery
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', '').strip()
+if CELERY_BROKER_URL:
+    CELERY_BROKER_URL = os.path.expandvars(CELERY_BROKER_URL)
 if not CELERY_BROKER_URL or CELERY_BROKER_URL in ('${REDIS_URL}', '$REDIS_URL'):
     CELERY_BROKER_URL = REDIS_URL
 CELERY_ACCEPT_CONTENT = ['json']  # Celery chấp nhận dữ liệu định dạng JSON

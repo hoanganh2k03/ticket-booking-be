@@ -24,7 +24,7 @@ def run_manage_commands():
 
 
 def start_process(cmd, env=None):
-    return subprocess.Popen(cmd, env=env)
+    return subprocess.Popen(cmd, env=env, cwd=PROJECT_ROOT)
 
 
 def terminate_process(p):
@@ -45,9 +45,12 @@ def main():
     processes = []
 
     env = os.environ.copy()
+    env['PYTHONPATH'] = PROJECT_ROOT
+    env.setdefault('DJANGO_SETTINGS_MODULE', 'ticket_booking.settings')
+    python = sys.executable
 
     # Start daphne first so web responds quickly
-    daphne_cmd = ['daphne', '-b', '0.0.0.0', '-p', str(port), 'ticket_booking.asgi:application']
+    daphne_cmd = [python, '-m', 'daphne', '-b', '0.0.0.0', '-p', str(port), 'ticket_booking.asgi:application']
     daphne_proc = start_process(daphne_cmd, env=env)
     processes.append(('daphne', daphne_proc))
 
@@ -57,8 +60,8 @@ def main():
 
     # Start celery processes (they will run alongside daphne)
     cmds = [
-        ('celery_worker', ['python', '-m', 'celery', '-A', 'ticket_booking.celery', 'worker', '-l', 'info']),
-        ('celery_beat', ['python', '-m', 'celery', '-A', 'ticket_booking.celery', 'beat', '-l', 'info']),
+        ('celery_worker', [python, '-m', 'celery', '-A', 'ticket_booking.celery', 'worker', '-l', 'info']),
+        ('celery_beat', [python, '-m', 'celery', '-A', 'ticket_booking.celery', 'beat', '-l', 'info']),
     ]
 
     for name, cmd in cmds:

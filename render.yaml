@@ -9,8 +9,6 @@ services:
         value: "1"
       - key: DJANGO_SETTINGS_MODULE
         value: "ticket_booking.settings"
-      - key: PORT
-        value: "10000"
 
   - type: worker
     name: ticket-booking-celery-worker

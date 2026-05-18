@@ -4,7 +4,13 @@ app = "ticket-booking-be"
   builder = "paketobuildpacks/builder:base"
   buildpacks = ["heroku/python"]
 
+[processes]
+  web = "gunicorn ticket_booking.wsgi:application --bind 0.0.0.0:${PORT}"
+  worker = "celery -A ticket_booking worker -l info"
+  beat = "celery -A ticket_booking beat -l info"
+
 [[services]]
+  processes = ["web"]
   internal_port = 10000
   protocol = "tcp"
 

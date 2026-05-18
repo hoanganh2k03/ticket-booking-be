@@ -12,7 +12,8 @@ RUN apt-get update \
 COPY ticket_booking/requirements.txt /app/
 
 RUN pip install --upgrade pip \
-    && pip install -r requirements.txt
+    && pip install --no-cache-dir -r requirements.txt \
+    && pip install --no-cache-dir --force-reinstall torch==2.9.1+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html
 
 COPY . /app/
 

@@ -263,6 +263,7 @@ import requests
 import logging
 
 logger = logging.getLogger(__name__)
+from .tasks import send_invoice_email_task
 '''
 class MoMoPaymentAPIView(APIView):
 
@@ -754,8 +755,12 @@ class OrderDetailQRAPIView(APIView):
                 "payment_status": payment.payment_status
             }
 
-            if payment.payment_status == 'success' and order.user.email:
-                self.send_invoice_email(order, payment)
+            if payment.payment_status == 'success' and getattr(order.user, 'email', None):
+                # send invoice asynchronously to avoid blocking the request
+                try:
+                    send_invoice_email_task.delay(order.order_id, payment.payment_id)
+                except Exception:
+                    logger.exception('Failed to enqueue invoice email task for order %s', order.order_id)
 
         # Trả về thông tin của đơn hàng cùng với mã QR và thông tin khuyến mãi cho mỗi OrderDetail
         return Response({
@@ -1059,8 +1064,11 @@ class CashCardPaymentAPIView(APIView):
             detail.qr_code = qr_b64
             detail.save()
 
-        # Gửi email hóa đơn
-        self.send_invoice_email(order, payment)
+        # Enqueue invoice email send to background task to avoid blocking
+        try:
+            send_invoice_email_task.delay(order.order_id, payment.payment_id)
+        except Exception:
+            logger.exception('Failed to enqueue invoice email task for order %s', order.order_id)
 
         return Response({
             "status": "success",

@@ -18,6 +18,7 @@ from .serializers import *
 from apps.returns.models import TicketReturn
 
 import redis
+import os
 import time
 import qrcode
 import base64
@@ -147,7 +148,12 @@ class OrderCreateAPIView(generics.CreateAPIView):
                 "message": f"Lỗi server: {str(e)}",
                 "errors": str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-redis_client = redis.StrictRedis.from_url(settings.REDIS_URL, decode_responses=True)
+redis_client = redis.StrictRedis.from_url(
+    settings.REDIS_URL,
+    decode_responses=True,
+    socket_timeout=int(os.environ.get('REDIS_SOCKET_TIMEOUT', 10)),
+    socket_connect_timeout=int(os.environ.get('REDIS_SOCKET_CONNECT_TIMEOUT', 5)),
+)
 
 class PaymentCreateView(APIView):
     def post(self, request, *args, **kwargs):

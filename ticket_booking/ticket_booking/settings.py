@@ -74,6 +74,23 @@ if not CELERY_BROKER_URL or CELERY_BROKER_URL in ('${REDIS_URL}', '$REDIS_URL'):
 CELERY_ACCEPT_CONTENT = ['json']  # Celery chấp nhận dữ liệu định dạng JSON
 CELERY_TASK_SERIALIZER = 'json'  # Sử dụng JSON để serialize tasks
 
+# Transport / connection resiliency options for Redis broker
+# Tune these via environment variables in production if needed
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    'visibility_timeout': int(os.environ.get('CELERY_VISIBILITY_TIMEOUT', 3600)),
+    'socket_timeout': int(os.environ.get('REDIS_SOCKET_TIMEOUT', 10)),
+    'socket_connect_timeout': int(os.environ.get('REDIS_SOCKET_CONNECT_TIMEOUT', 5)),
+    'retry_on_timeout': True,
+    'max_connections': int(os.environ.get('CELERY_BROKER_MAX_CONNECTIONS', 10)),
+}
+
+# Celery broker connection tuning
+CELERY_BROKER_POOL_LIMIT = int(os.environ.get('CELERY_BROKER_POOL_LIMIT', 10))
+CELERY_BROKER_CONNECTION_RETRY = True
+# None means retry forever; set integer to limit retries
+CELERY_BROKER_CONNECTION_MAX_RETRIES = None
+CELERY_BROKER_HEARTBEAT = int(os.environ.get('CELERY_BROKER_HEARTBEAT', 10))
+
 # Celery Beat schedule (công việc định kỳ)
 CELERY_BEAT_SCHEDULE = {
     'update-section-prices-every-5-minutes': {

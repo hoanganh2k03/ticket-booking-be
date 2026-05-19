@@ -62,6 +62,8 @@ EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('1', 'true', 'yes')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'vuquochoanganh2k3@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'tgai qoii itcl oroc')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+SERVER_EMAIL = os.environ.get('SERVER_EMAIL', DEFAULT_FROM_EMAIL)
 GROQ_API_KEY = os.environ.get('GROQ_API_KEY', 'abcdef');
 
 # celery

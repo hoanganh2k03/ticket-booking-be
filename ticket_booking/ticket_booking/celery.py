@@ -1,7 +1,12 @@
 # apps/tickets/celery.py
 import os
+import socket
+from urllib.parse import urlparse
 from celery import Celery
 from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Đặt môi trường DJANGO_SETTINGS_MODULE
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ticket_booking.settings')
@@ -19,7 +24,34 @@ def _get_broker_url():
         broker_url = getattr(settings, 'REDIS_URL', None)
     return broker_url
 
-app.conf.broker_url = _get_broker_url()
+def _validate_and_choose_broker():
+    url = _get_broker_url()
+    if not url:
+        logger.warning('No broker URL configured; Celery will start without broker.')
+        return url
+
+    parsed = urlparse(url)
+    scheme = parsed.scheme.lower()
+
+    # If broker is AMQP/RabbitMQ, check DNS resolution of hostname
+    if scheme in ('amqp', 'amqps') and parsed.hostname:
+        try:
+            socket.getaddrinfo(parsed.hostname, parsed.port or 5672)
+        except Exception as exc:
+            logger.warning('Broker host %s not resolvable (%s). Falling back to REDIS_URL.', parsed.hostname, exc)
+            # fallback to redis if configured
+            redis_url = getattr(settings, 'REDIS_URL', None) or os.environ.get('REDIS_URL')
+            if redis_url:
+                logger.info('Using fallback broker URL: %s', redis_url)
+                return redis_url
+            else:
+                logger.error('No REDIS_URL found to fall back to.')
+                return url
+
+    return url
+
+
+app.conf.broker_url = _validate_and_choose_broker()
 
 # Tự động tìm kiếm task trong các app
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)

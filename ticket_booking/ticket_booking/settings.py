@@ -53,6 +53,8 @@ AUTH_USER_MODEL = 'accounts.EmployeeAccount'
 
 # Redis config
 REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+if REDIS_URL in ('${REDIS_URL}', '$REDIS_URL', ''):
+    REDIS_URL = 'redis://localhost:6379/0'
 
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
@@ -69,7 +71,7 @@ from celery.schedules import crontab  # Thêm import ở đây
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', '').strip()
 if CELERY_BROKER_URL:
     CELERY_BROKER_URL = os.path.expandvars(CELERY_BROKER_URL)
-if not CELERY_BROKER_URL or CELERY_BROKER_URL in ('${REDIS_URL}', '$REDIS_URL'):
+if CELERY_BROKER_URL in ('${REDIS_URL}', '$REDIS_URL', ''):
     CELERY_BROKER_URL = REDIS_URL
 CELERY_ACCEPT_CONTENT = ['json']  # Celery chấp nhận dữ liệu định dạng JSON
 CELERY_TASK_SERIALIZER = 'json'  # Sử dụng JSON để serialize tasks

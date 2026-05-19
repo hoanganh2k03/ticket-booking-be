@@ -264,8 +264,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 from .tasks import enqueue_invoice_email
-from urllib.parse import urlparse
-import socket
 '''
 class MoMoPaymentAPIView(APIView):
 
@@ -1301,6 +1299,7 @@ def payment_result_view(request):
                 if order.order_status != 'received':
                     order.order_status = 'received'
                     order.save(update_fields=['order_status'])
+                enqueue_invoice_email(order, payment)
             else:
                 payment.payment_status = 'failed'
                 if trans_id:

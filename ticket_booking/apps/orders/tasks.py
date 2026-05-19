@@ -4,6 +4,7 @@ from django.core.cache import cache
 from django.core.mail import EmailMessage
 from django.db import transaction
 from io import BytesIO
+import errno
 import logging
 import qrcode
 
@@ -41,6 +42,13 @@ def send_invoice_email_now(order_id, payment_id):
         img.save(buf, format='PNG')
         email.attach(f'qr_code_{i}.png', buf.getvalue(), 'image/png')
 
+    logger.info(
+        "Sending invoice email for order %s via %s:%s to %s",
+        order_id,
+        settings.EMAIL_HOST,
+        settings.EMAIL_PORT,
+        order.user.email,
+    )
     email.send(fail_silently=False)
     logger.info('Invoice email sent for order %s', order_id)
     return {'status': 'sent'}
@@ -67,10 +75,20 @@ def enqueue_invoice_email(order, payment):
     transaction.on_commit(_enqueue)
 
 
-@shared_task(bind=True, max_retries=3, default_retry_delay=60, name='orders.tasks.send_invoice_email_task')
+@shared_task(bind=True, max_retries=3, default_retry_delay=60, name='apps.orders.tasks.send_invoice_email_task')
 def send_invoice_email_task(self, order_id, payment_id):
     try:
         return send_invoice_email_now(order_id, payment_id)
+    except OSError as exc:
+        if getattr(exc, 'errno', None) in (errno.ENETUNREACH, errno.EHOSTUNREACH):
+            logger.error(
+                "SMTP network is unreachable for order %s. Check outbound SMTP/network policy and EMAIL_HOST/EMAIL_PORT.",
+                order_id,
+                exc_info=True,
+            )
+            return {'status': 'failed', 'error': str(exc), 'retryable': False}
+        logger.exception('Failed to send invoice email for order %s: %s', order_id, exc)
+        raise self.retry(exc=exc)
     except Exception as exc:
         logger.exception('Failed to send invoice email for order %s: %s', order_id, exc)
         raise self.retry(exc=exc)

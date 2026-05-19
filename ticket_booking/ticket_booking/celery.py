@@ -51,7 +51,14 @@ def _validate_and_choose_broker():
     return url
 
 
-app.conf.broker_url = _validate_and_choose_broker()
+broker_url = _validate_and_choose_broker()
+if broker_url:
+    os.environ['CELERY_BROKER_URL'] = broker_url
+    os.environ['BROKER_URL'] = broker_url
+    app.conf.update(
+        broker_url=broker_url,
+        CELERY_BROKER_URL=broker_url,
+    )
 
 # Log chosen broker for visibility
 try:

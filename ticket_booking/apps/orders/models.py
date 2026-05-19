@@ -1,11 +1,17 @@
 import uuid
+from datetime import timedelta
 from django.db import models
+from django.utils import timezone
 
 from apps.accounts.models import Customer
 from apps.tickets.models import SectionPrice, Seat
 from apps.promotions.models import Promotion
 
 import uuid
+
+
+def default_payment_expiration():
+    return timezone.now() + timedelta(minutes=10)
 
 class Order(models.Model):
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -28,7 +34,7 @@ class Payment(models.Model):
     payment_status = models.CharField(max_length=50, choices=[('success', 'Thành công'), ('failed', 'Thất bại'), ('pending', 'Đang chờ')])
     transaction_code = models.CharField(max_length=100, unique=True, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    expiration_time = models.DateTimeField(default="2025-05-01")
+    expiration_time = models.DateTimeField(default=default_payment_expiration)
 
     class Meta:
         db_table = 'payment'

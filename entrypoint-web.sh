@@ -19,6 +19,15 @@ echo "DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE"
 echo "REDIS_URL=${REDIS_URL:-<not set>}"
 echo "CELERY_BROKER_URL=${CELERY_BROKER_URL:-<not set>}"
 
+if [ -n "$REDIS_URL" ]; then
+  if [ -z "$CELERY_BROKER_URL" ] || [ "$CELERY_BROKER_URL" = '${REDIS_URL}' ] || [ "$CELERY_BROKER_URL" = '$REDIS_URL' ]; then
+    export CELERY_BROKER_URL="$REDIS_URL"
+  fi
+  if [ -z "$BROKER_URL" ] || [ "$BROKER_URL" = '${REDIS_URL}' ] || [ "$BROKER_URL" = '$REDIS_URL' ]; then
+    export BROKER_URL="$REDIS_URL"
+  fi
+fi
+
 echo 'Starting web server...'
 if command -v "$PYTHON" >/dev/null 2>&1 && "$PYTHON" -m uvicorn --help >/dev/null 2>&1; then
     exec "$PYTHON" -m uvicorn ticket_booking.asgi:application --host 0.0.0.0 --port "$PORT" --proxy-headers --lifespan off

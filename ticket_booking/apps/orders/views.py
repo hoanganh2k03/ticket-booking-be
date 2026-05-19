@@ -761,6 +761,10 @@ class OrderDetailQRAPIView(APIView):
                     send_invoice_email_task.delay(order.order_id, payment.payment_id)
                 except Exception:
                     logger.exception('Failed to enqueue invoice email task for order %s', order.order_id)
+                    try:
+                        self.send_invoice_email(order, payment)
+                    except Exception:
+                        logger.exception('Fallback synchronous invoice send failed for order %s', order.order_id)
 
         # Trả về thông tin của đơn hàng cùng với mã QR và thông tin khuyến mãi cho mỗi OrderDetail
         return Response({
@@ -1069,6 +1073,10 @@ class CashCardPaymentAPIView(APIView):
             send_invoice_email_task.delay(order.order_id, payment.payment_id)
         except Exception:
             logger.exception('Failed to enqueue invoice email task for order %s', order.order_id)
+            try:
+                self.send_invoice_email(order, payment)
+            except Exception:
+                logger.exception('Fallback synchronous invoice send failed for order %s', order.order_id)
 
         return Response({
             "status": "success",
@@ -1130,16 +1138,19 @@ class CashCardPaymentAPIView(APIView):
         return "\n".join(details)
     
     def create_qr_code_image_from_base64(self, order_detail):
-        # Tạo nội dung QR (order_id + detail_id)
-        qr_payload = f"{order_detail.order.order_id}|{order_detail.detail_id}"
-        qr_img = qrcode.make(qr_payload)
+        qr_code_base64 = order_detail.qr_code
+        if not qr_code_base64:
+            return b''
 
-        # Chuyển ảnh QR thành Base64
-        buffer = BytesIO()
-        qr_img.save(buffer, format='PNG')
-        qr_b64 = base64.b64encode(buffer.getvalue()).decode()
-
-        return qr_b64
+        try:
+            return b64decode(qr_code_base64)
+        except Exception:
+            # If the stored value is not valid base64, generate a fresh QR image instead.
+            qr_payload = f"{order_detail.order.order_id}|{order_detail.detail_id}"
+            qr_img = qrcode.make(qr_payload)
+            buffer = BytesIO()
+            qr_img.save(buffer, format='PNG')
+            return buffer.getvalue()
     
 
 class CustomerOrdersAPIView(APIView):

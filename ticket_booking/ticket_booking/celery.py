@@ -53,6 +53,12 @@ def _validate_and_choose_broker():
 
 app.conf.broker_url = _validate_and_choose_broker()
 
+# Log chosen broker for visibility
+try:
+    logger.info('Celery broker URL configured as: %s', app.conf.broker_url)
+except Exception:
+    pass
+
 # Tự động tìm kiếm task trong các app
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 

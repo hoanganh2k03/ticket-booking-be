@@ -264,6 +264,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 from .tasks import send_invoice_email_task
+from ticket_booking.celery import app as celery_app
+from urllib.parse import urlparse
+import socket
 '''
 class MoMoPaymentAPIView(APIView):
 
@@ -756,11 +759,32 @@ class OrderDetailQRAPIView(APIView):
             }
 
             if payment.payment_status == 'success' and getattr(order.user, 'email', None):
-                # send invoice asynchronously to avoid blocking the request
+                # If broker is an AMQP host that doesn't resolve, avoid triggering kombu connect attempts.
                 try:
-                    send_invoice_email_task.delay(order.order_id, payment.payment_id)
+                    broker_url = getattr(celery_app.conf, 'broker_url', None) or ''
+                    parsed = urlparse(broker_url)
+                    if parsed.scheme in ('amqp', 'amqps') and parsed.hostname:
+                        try:
+                            socket.getaddrinfo(parsed.hostname, parsed.port or 5672)
+                            broker_ok = True
+                        except Exception:
+                            broker_ok = False
+                    else:
+                        broker_ok = True
                 except Exception:
-                    logger.exception('Failed to enqueue invoice email task for order %s', order.order_id)
+                    broker_ok = True
+
+                if broker_ok:
+                    try:
+                        send_invoice_email_task.delay(order.order_id, payment.payment_id)
+                    except Exception:
+                        logger.exception('Failed to enqueue invoice email task for order %s', order.order_id)
+                        try:
+                            self.send_invoice_email(order, payment)
+                        except Exception:
+                            logger.exception('Fallback synchronous invoice send failed for order %s', order.order_id)
+                else:
+                    logger.warning('Broker host unresolved; falling back to synchronous invoice send for order %s', order.order_id)
                     try:
                         self.send_invoice_email(order, payment)
                     except Exception:
@@ -1069,10 +1093,32 @@ class CashCardPaymentAPIView(APIView):
             detail.save()
 
         # Enqueue invoice email send to background task to avoid blocking
+        # Pre-check broker resolution to avoid heavy AMQP stack traces when host is invalid
         try:
-            send_invoice_email_task.delay(order.order_id, payment.payment_id)
+            broker_url = getattr(celery_app.conf, 'broker_url', None) or ''
+            parsed = urlparse(broker_url)
+            if parsed.scheme in ('amqp', 'amqps') and parsed.hostname:
+                try:
+                    socket.getaddrinfo(parsed.hostname, parsed.port or 5672)
+                    broker_ok = True
+                except Exception:
+                    broker_ok = False
+            else:
+                broker_ok = True
         except Exception:
-            logger.exception('Failed to enqueue invoice email task for order %s', order.order_id)
+            broker_ok = True
+
+        if broker_ok:
+            try:
+                send_invoice_email_task.delay(order.order_id, payment.payment_id)
+            except Exception:
+                logger.exception('Failed to enqueue invoice email task for order %s', order.order_id)
+                try:
+                    self.send_invoice_email(order, payment)
+                except Exception:
+                    logger.exception('Fallback synchronous invoice send failed for order %s', order.order_id)
+        else:
+            logger.warning('Broker host unresolved; falling back to synchronous invoice send for order %s', order.order_id)
             try:
                 self.send_invoice_email(order, payment)
             except Exception:

@@ -4,23 +4,18 @@ from django.core.cache import cache
 from django.core.mail import EmailMessage
 from django.db import transaction
 from io import BytesIO
+import base64
 import errno
 import logging
 import qrcode
+import requests
 
 from .models import Order, Payment
 
 logger = logging.getLogger(__name__)
 
 
-def send_invoice_email_now(order_id, payment_id):
-    order = Order.objects.get(order_id=order_id)
-    payment = Payment.objects.get(payment_id=payment_id)
-
-    if not order.user or not getattr(order.user, 'email', None):
-        logger.info("Order %s has no user/email, skipping invoice send.", order_id)
-        return {'status': 'skipped', 'reason': 'no_email'}
-
+def _build_invoice_email(order, payment):
     subject = f"Hoa don thanh toan cho don hang {order.order_id}"
     message = (
         f"Chao {order.user.full_name if order.user else 'Khach hang'},\n\n"
@@ -34,24 +29,95 @@ def send_invoice_email_now(order_id, payment_id):
         "He thong ban ve truc tuyen"
     )
 
-    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL, [order.user.email])
+    attachments = []
     for i, order_detail in enumerate(order.order_details.all(), start=1):
         qr_payload = f"{order.order_id}|{order_detail.detail_id}"
         img = qrcode.make(qr_payload)
         buf = BytesIO()
         img.save(buf, format='PNG')
-        email.attach(f'qr_code_{i}.png', buf.getvalue(), 'image/png')
+        img_bytes = buf.getvalue()
+        attachments.append({
+            'filename': f'qr_code_{i}.png',
+            'content': base64.b64encode(img_bytes).decode('ascii'),
+            'content_type': 'image/png',
+            'bytes': img_bytes,
+        })
+
+    return subject, message, attachments
+
+
+def _send_invoice_with_resend(order, payment, subject, message, attachments):
+    if not settings.RESEND_API_KEY:
+        raise RuntimeError('RESEND_API_KEY is not configured')
+
+    payload = {
+        'from': settings.RESEND_FROM_EMAIL,
+        'to': [order.user.email],
+        'subject': subject,
+        'text': message,
+        'attachments': [
+            {
+                'filename': attachment['filename'],
+                'content': attachment['content'],
+                'content_type': attachment['content_type'],
+            }
+            for attachment in attachments
+        ],
+    }
+    headers = {
+        'Authorization': f'Bearer {settings.RESEND_API_KEY}',
+        'Content-Type': 'application/json',
+        'Idempotency-Key': f'invoice-{payment.payment_id}',
+    }
+
+    logger.info(
+        "Sending invoice email for order %s via Resend API to %s",
+        order.order_id,
+        order.user.email,
+    )
+    response = requests.post(
+        settings.RESEND_API_URL,
+        json=payload,
+        headers=headers,
+        timeout=settings.EMAIL_API_TIMEOUT,
+    )
+    if response.status_code >= 400:
+        raise RuntimeError(f"Resend API error {response.status_code}: {response.text[:500]}")
+
+    data = response.json()
+    logger.info('Invoice email sent for order %s via Resend id=%s', order.order_id, data.get('id'))
+    return {'status': 'sent', 'provider': 'resend', 'id': data.get('id')}
+
+
+def _send_invoice_with_smtp(order, subject, message, attachments):
+    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL, [order.user.email])
+    for attachment in attachments:
+        email.attach(attachment['filename'], attachment['bytes'], attachment['content_type'])
 
     logger.info(
         "Sending invoice email for order %s via %s:%s to %s",
-        order_id,
+        order.order_id,
         settings.EMAIL_HOST,
         settings.EMAIL_PORT,
         order.user.email,
     )
     email.send(fail_silently=False)
-    logger.info('Invoice email sent for order %s', order_id)
-    return {'status': 'sent'}
+    logger.info('Invoice email sent for order %s via SMTP', order.order_id)
+    return {'status': 'sent', 'provider': 'smtp'}
+
+
+def send_invoice_email_now(order_id, payment_id):
+    order = Order.objects.get(order_id=order_id)
+    payment = Payment.objects.get(payment_id=payment_id)
+
+    if not order.user or not getattr(order.user, 'email', None):
+        logger.info("Order %s has no user/email, skipping invoice send.", order_id)
+        return {'status': 'skipped', 'reason': 'no_email'}
+
+    subject, message, attachments = _build_invoice_email(order, payment)
+    if settings.EMAIL_PROVIDER == 'resend':
+        return _send_invoice_with_resend(order, payment, subject, message, attachments)
+    return _send_invoice_with_smtp(order, subject, message, attachments)
 
 
 def enqueue_invoice_email(order, payment):

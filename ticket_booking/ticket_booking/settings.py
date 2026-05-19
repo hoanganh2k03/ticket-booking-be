@@ -66,6 +66,11 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'tgai qoii itcl oroc
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 SERVER_EMAIL = os.environ.get('SERVER_EMAIL', DEFAULT_FROM_EMAIL)
 EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', 10))
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+RESEND_API_URL = os.environ.get('RESEND_API_URL', 'https://api.resend.com/emails')
+RESEND_FROM_EMAIL = os.environ.get('RESEND_FROM_EMAIL', DEFAULT_FROM_EMAIL)
+EMAIL_API_TIMEOUT = int(os.environ.get('EMAIL_API_TIMEOUT', 15))
+EMAIL_PROVIDER = os.environ.get('EMAIL_PROVIDER', 'resend' if RESEND_API_KEY else 'smtp').lower()
 GROQ_API_KEY = os.environ.get('GROQ_API_KEY', 'abcdef');
 
 # celery

@@ -9,7 +9,7 @@
 
 Đây là kho lưu trữ mã nguồn **Backend** (RESTful API) cho Đồ án tốt nghiệp: "Xây dựng website đặt vé xem sự kiện thể thao". Hệ thống được thiết kế theo kiến trúc Client-Server, tập trung giải quyết các bài toán về xử lý đồng thời (Concurrency), tính khả dụng của tài nguyên thời gian thực (Real-time) và tích hợp Trí tuệ nhân tạo (AI/ML) để tối ưu hóa quy trình kinh doanh.
 
-🔗 **Frontend Repository:** (https://github.com/dat060603/ticket-booking-fe.git)
+🔗 **Frontend Repository:** (https://github.com/hoanganh2k03/ticket-booking-fe.git)
 
 ---
 
